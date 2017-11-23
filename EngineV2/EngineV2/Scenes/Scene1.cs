@@ -78,7 +78,7 @@ namespace EngineV2.Scenes
             physicsMgr = PhysicsManager.getPhysicsInstance;
             physicsMgr.setPhysicsList(physicsObj);
 
-            scn = new SceneManager(Kernel.instance, physicsMgr);
+            scn = new SceneManager(Kernel.instance);
 
             behaviours = BehaviourManager.getBehaviourManager;
             snd = SoundManager.getSoundInstance;
