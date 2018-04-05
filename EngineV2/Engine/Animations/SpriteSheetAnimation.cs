@@ -83,9 +83,6 @@ namespace Engine.Animations
         /// </summary>
         public void Draw(SpriteBatch spriteBatch)
         {
-
-
-
             //Assign _row variable the row that wants to be shown in the animation.
             _row = entity.getRows();
             //Assign _column variable the columns that are going to be shown in the animation.
