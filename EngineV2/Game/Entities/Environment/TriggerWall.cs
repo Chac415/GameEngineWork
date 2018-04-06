@@ -15,9 +15,6 @@ namespace ProjectHastings.Entities.Environment
     /// </summary>
     class TriggerWall : GameEntity
     {
-        //Tag Identifier
-        public string Tag = "triggerWall";
-
         //COLLISIONS
         private IEntity collisionObj;
         private IEntity collision;
@@ -32,6 +29,7 @@ namespace ProjectHastings.Entities.Environment
         /// </summary>
         public override void UniqueData()
         {
+            Tag = "triggerWall";
             coli.subscribe(onCollision);
             // physicsObjs = _PhysicsObj.getPhysicsList();
             _Collisions.isEnvironmentCollidable(this);

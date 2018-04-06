@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Engine.StateMachines.StateTranstions
+namespace Engine.State_Machines.State_Transitions
 {
     /// <summary>
     /// Stores the transition Conditions for a stateMachine

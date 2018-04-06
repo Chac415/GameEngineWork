@@ -2,7 +2,7 @@
 using Engine.Physics;
 using Microsoft.Xna.Framework;
 
-namespace Engine.StateMachines.TestStates
+namespace Engine.State_Machines.Test_States
 {
     class FallState<T> : IState<T> where T : IPhysics
     {

@@ -2,7 +2,7 @@
 using Engine.Physics;
 using Microsoft.Xna.Framework;
 
-namespace Engine.StateMachines.TestStates
+namespace Engine.State_Machines.Test_States
 {
     public class MoveLeft<T> : IState<T> where T: IPhysics
     {
@@ -10,17 +10,17 @@ namespace Engine.StateMachines.TestStates
 
         public void Enter(T entity)
         {
-            entity.ApplyForce(new Vector2(5,0));
+            entity.ApplyForce(new Vector2(2,0));
         }
 
         public void Update(T entity)
         {
-            entity.ApplyForce(new Vector2(-5, 0));
+            entity.ApplyForce(new Vector2(-2, 0));
         }
 
         public void Exit(T entity)
         {
-            Console.WriteLine("Living life to the fullest");
+            Console.WriteLine("Leaving the MoveLeftState");
         }
     }
 }

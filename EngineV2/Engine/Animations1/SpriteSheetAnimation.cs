@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Engine.Animations
+namespace Engine.Animations1
 {
     public class SpriteSheetAnimation
     {

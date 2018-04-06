@@ -1,7 +1,7 @@
 ﻿using System;
 using Engine.Physics;
 
-namespace Engine.StateMachines.TestStates
+namespace Engine.State_Machines.Test_States
 {
     class JumpState<T>: IState<T> where T : IPhysics
     {

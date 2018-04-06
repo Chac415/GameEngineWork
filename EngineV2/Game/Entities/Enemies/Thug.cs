@@ -1,9 +1,12 @@
 ﻿using Engine.Collision_Management;
 using Engine.Interfaces;
-using Engine.Managers;
+using Engine.Physics;
 using Engine.Service_Locator;
+using Engine.State_Machines;
+using Engine.State_Machines.Animations;
+using Engine.State_Machines.Test_States;
 using Microsoft.Xna.Framework;
-using ProjectHastings.Animations;
+using Microsoft.Xna.Framework.Graphics;
 using ProjectHastings.Behaviours;
 
 namespace ProjectHastings.Entities.Enemies
@@ -11,11 +14,11 @@ namespace ProjectHastings.Entities.Enemies
     class Thug : GamePhysicsEntity
     {
         public IAnimations ani;
-        public int row = 1;
 
         private IEntity collisionObj;
 
         private EnemyMind mind;
+        public IStateMachine<IPhysics> StateMachine;
 
         ICollisionManager coli = Locator.Instance.getProvider<CollisionManager>() as ICollisionManager;
 
@@ -25,14 +28,18 @@ namespace ProjectHastings.Entities.Enemies
         public override void UniqueData()
         {
             Tag = "thug";
-            ani = new ThugAnimation();
-            ani.Initialize(this, 3, 3);
-            mind = new EnemyMind();
-            mind.Initialise(this);
+            //ani = new ThugAnimation();
+            //ani.Initialize(this, 3, 3);
+
+            StateMachine = new StateMachine<IPhysics>(this);
+
+            StateMachine.AddState(new AnimationState<IPhysics>(this, Texture, 2, 1, 3), new MoveLeft<IPhysics>(), "left");
+            StateMachine.AddState(new AnimationState<IPhysics>(this, Texture, 2, 2, 3), new MoveRight<IPhysics>(), "right");
+
+
+            mind = new EnemyMind(this, StateMachine);
             _Collisions.isCollidableEntity(this);
             coli.subscribe(onCollision);
-
-
         }
 
         public virtual void onCollision(object source, CollisionEventData data)
@@ -54,23 +61,26 @@ namespace ProjectHastings.Entities.Enemies
 
         }
 
-
         public override void Update(GameTime game)
         {
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
-
-            ani.Update(game);
-            mind.Update();
+            StateMachine.UpdateBehaviour();
         }
 
-        public override int getRows()
-        {
-            return row;
-        }
+        //public override int getRows()
+        //{
+        //    return row;
+        //}
 
-        public override void setRow(int rows)
+        //public override void setRow(int rows)
+        //{
+        //    row = rows;
+        //}
+
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            row = rows;
+            StateMachine.UpdateAnimation(spriteBatch);
+           StateMachine.DrawAnimation(spriteBatch);
         }
     }
 }

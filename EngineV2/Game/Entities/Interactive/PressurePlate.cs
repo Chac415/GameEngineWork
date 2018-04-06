@@ -16,7 +16,7 @@ namespace ProjectHastings.Entities.Interactive
     class PressurePlate : GameEntity
     {
         //tag Identifier
-        public string Tag = "PressurePlate";
+        public new string Tag = "PressurePlate";
         private float moveDirec = 3;
         private bool moveObject = false;
         private bool canMove = true;
