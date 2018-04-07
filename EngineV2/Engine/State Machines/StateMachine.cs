@@ -111,7 +111,7 @@ namespace Engine.State_Machines
         /// <param name="stateID"></param>
         public void AddState(IAnimationState animState, IState<T> state, string stateID)
         {
-            //If the Dictionary is empty
+            //If the State Behaviour Dictionary is empty
             if (StateBehaviour.Count == 0)
             {
                 //The Active State is the State being passed
@@ -119,16 +119,16 @@ namespace Engine.State_Machines
                 //Call the AnimStates Animation Method
                 state.Enter(Holder);
             }
-
+            //Look to see if the animation dictionary is empty
             if (StateAnimation.Count == 0)
             {
+                //If the dictionary is empty, Change the active animation to the state Being passed
                 ActiveAnimation = stateID;
-
             }
-            //If the Dictionary doesnt hold a copy of this State
+            //Check to see whether or not each of the Dictionaries hold a copy of this State
             if (!HoldingState(stateID))
             {
-                //Ass the STate the the States Dictionary
+                //Add the state the the States Dictionary
                 StateBehaviour.Add(stateID, state);
             }
             if (!HoldingAnimationState(stateID))
@@ -175,17 +175,20 @@ namespace Engine.State_Machines
             if (changeto != null)
             {
                 //Caal the exit behaviour of the current state
-                StateBehaviour[ActiveState].Exit(Holder); //animation
+                StateBehaviour[ActiveState].Exit(Holder);
 
-                if (StateBehaviour.Count != 0)  //Null Check on States Dictionary
-                    ActiveState = changeto;                    //Change the current to state to the Type being passed into the method
+                //Look to see if the dicitonary is holding the target State
+                if (HoldingState(changeto) && StateBehaviour.Count != 0)  
+                    //Change the current to state to the Type being passed into the method
+                    ActiveState = changeto;
 
-
-                if (StateAnimation.Count != 0)          //Null Check on Animation States Dictionary 
-                    ActiveAnimation = changeto;                    //Change the current Aniation state to the Type being passed into the method
+                //Null Check on Animation States Dictionary and to see if it is holding the target Animation state
+                if ( HoldingAnimationState(changeto) && StateAnimation.Count != 0)
+                    //Change the current Aniation state to the Type being passed into the method
+                    ActiveAnimation = changeto;                   
 
                 //Call The Update method of the new currentState from the dictionary
-                StateBehaviour[ActiveState].Enter(Holder); //animation);
+                StateBehaviour[ActiveState].Enter(Holder);
             }
         }
 
@@ -198,7 +201,8 @@ namespace Engine.State_Machines
             //If the type isnt null
             if (changeto != null)
             {
-                ActiveAnimation = changeto;                    //Change the current Aniation state to the Type being passed into the method
+                //Change the current Aniation state to the Type being passed into the method
+                ActiveAnimation = changeto;                   
             }
         }
 
@@ -206,7 +210,7 @@ namespace Engine.State_Machines
 
         #region Transitions
 
-                /// <summary>
+        /// <summary>
         /// Adds transitions between state that 
         /// </summary>
         /// <param name="MethodVal"></param>
@@ -228,7 +232,7 @@ namespace Engine.State_Machines
         public void AddMethodTransition(Func<bool> MethodVal, string stateFrom, string targetState, bool ReqResult)
         {
             //Check to see whether or not the dictionary holds both states and both states aren't the same
-            if (isValidTransition(stateFrom, targetState))
+            if (IsValidTransition(stateFrom, targetState))
             {
                 //Look to see whether or not the base transition state is currently held in the dictionary
                 checkHandlerExists(stateFrom);
@@ -243,7 +247,7 @@ namespace Engine.State_Machines
         /// <param name="baseState"></param>
         /// <param name="targetState"></param>
         /// <returns></returns>
-        private bool isValidTransition(string baseState, string targetState)
+        private bool IsValidTransition(string baseState, string targetState)
         {
             if (StateBehaviour.Count!= 0 && StateAnimation.Count!=0)
             {
@@ -254,9 +258,6 @@ namespace Engine.State_Machines
                     return true;
                 }
             }
-
-            return false;
-
             //The transition is invalid
             return false;
 
