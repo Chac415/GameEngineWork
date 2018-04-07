@@ -1,6 +1,6 @@
 ﻿
 
-namespace Engine.StateMachines
+namespace Engine.State_Machines
 {
     /// <summary>
     /// Interface required for all State Classes

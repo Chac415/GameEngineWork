@@ -23,7 +23,7 @@ namespace ProjectHastings.Entities.Player
         #region Properties
         //Animation Variable
         public IAnimations ani;
-        public static int row = 1;
+        public new static int row = 1;
         public static bool Animate = false;
 
 

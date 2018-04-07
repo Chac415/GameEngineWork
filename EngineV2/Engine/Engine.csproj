@@ -16,7 +16,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -37,13 +37,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animations\IAnimation.cs" />
+    <Compile Include="Animations\SpriteSheetAnimation.cs" />
     <Compile Include="BackGround\BackGrounds.cs" />
     <Compile Include="Buttons\ButtonList.cs" />
     <Compile Include="ClearList\ListWipe.cs" />
@@ -82,17 +79,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render\Renderable.cs" />
     <Compile Include="Service Locator\Locator.cs" />
-    <Compile Include="StateMachines\IState.cs" />
-    <Compile Include="StateMachines\IStateMachine.cs" />
-    <Compile Include="StateMachines\StateMachine.cs" />
-    <Compile Include="StateMachines\StateTransitions\ITransitionHandler.cs" />
-    <Compile Include="StateMachines\StateTransitions\MethodTransition.cs" />
-    <Compile Include="StateMachines\StateTransitions\TransitionHandler.cs" />
-    <Compile Include="StateMachines\Test States\FallState.cs" />
-    <Compile Include="StateMachines\Test States\JumpState.cs" />
-    <Compile Include="StateMachines\Test States\MoveLeft.cs" />
-    <Compile Include="StateMachines\Test States\MoveRight.cs" />
+    <Compile Include="State Machines\Animations\AnimationState.cs" />
+    <Compile Include="State Machines\Animations\IAnimationState.cs" />
+    <Compile Include="State Machines\IState.cs" />
+    <Compile Include="State Machines\IStateMachine.cs" />
+    <Compile Include="State Machines\StateMachine.cs" />
+    <Compile Include="State Machines\State Transitions\ITransitionHandler.cs" />
+    <Compile Include="State Machines\State Transitions\MethodTransition.cs" />
+    <Compile Include="State Machines\State Transitions\TransitionHandler.cs" />
+    <Compile Include="State Machines\Test States\FallState.cs" />
+    <Compile Include="State Machines\Test States\JumpState.cs" />
+    <Compile Include="State Machines\Test States\MoveLeft.cs" />
+    <Compile Include="State Machines\Test States\MoveRight.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -45,7 +45,6 @@ namespace ProjectHastings.Scenes
 
             physicsMgr = new PhysicsManager();
 
-
             collider = new CollidableClass();
 
             #endregion

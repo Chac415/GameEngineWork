@@ -81,7 +81,7 @@ namespace ProjectHastings
             Wingame.LoadContent(Content);
             LoseScreen.LoadContent(Content);
 
-            scn.AddScene("Mainmenu", mainmenu);
+            //scn.AddScene("Mainmenu", mainmenu);
             scn.AddScene("TestLevel", TestScene);
             scn.AddScene("WinGame", Wingame);
             scn.AddScene("LoseScreen", LoseScreen);

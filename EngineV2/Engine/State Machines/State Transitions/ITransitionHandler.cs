@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Engine.StateMachines.StateTranstions
+namespace Engine.State_Machines.State_Transitions
 {
     /// <summary>
     /// Interface for the Transition Handler Class

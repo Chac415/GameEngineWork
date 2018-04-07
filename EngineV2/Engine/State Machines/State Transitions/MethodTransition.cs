@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Engine.StateMachines.StateTranstions
+namespace Engine.State_Machines.State_Transitions
 {
     internal class MethodTransition
     {

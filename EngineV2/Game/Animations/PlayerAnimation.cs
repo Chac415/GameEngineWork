@@ -28,7 +28,7 @@ namespace ProjectHastings.Animations
         //Create Intergers called _row, _column that will store which row and column is needed for a specific animation.
         private int _row, _column;
         //Create a variable of type IEntity called entity that will store object of type IEntity.
-        public  IEntity entity;
+        public IEntity entity;
         //Create a variable of type Rectangle called sourceRectangle which will store information on what part of the spritesheet to look at for the animation.
         // Create a variable of type Rectangle called destinationRectangle which will store information on where sourceRectangle will be created.
         private Rectangle sourceRectangle, destinationRectangle;
@@ -63,18 +63,18 @@ namespace ProjectHastings.Animations
                 //Set _timeSinceLastFrame -= _millisecondsPerFrame.
                 _timeSinceLastFrame -= _millisecondsPerFrame;
 
-                    
-                    _currentFrame++;
 
-                    //Create an If Statment to check if the current frames is == to the total frames (_currentFrame == _totalFrames) 
-                    //if so set current frames to 0.
-                    if (_currentFrame == _totalFrames)
-                    {
-                        _currentFrame = 0;
-                    }
+                _currentFrame++;
+
+                //Create an If Statment to check if the curbrent frames is == to the total frames (_currentFrame == _totalFrames) 
+                //if so set current frames to 0.
+                if (_currentFrame >= _totalFrames)
+                {
+                    _currentFrame = 0;
                 }
-
             }
+
+        }
 
         /// <summary>
         /// Create a method called Draw that gets passed a variable of type SpriteBatch.
@@ -83,28 +83,26 @@ namespace ProjectHastings.Animations
         public void Draw(SpriteBatch spriteBatch)
         {
 
-                //Assign _width variable with the correct width of one of the images with in the spritesheet. 
-                //Do this by getting the texture width and divide it by the amount of columns the spritesheet has.
-                _width = entity.Texture.Width / _columns;
-                //Assign _height variable with the correct height of one of the images with in the spritesheet. 
-                //Do this by getting the texture height and divide it by the amount of rows the spritesheet has.
-                _height = entity.Texture.Height / _rows;
-                //Assign _row variable the row that wants to be shown in the animation.
-                _row = entity.getRows();
-                //Assign _column variable the columns that are going to be shown in the animation.
-                _column = _currentFrame % _columns;
-                
-                //Create a new rectangle and assign it to the sourceRectangle variable.
-                //The rectangle will hold all the information it need to create a rectangle around the image on the spritesheet.
-                sourceRectangle = new Rectangle(_width * _column, _height * _row, _width, _height);
-                //Create a new rectangle and assign it to the destinationRectangle variable.
-                //The rectangle will hold all the information it needs for where the animations is going to be created.
-                destinationRectangle = new Rectangle((int)entity.Position.X,(int)entity.Position.Y, _width, _height);
-                //Call the Draw method from the spritebatch method and assign it the correct parameters need to draw the animations.
-                spriteBatch.Draw(entity.Texture, destinationRectangle, sourceRectangle, Color.White);
-                
-            
-            
+            //Assign _width variable with the correct width of one of the images with in the spritesheet. 
+            //Do this by getting the texture width and divide it by the amount of columns the spritesheet has.
+            _width = entity.Texture.Width / _columns;
+            //Assign _height variable with the correct height of one of the images with in the spritesheet. 
+            //Do this by getting the texture height and divide it by the amount of rows the spritesheet has.
+            _height = entity.Texture.Height / _rows;
+            //Assign _row variable the row that wants to be shown in the animation.
+            _row = entity.getRows();
+            //Assign _column variable bthe columns that are going to be shown in the animation.
+            _column = _currentFrame % _columns;
+
+            //Create a new rectangle and assign it to the sourceRectangle variable.
+            //The rectangle will hold all the information it need to create a rectangle around the image on the spritesheet.
+            sourceRectangle = new Rectangle(_width * _column, _height * _row, _width, _height);
+            //Create a new rectangle and assign it to the destinationRectangle variable.
+            //The rectangle will hold all the information it needs for where the animations is going to be created.
+            destinationRectangle = new Rectangle((int)entity.Position.X, (int)entity.Position.Y, _width, _height);
+            //Call the Draw method from the spritebatch method and assign it the correct parameters need to draw the animations.
+            spriteBatch.Draw(entity.Texture, destinationRectangle, sourceRectangle, Color.White);
+
         }
 
         #endregion

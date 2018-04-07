@@ -1,9 +1,7 @@
 ﻿using Engine.Interfaces;
 using Engine.Physics;
-using Engine.StateMachines;
-using Engine.StateMachines.TestStates;
+using Engine.State_Machines;
 using Microsoft.Xna.Framework;
-using ProjectHastings.Animations;
 
 namespace ProjectHastings.Behaviours
 {
@@ -11,27 +9,16 @@ namespace ProjectHastings.Behaviours
     {
         private IMoveBehaviour move;
         private IPhysics body;
-        private IStateMachine<IPhysics> stateMachine;
 
-
-        public EnemyMind()
+        public EnemyMind(IPhysics Ent, IStateMachine<IPhysics> stateMachine)
         {
-        }
-
-        public void Initialise(IPhysics Ent)
-        {
+            var stateMachine1 = stateMachine;
             body = Ent;
             //move = new xMoveBehaviour(body);
-            stateMachine = new StateMachine<IPhysics>(Ent);
-
-            stateMachine.AddState(new MoveLeft<IPhysics>(), "left");
-            stateMachine.AddState(new MoveRight<IPhysics>(), "right");
-
-            stateMachine.AddMethodTransition(right, "left", "right");
-            stateMachine.AddMethodTransition(left, "right", "left");
-
-
+            stateMachine1.AddMethodTransition(right, "left", "right");
+            stateMachine1.AddMethodTransition(left, "right", "left");
         }
+
 
         bool left()
         {
@@ -53,11 +40,6 @@ namespace ProjectHastings.Behaviours
             return false;
         }
 
-        public void Update()
-        {
-            
-            stateMachine.Update();
-        }
 
     }
 }

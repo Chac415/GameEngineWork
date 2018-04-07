@@ -1,23 +1,25 @@
-﻿using Engine.Collision_Management;
+﻿using Engine.Animations;
+using Engine.Collision_Management;
 using Engine.Interfaces;
-using Engine.Managers;
+using Engine.Physics;
 using Engine.Service_Locator;
+using Engine.State_Machines;
+using Engine.State_Machines.Animations;
+using Engine.State_Machines.Test_States;
 using Microsoft.Xna.Framework;
-using ProjectHastings.Animations;
+using Microsoft.Xna.Framework.Graphics;
 using ProjectHastings.Behaviours;
 
 namespace ProjectHastings.Entities.Enemies
 {
     class Thug : GamePhysicsEntity
     {
-        public IAnimations ani;
-        public int row = 1;
 
-        private IEntity collisionObj;
+        public IEntity CollisionObj { get; private set; }
 
-        private EnemyMind mind;
-
-        ICollisionManager coli = Locator.Instance.getProvider<CollisionManager>() as ICollisionManager;
+        public EnemyMind Mind { get; private set; }
+        private IAnimation SpriteSheet;
+        public IStateMachine<IPhysics> StateMachine;
 
         /// <summary>
         /// Initialise the Variables specific to this object
@@ -25,52 +27,31 @@ namespace ProjectHastings.Entities.Enemies
         public override void UniqueData()
         {
             Tag = "thug";
-            ani = new ThugAnimation();
-            ani.Initialize(this, 3, 3);
-            mind = new EnemyMind();
-            mind.Initialise(this);
-            _Collisions.isCollidableEntity(this);
-            coli.subscribe(onCollision);
 
+            //Initialise the spriteSheet animation
+            SpriteSheet = new SpriteSheetAnimation(Texture);
+            //Create a new instance of State Machine
+            StateMachine = new StateMachine<IPhysics>(this);
 
-        }
+            //Add the states to the State Machine
+            StateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 1), new MoveLeft<IPhysics>(), "left");
+            StateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 0),new MoveRight<IPhysics>(), "right");
 
-        public virtual void onCollision(object source, CollisionEventData data)
-        {
-            collisionObj = data.objectCollider;
-
-            //if (Hitbox.X > 850)
-            //{
-            //    Position = new Vector2(849, Position.Y);
-            //    row = 0;
-            //    Behaviours.EnemyMind.speed *= -1;
-            //}
-            //if (Hitbox.X < 0)
-            //{
-            //    Position = new Vector2(1, Position.Y);
-            //    row = 1;
-            //    Behaviours.EnemyMind.speed *= -1;
-            //}
+            //Create the Mind and pass the state machine and this entity
+            Mind = new EnemyMind(this, StateMachine);
 
         }
-
 
         public override void Update(GameTime game)
         {
-            Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
-
-            ani.Update(game);
-            mind.Update();
+           // Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
+            StateMachine.UpdateBehaviour();
+            StateMachine.UpdateAnimation(game);
         }
 
-        public override int getRows()
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            return row;
-        }
-
-        public override void setRow(int rows)
-        {
-            row = rows;
+            StateMachine.DrawAnimation(spriteBatch);
         }
     }
 }
