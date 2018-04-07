@@ -35,7 +35,7 @@ namespace ProjectHastings.Entities.Enemies
 
             //Add the states to the State Machine
             StateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 1), new MoveLeft<IPhysics>(), "left");
-            StateMachine.AddState(new MoveRight<IPhysics>(), "right");
+            StateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 0),new MoveRight<IPhysics>(), "right");
 
             //Create the Mind and pass the state machine and this entity
             Mind = new EnemyMind(this, StateMachine);
