@@ -66,9 +66,9 @@ namespace ProjectHastings.Animations
 
                 _currentFrame++;
 
-                //Create an If Statment to check if the current frames is == to the total frames (_currentFrame == _totalFrames) 
+                //Create an If Statment to check if the curbrent frames is == to the total frames (_currentFrame == _totalFrames) 
                 //if so set current frames to 0.
-                if (_currentFrame == _totalFrames)
+                if (_currentFrame >= _totalFrames)
                 {
                     _currentFrame = 0;
                 }
@@ -91,7 +91,7 @@ namespace ProjectHastings.Animations
             _height = entity.Texture.Height / _rows;
             //Assign _row variable the row that wants to be shown in the animation.
             _row = entity.getRows();
-            //Assign _column variable the columns that are going to be shown in the animation.
+            //Assign _column variable bthe columns that are going to be shown in the animation.
             _column = _currentFrame % _columns;
 
             //Create a new rectangle and assign it to the sourceRectangle variable.

@@ -39,7 +39,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animations1\SpriteSheetAnimation.cs" />
+    <Compile Include="Animations\IAnimation.cs" />
+    <Compile Include="Animations\SpriteSheetAnimation.cs" />
     <Compile Include="BackGround\BackGrounds.cs" />
     <Compile Include="Buttons\ButtonList.cs" />
     <Compile Include="ClearList\ListWipe.cs" />

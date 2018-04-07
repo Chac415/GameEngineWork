@@ -113,20 +113,20 @@ namespace ProjectHastings.Entities.Interactive
         /// <param name="data"></param>
         public virtual void onCollision(object source, CollisionEventData data)
         {
-            collisionObj = data.objectCollider;
+            //collisionObj = data.objectCollider;
 
-            for (int i = 0; i < interactiveObjs.Count; i++)
-            {
-                //checks to see if player is in contact with the door 
-                if (Hitbox.Intersects((interactiveObjs[0].Hitbox)))
-                {
-                    doorContact = true;
-                }
-                else
-                {
-                    doorContact = false;
-                }
-            }
+            //for (int i = 0; i < interactiveObjs.Count; i++)
+            //{
+            //    //checks to see if player is in contact with the door 
+            //    if (Hitbox.Intersects((interactiveObjs[0].Hitbox)))
+            //    {
+            //        doorContact = true;
+            //    }
+            //    else
+            //    {
+            //        doorContact = false;
+            //    }
+            //}
         }
     }
 }

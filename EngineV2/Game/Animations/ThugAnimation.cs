@@ -68,12 +68,6 @@ namespace ProjectHastings.Animations
 
                 _currentFrame++;
 
-                //Create an If Statment to check if the current frames is == to the total frames (_currentFrame == _totalFrames) 
-                //if so set current frames to 0.
-                if (_currentFrame == _totalFrames)
-                {
-                    _currentFrame = 0;
-                }
             }
 
         }

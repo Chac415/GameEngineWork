@@ -1,4 +1,5 @@
 ﻿using System;
+using Engine.Animations;
 using Engine.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -6,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Engine.State_Machines.Animations
 {
 
-    public class AnimationState<T> : IAnimationState<T>
+    public class AnimationState : IAnimationState
 
     {
         //Int of Current Frame in Animation
@@ -20,88 +21,51 @@ namespace Engine.State_Machines.Animations
 
         private Rectangle sourceRectangle, destinationRectangle;
 
-        private readonly GameTime gameTime;
 
-        private float timeSinceLastFrame = 0;
-        private float millisecondsPerFrame = 200;
+        private float timeSinceLastFrame = 0f;
+        private float millisecondsPerFrame = 100;
 
         //Animation Variables
-        public Texture2D SpriteSheet { get; private set; }
+        public IAnimation SpriteSheet { get; private set; }
         public IEntity Entity;
         public int TargetRow { get; private set; }
         public int Column { get; private set; }
 
+        private int Height;
+        private int Width;
+
         /// <summary>
         /// Initialise a SpriteSheet Animation state
         /// </summary>
+        /// <param name="entity"></param>
         /// <param name="spriteSheet"></param>
         /// <param name="fps"></param>
         /// <param name="targetRow"></param>
-        /// <param name="column"></param>
-        public AnimationState(IEntity entity, Texture2D spriteSheet, int fps, int targetRow, int column)
-        {
-            gameTime = new GameTime();
-            Entity = entity;
-            //Perform a null check on the animation
-            if (spriteSheet != null)
-                //Set the SpriteSheet variable to animation
-                SpriteSheet = spriteSheet;
-            else { throw new Exception("SpritesheetAnimation is Null"); }
-
-            //Initialise Rows and ColumnsVariables
-            TargetRow = targetRow;
-            Column = column;
-
-            //Set the Animation speed of the animation
-            FrameRate = 1f / fps;
-
-            //Initialise the current Frame
-            CurrentFrame = 0;
-        }
+        public AnimationState(IEntity entity, IAnimation spriteSheet, int fps, int targetRow) : this(entity, spriteSheet, fps, targetRow, 1, 0)
+        {}
 
         /// <summary>
         /// Initialise a SpriteSheet Animation state and animation speed 
         /// </summary>
         /// <param name="targetRow"></param>
-        /// <param name="column"></param>
         /// <param name="animationSpeed"></param>
+        /// <param name="entity"></param>
         /// <param name="spriteSheet"></param>
         /// <param name="fps"></param>
-        public AnimationState(IEntity entity, Texture2D spriteSheet, int fps, int targetRow, int column, float animationSpeed)
-        {
-            gameTime = new GameTime();
-            Entity = entity;
-
-            //Perform a null check on the animation
-            if (spriteSheet != null)
-                //Set the SpriteSheet variable to animation
-                SpriteSheet = spriteSheet;
-            else { throw new Exception("SpritesheetAnimation is Null"); }
-
-            //Initialise Rows and ColumnsVariables
-            TargetRow = targetRow;
-            Column = column;
-
-            //Set the Animation speed of the animation
-            FrameRate = animationSpeed / fps;
-            //Store the AnimationSpeed Variable
-            AnimationSpeed = animationSpeed;
-            //Set the Initialise currentframe variable
-            CurrentFrame = 0;
-        }
+        public AnimationState(IEntity entity, IAnimation spriteSheet, int fps, int targetRow, float animationSpeed) : this(entity, spriteSheet, fps, targetRow, animationSpeed, 0)
+        {}
 
         /// <summary>
         /// Initialise a SpriteSheet Animation state and Starting frame
         /// </summary>
-        /// <param name="column"></param>
-        /// <param name="animationSpeed"></param>
+        /// <param name="entity"></param>
         /// <param name="spriteSheet"></param>
         /// <param name="fps"></param>
-        /// <param name="currentFrame"></param>
         /// <param name="targetRow"></param>
-        public AnimationState(IEntity entity, Texture2D spriteSheet, int fps, int targetRow, int column, float animationSpeed, int currentFrame)
+        /// <param name="animationSpeed"></param>
+        /// <param name="currentFrame"></param>
+        public AnimationState(IEntity entity, IAnimation spriteSheet,  int fps, int targetRow, float animationSpeed, int currentFrame)
         {
-            gameTime = new GameTime();
             Entity = entity;
 
             //Perform a null check on the animation
@@ -112,8 +76,6 @@ namespace Engine.State_Machines.Animations
 
             //Initialise Rows and ColumnsVariables
             TargetRow = targetRow;
-            Column = column;
-
             //Set the Animation speed of the animation
             FrameRate = animationSpeed / fps;
             //Store the AnimationSpeed Variable
@@ -122,57 +84,45 @@ namespace Engine.State_Machines.Animations
             CurrentFrame = currentFrame;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="entity"></param>
-        public void Animate()
+        public void Animate(GameTime gameTime)
         {
             //Set _timeSinceLastFrame += milliseconds generated by gametime.
-            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+            timeSinceLastFrame += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //Create an If the check to see if _timeSinceLastFrame > _millisecondsPerFrame.
             if (timeSinceLastFrame > FrameRate)
             {
                 //Reset the Time since the last frame
-                timeSinceLastFrame -= FrameRate;
+                timeSinceLastFrame = 0;
 
                 //Increment the current frame
                 CurrentFrame++;
 
-                //Create an If Statment to check if the current frames is == to the total frames (_currentFrame == _totalFrames) 
-                //if so set current frames to 0.
-                if (CurrentFrame == TotalFrames)
-                {
-                    CurrentFrame = 0;
-                }
             }
         }
 
         public void DrawAnimation(SpriteBatch spriteBatch)
         {
 
-            if (Column != 0 && TargetRow != 0)
-            {
-
-                //Assign _width variable with the correct width of one of the images with in the spritesheet. 
-                //Do this by getting the texture width and divide it by the amount of columns the spritesheet has.
-                int width = SpriteSheet.Width / Column;
-                //Assign _height variable with the correct height of one of the images with in the spritesheet. 
-                //Do this by getting the texture height and divide it by the amount of rows the spritesheet has.
-                int height = SpriteSheet.Width / TargetRow;
+                ////Assign _width variable with the correct width of one of the images with in the spritesheet. 
+                ////Do this by getting the texture width and divide it by the amount of columns the spritesheet has.
+                Width = SpriteSheet.GetSpriteSheet().Width / SpriteSheet.GetColumns() ;
+                ////Assign _height variable with the correct height of one of the images with in the spritesheet. 
+                ////Do this by getting the texture height and divide it by the amount of rows the spritesheet has.
+                Height = (SpriteSheet.GetSpriteSheet().Height / SpriteSheet.GetRows());
                 //Assign _column variable the columns that are going to be shown in the animation.
-                Column = CurrentFrame % Column;
-                
+                var column = CurrentFrame % SpriteSheet.GetColumns();
+
                 //Create a new rectangle and assign it to the sourceRectangle variable.
                 //The rectangle will hold all the information it need to create a rectangle around the image on the spritesheet.
-                sourceRectangle = new Rectangle(width * Column, height * TargetRow, width, height);
+                sourceRectangle = new Rectangle(Width * column, Height * TargetRow, Width, Height);
                 //Create a new rectangle and assign it to the destinationRectangle variable.
                 //The rectangle will hold all the information it needs for where the animations is going to be created.
-                destinationRectangle = new Rectangle((int)Entity.Position.X, (int)Entity.Position.Y, width, height);
+                destinationRectangle = new Rectangle((int)Entity.Position.X, (int)Entity.Position.Y, Width, Height);
+               
                 //Call the Draw method from the spritebatch method and assign it the correct parameters need to draw the animations.
-                spriteBatch.Draw(Entity.Texture, destinationRectangle, sourceRectangle, Color.White);
-            }
+                spriteBatch.Draw(Entity.Texture, Entity.Position, sourceRectangle, Color.White);
+            
         }
 
         /// <summary>

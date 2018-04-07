@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine.State_Machines.Animations
 {
-    public interface IAnimationState<T>
+    public interface IAnimationState
     {
-        void Animate();
+        void Animate(GameTime gameTime);
         void DrawAnimation(SpriteBatch spriteBatch);
         void ResetAnimation();
     }

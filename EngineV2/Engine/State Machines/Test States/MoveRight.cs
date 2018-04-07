@@ -9,12 +9,12 @@ namespace Engine.State_Machines.Test_States
 
         public void Enter(T entity)
         {
-            entity.ApplyForce(new Vector2(-2, 0));
+            entity.ApplyForce(new Vector2(-1, 0));
         }
 
         public void Update(T entity)
         {
-            entity.ApplyForce(new Vector2(2, 0));
+            entity.ApplyForce(new Vector2(1, 0));
 
         }
 

@@ -28,3 +28,4 @@ C:\Users\Nathan\Documents\GitHub\GameEngineWork\EngineV2\Engine\bin\Debug\MonoGa
 C:\Users\Nathan\Documents\GitHub\GameEngineWork\EngineV2\Engine\bin\Debug\OpenTK.dll
 C:\Users\Nathan\Documents\GitHub\GameEngineWork\EngineV2\Engine\obj\Debug\Engine.dll
 C:\Users\Nathan\Documents\GitHub\GameEngineWork\EngineV2\Engine\obj\Debug\Engine.pdb
+C:\Users\Nathan\Documents\GitHub\GameEngineWork\EngineV2\Engine\obj\Debug\Engine.csprojResolveAssemblyReference.cache

@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using Engine.State_Machines.Animations;
 using Engine.State_Machines.State_Transitions;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine.State_Machines
 {
     /// <summary>
     /// State Machines Handle used to store and manage different State classes
+    /// 
+    /// Author : Nathan Robertson & Carl Chalmers
+    /// Date 07/04/18 : Version 0.4
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class StateMachine<T> : IStateMachine<T>
@@ -17,7 +21,7 @@ namespace Engine.State_Machines
         //Dictionary to hold the different State classes
         private readonly IDictionary<string, IState<T>> StateBehaviour;
         //Dictionary to hold the AnimationStates
-        private readonly IDictionary<string, IAnimationState<T>> StateAnimation;
+        private readonly IDictionary<string, IAnimationState> StateAnimation;
 
         //Dictionary to hold the different Transition types
         private readonly IDictionary<string, ITransitionHandler> Transitions;
@@ -31,10 +35,9 @@ namespace Engine.State_Machines
         private readonly T Holder;
 
         //private IAnimation AnimationClass
-
+        private GameTime gameTime;
 
         #endregion
-
 
         #region StateManagement
 
@@ -50,8 +53,8 @@ namespace Engine.State_Machines
             //AnimationClass = animation
             StateBehaviour = new Dictionary<string, IState<T>>();
             Transitions = new Dictionary<string, ITransitionHandler>();
-            StateAnimation = new Dictionary<string, IAnimationState<T>>();
-
+            StateAnimation = new Dictionary<string, IAnimationState>();
+            gameTime = new GameTime();
         }
 
         /// <summary>
@@ -83,7 +86,7 @@ namespace Engine.State_Machines
         /// </summary>
         /// <param name="animState"></param>
         /// <param name="stateID"></param>
-        public void AddState(IAnimationState<T> animState, string stateID)
+        public void AddState(IAnimationState animState, string stateID)
         {
             //If the Dictionary is empty
             if (StateAnimation.Count == 0)
@@ -106,7 +109,7 @@ namespace Engine.State_Machines
         /// <param name="animState"></param>
         /// <param name="state"></param>
         /// <param name="stateID"></param>
-        public void AddState(IAnimationState<T> animState, IState<T> state, string stateID)
+        public void AddState(IAnimationState animState, IState<T> state, string stateID)
         {
             //If the Dictionary is empty
             if (StateBehaviour.Count == 0)
@@ -201,17 +204,18 @@ namespace Engine.State_Machines
 
         #endregion
 
+        #region Transitions
 
-        /// <summary>
+                /// <summary>
         /// Adds transitions between state that 
         /// </summary>
-        /// <param name="methodVal"></param>
+        /// <param name="MethodVal"></param>
         /// <param name="stateFrom"></param>
         /// <param name="targetState"></param>
-        public void AddMethodTransition(Func<bool> methodVal, string stateFrom, string targetState)
+        public void AddMethodTransition(Func<bool> MethodVal, string stateFrom, string targetState)
         {
             //Call the Method Tranisiton method with a default BOOl state of required result
-            AddMethodTransition(methodVal, stateFrom, targetState, true);
+            AddMethodTransition(MethodVal, stateFrom, targetState, true);
         }
 
         /// <summary>
@@ -224,11 +228,13 @@ namespace Engine.State_Machines
         public void AddMethodTransition(Func<bool> MethodVal, string stateFrom, string targetState, bool ReqResult)
         {
             //Check to see whether or not the dictionary holds both states and both states aren't the same
-            isValidTransition(stateFrom, targetState);
-            //Look to see whether or not the base transition state is currently held in the dictionary
-            checkHandlerExists(stateFrom);
-            //Store the method transition in the transition dictionary
-            Transitions[stateFrom].StoreMethodTransition(targetState, MethodVal, ReqResult);
+            if (isValidTransition(stateFrom, targetState))
+            {
+                //Look to see whether or not the base transition state is currently held in the dictionary
+                checkHandlerExists(stateFrom);
+                //Store the method transition in the transition dictionary
+                Transitions[stateFrom].StoreMethodTransition(targetState, MethodVal, ReqResult);
+            }
         }
 
         /// <summary>
@@ -239,32 +245,17 @@ namespace Engine.State_Machines
         /// <returns></returns>
         private bool isValidTransition(string baseState, string targetState)
         {
-            if (StateBehaviour.Count != 0 && StateAnimation.Count == 0)
+            if (StateBehaviour.Count!= 0 && StateAnimation.Count!=0)
             {
-                //Check to see if base state to target state is a valid transion
+                //Check to see if base state to target state is a valid transion for both the state behaviour and animation
                 if (StateBehaviour.ContainsKey(baseState) && StateBehaviour.ContainsKey(targetState) && baseState != targetState)
                 {
                     //The Transition is Valid
                     return true;
                 }
             }
-            else if (StateBehaviour.Count == 0 && StateAnimation.Count != 0)
-            {
-                if (StateAnimation.ContainsKey(baseState) && StateAnimation.ContainsKey(targetState) &&
-                    baseState != targetState)
-                {
-                    return true;
-                }
-            }
-            else if (StateBehaviour.Count != 0 && StateAnimation.Count != 0)
-            {
-                if (StateBehaviour.ContainsKey(baseState) && StateBehaviour.ContainsKey(targetState) && baseState != targetState &&
-                    StateAnimation.ContainsKey(baseState) && StateAnimation.ContainsKey(targetState) && baseState != targetState)
-                {
-                    //The Transition is Valid
-                    return true;
-                }
-            }
+
+            return false;
 
             //The transition is invalid
             return false;
@@ -298,11 +289,14 @@ namespace Engine.State_Machines
                 //Add the new transition to the state
                 Transitions.Add(state, new TransitionHandler());
         }
+        #endregion
+
+        #region Updates
 
         /// <summary>
         /// Update Method for State Machine
         /// </summary>
-        public void UpdateStates(SpriteBatch sprite)
+        public void UpdateStates(SpriteBatch sprite, GameTime gameTime)
         {
             //Look to see whether or not the state behaviour should be changed
             CheckMethodTransition();
@@ -311,32 +305,37 @@ namespace Engine.State_Machines
                 //Update the State Behaviour
                 StateBehaviour[ActiveState].Update(Holder);
 
-            if (StateAnimation.ContainsKey(ActiveAnimation))
+            if (!StateAnimation.ContainsKey(ActiveAnimation))
             {
                 //Update the Animation
-                StateAnimation[ActiveAnimation].Animate();
+                StateAnimation[ActiveAnimation].Animate(gameTime);
             }
         }
-
         /// <summary>
-        /// Calls the Update method from the Animation State
+        /// Calls the Animate Method from the Animation States
         /// </summary>
-        /// <param name="sprite"></param>
-        public void UpdateAnimation(SpriteBatch sprite)
+        /// <param name="gameTime"></param>
+        public void UpdateAnimation(GameTime gameTime)
         {
             //Look to see whether or not the state behaviour should be changed
             CheckMethodTransition();
             //Updat the Animation
-            StateAnimation[ActiveAnimation].Animate();
+            if (!StateAnimation.ContainsKey(ActiveAnimation))
+                throw new Exception("There is no Animation to draw in the State Machine");
+
+            StateAnimation[ActiveAnimation].Animate(gameTime);
 
         }
-
-        public void DrawAnimation(SpriteBatch sprite )
+        /// <summary>
+        /// Draws the current Animation State
+        /// </summary>
+        /// <param name="sprite"></param>
+        public void DrawAnimation(SpriteBatch sprite)
         {
+            if (!StateAnimation.ContainsKey(ActiveAnimation))
+                throw new Exception("There is no Animation to draw in the State Machine");
             StateAnimation[ActiveAnimation].DrawAnimation(sprite);
-
         }
-
         /// <summary>
         /// Call the update method for the state behvaiour that ios currently active
         /// </summary>
@@ -347,6 +346,8 @@ namespace Engine.State_Machines
             //Update the State Behaviour
             StateBehaviour[ActiveState].Update(Holder);
         }
+
+        #endregion
 
     }
 }
