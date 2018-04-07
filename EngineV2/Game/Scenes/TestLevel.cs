@@ -23,13 +23,12 @@ namespace ProjectHastings.Scenes
     {
         List<IEntity> Scenegraph = new List<IEntity>();
         List<IBehaviour> Behaviours = new List<IBehaviour>();
-        List<IPhysics> PhysicsEntites = new List<IPhysics>();
 
         //Managers
         IEntityManager entManager;
         IBackGrounds back;
         ICollidable collider;
-        PhysicsManager physicsMgr;
+        IPhysicsManager physicsMgr;
 
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
         ICollisionManager coli = Locator.Instance.getProvider<CollisionManager>() as ICollisionManager;
@@ -108,13 +107,18 @@ namespace ProjectHastings.Scenes
             Scenegraph.AddRange(EntityManager.Entities);
             Behaviours = BehaviourManager.behaviours;
 
+
+
             foreach (var entity in Scenegraph)
             {
+                //If Entity is of Type IPhysics
                 if (entity is IPhysics)
                 {
-                    PhysicsEntites.Add((IPhysics)entity);
+                    //Add Entites to the Physics List in the Physics Manager
+                    physicsMgr.AddToList((IPhysics)entity);
                 }
             }
+
         }
 
         public void UnloadContent()
@@ -124,26 +128,24 @@ namespace ProjectHastings.Scenes
 
         public void update(GameTime gameTime)
         {
+            //Update Input
+            input.Update();
+            //Update COllisions
+            coli.update();
 
-                input.Update();
-                coli.update();
+            //Call the Update method for the physics Manager
+            physicsMgr.Update();
+            //Call the Update method for the Behaviour Manager
+            behaviours.Update();
+
+            //Call the Update method for each entity in the Scengrapgh list
+            foreach (var entity in Scenegraph)
+            {
+                entity.Update(gameTime);
+            }
 
 
-                foreach (var entity in Scenegraph)
-                {
-                    entity.Update(gameTime);
-                }
 
-                foreach (var behaviour in Behaviours)
-                {
-                    behaviour.update();
-                }
-
-                foreach (var physics in PhysicsEntites)
-                {
-                    physics.UpdatePhysics();
-                }
-            
         }
 
 

@@ -9,8 +9,7 @@ namespace Engine.State_Machines
 {
     /// <summary>
     /// State Machines Handle used to store and manage different State classes
-    /// 
-    /// Author : Nathan Robertson & Carl Chalmers
+    /// Author : Nathan Robertson
     /// Date 07/04/18 : Version 0.4
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -22,7 +21,6 @@ namespace Engine.State_Machines
         private readonly IDictionary<string, IState<T>> StateBehaviour;
         //Dictionary to hold the AnimationStates
         private readonly IDictionary<string, IAnimationState> StateAnimation;
-
         //Dictionary to hold the different Transition types
         private readonly IDictionary<string, ITransitionHandler> Transitions;
 
@@ -34,8 +32,6 @@ namespace Engine.State_Machines
         //To Store the entity which this state machine belongs to
         private readonly T Holder;
 
-        //private IAnimation AnimationClass
-        private GameTime gameTime;
 
         #endregion
 
@@ -54,7 +50,6 @@ namespace Engine.State_Machines
             StateBehaviour = new Dictionary<string, IState<T>>();
             Transitions = new Dictionary<string, ITransitionHandler>();
             StateAnimation = new Dictionary<string, IAnimationState>();
-            gameTime = new GameTime();
         }
 
         /// <summary>

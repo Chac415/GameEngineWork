@@ -63,7 +63,7 @@
     <Compile Include="Interfaces\IInputManager.cs" />
     <Compile Include="Interfaces\IListWipe.cs" />
     <Compile Include="Interfaces\IMoveBehaviour.cs" />
-    <Compile Include="Interfaces\IPhysicsMgr.cs" />
+    <Compile Include="Interfaces\IPhysicsManager.cs" />
     <Compile Include="Interfaces\IPhysicsObj.cs" />
     <Compile Include="Interfaces\IProvider.cs" />
     <Compile Include="Interfaces\IRenderable.cs" />

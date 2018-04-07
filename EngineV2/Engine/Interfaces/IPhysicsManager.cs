@@ -6,8 +6,9 @@ using Engine.Physics;
 
 namespace Engine.Interfaces
 {
-    interface IPhysicsMgr
+    public interface IPhysicsManager
     {
-        void Update(IPhysics phys);
+        void AddToList(IPhysics physicsObj);
+        void Update();
     }
 }
