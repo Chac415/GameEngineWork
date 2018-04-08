@@ -1,5 +1,4 @@
 ﻿using Engine.Interfaces;
-using Engine.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

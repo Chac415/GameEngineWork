@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using Engine.Collision_Management;
-using Engine.Input_Managment;
+using Engine.Collision_Manager;
 using Engine.Interfaces;
-using Engine.Managers;
 using Engine.Physics;
 using Engine.Service_Locator;
 using Microsoft.Xna.Framework;
@@ -19,8 +17,6 @@ namespace ProjectHastings.Entities.Interactive
         public string tag = "LeverTarget";
 
         //COLLISIONS
-        private IEntity collisionObj;
-        private IEntity collision;
 
 
         //PHYSICS
@@ -29,41 +25,14 @@ namespace ProjectHastings.Entities.Interactive
         //LISTS
         private List<IEntity> physicsObjs;
 
-        ICollisionManager coli = Locator.Instance.getProvider<CollisionManager>() as ICollisionManager;
 
         /// <summary>
         /// Initialise the Variables specific to this object
         /// </summary>
         public override void UniqueData()
         {
-            _Collisions.isEnvironmentCollidable(this);
             //physicsObjs = _PhysicsObj.getPhysicsList();
-            coli.subscribe(onCollision);
 
-        }
-
-        /// <summary>
-        /// Send Event to collision Event Manager
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="data"></param>
-        public virtual void onCollision(object source, CollisionEventData data)
-        {
-
-            bool onTerrain = false;
-
-            collision = data.objectCollider;
-
-            for (int i = 0; i < physicsObjs.Count; i++)
-            {
-                if (Hitbox.Intersects(physicsObjs[i].Hitbox))
-                {
-                    //physicsObjs[i].setGrav(false); 
-
-                }
-
-
-            }
         }
 
         /// <summary>

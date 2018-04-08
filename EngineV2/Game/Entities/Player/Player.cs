@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Engine.Collision_Manager;
 using Engine.Input_Managment;
 using Engine.Interfaces;
 using Engine.Managers;
@@ -6,7 +7,7 @@ using Engine.Service_Locator;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using ProjectHastings.Animations;
+using ProjectHastings.Behaviours.Player_Behaviours;
 
 namespace ProjectHastings.Entities.Player
 {
@@ -18,7 +19,7 @@ namespace ProjectHastings.Entities.Player
     /// Version 0.5
     /// 
     /// </summary>
-    public class Player : GamePhysicsEntity
+    public class Player : GamePhysicsEntity, ICollidable
     {
         #region Properties
         //Animation Variable
@@ -60,10 +61,8 @@ namespace ProjectHastings.Entities.Player
         {
             Tag = "Player";
             speed = 3;
-            ani = new PlayerAnimation();
-            ani.Initialize(this, 3, 3);
-            CollidableObjs();
-            // _BehaviourManager.createMind<PlayerMind>(this);
+            _BehaviourManager.createMind<PlayerMind>(this);
+
 
             // CollisionManager.GetColliderInstance.subscribe(onCollision);
             input.AddKeyListener(OnNewKeyInput);
@@ -106,87 +105,6 @@ namespace ProjectHastings.Entities.Player
             }
         }
 
-        #region Collision Management
-        /// <summary>
-        /// Gets the lists for the collidable Objecs
-        /// </summary>
-        public override void CollidableObjs()
-        {
-            //   collisionObjs = _Collisions.getCollidableList();
-            //   interactiveObjs = _Collisions.getInteractiveObj();
-            //   environment = _Collisions.getEnvironment();
-        }
-        /// <summary>
-        /// Send Event to collision Event Manager
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="data"></param>
-        //public virtual void onCollision(object source, CollisionEventData data)
-        //{
-        //    collision = data.objectCollider;
-
-        //    //gravity = true;
-        //    canClimb = false;
-
-        //    #region Map corners 
-        //    if (Hitbox.X <= 0)
-        //    { Position += new Vector2(3, 0); }
-
-        //    if (Hitbox.X >= 875)
-        //    { Position += new Vector2(-3,0); }
-
-        //    if (Hitbox.Y <= 0)
-        //    { Position += new Vector2(0, ySpeed);}
-
-        //    if (Hitbox.Y >= 559)
-        //    {
-        //        canJump = true;
-        //    }
-        #endregion
-
-        #region Enemy collisions
-        //    //for (int i = 0; i < collisionObjs.Count; i++)
-        //    //{
-        //    //    if (Hitbox.Intersects(collisionObjs[i].Hitbox) && collisionObjs[i].Tag == "Thug")
-        //    //    {
-        //    //        EntityManager.Entities.Clear();
-        //    //        BehaviourManager.behaviours.Clear();
-        //    //        SceneManager.LoseScreen = true;
-        //    //    }
-        //    //}
-        #endregion
-
-        //    #region Interactive Obj collisions
-        //    for (int i = 0; i < interactiveObjs.Count; i++)
-        //    {
-        //        if (Hitbox.Intersects(interactiveObjs[i].Hitbox) && interactiveObjs[i].Tag == "Crate")
-        //        { }
-
-        //        if (Hitbox.Intersects(interactiveObjs[i].Hitbox) && interactiveObjs[i].Tag == "Ladder")
-        //        {
-        //            ySpeed = 2;
-        //            canClimb = true;
-        //        }
-
-        //        if (Hitbox.Intersects(interactiveObjs[i].Hitbox))
-        //        {
-        //            //gravity = false;
-        //            canClimb = false;
-        //        }
-        //    }
-
-        //    for (int i = 0; i < environment.Count; i++)
-        //    {
-        //        if (Hitbox.Intersects(environment[i].Hitbox))
-        //        {
-        //            canJump = true;
-        //        }
-        //        else if (!Hitbox.Intersects(environment[i].Hitbox))
-        //        {
-        //        }
-        //    }
-
-        //}
 
         #region Behaviours
         /// <summary>
@@ -222,7 +140,7 @@ namespace ProjectHastings.Entities.Player
         /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            ani.Draw(spriteBatch);
+            spriteBatch.Draw(Texture, Position, Color.AntiqueWhite);
         }
         /// <summary>
         /// Called Every Frame
@@ -230,13 +148,8 @@ namespace ProjectHastings.Entities.Player
         /// <param name="game"></param>
         public override void Update(GameTime game)
         {
-            Hitbox = new Rectangle((int)Position.X, (int)Position.Y, PlayerAnimation._width, PlayerAnimation._height);
-
-            if (Animate == true)
-            {
-                ani.Update(game);
-            }
-            Animate = false;
+            Hitbox = new Rectangle((int)Position.X - 25, (int)Position.Y - 25, Texture.Width/2, Texture.Height/2);
+            SetPoints();
         }
 
         #region get/sets

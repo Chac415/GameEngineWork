@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Engine.Collision_Management;
+using Engine.Collision_Manager;
 using Engine.Interfaces;
 using Engine.Service_Locator;
 using Microsoft.Xna.Framework;
@@ -22,43 +22,13 @@ namespace ProjectHastings.Entities.Environment
         //LISTS
         private List<IEntity> physicsObjs;
 
-        ICollisionManager coli = Locator.Instance.getProvider<CollisionManager>() as ICollisionManager;
-
         /// <summary>
         /// Initialise the Variables specific to this object
         /// </summary>
         public override void UniqueData()
         {
             Tag = "triggerWall";
-            coli.subscribe(onCollision);
             // physicsObjs = _PhysicsObj.getPhysicsList();
-            _Collisions.isEnvironmentCollidable(this);
-        }
-
-        /// <summary>
-        /// Send Event to collision Event Manager
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="data"></param>
-        public virtual void onCollision(object source, CollisionEventData data)
-        {
-
-            bool onTerrain = false;
-
-            collision = data.objectCollider;
-
-            //for (int i = 0; i < physicsObjs.Count; i++)
-            //{
-            //    //if (Hitbox.Intersects(physicsObjs[i].Hitbox))
-            //    //{ physicsObjs[i].setXPos(physicsObjs[i].getPos().X - 3); }
-            //    if (Hitbox.Intersects(physicsObjs[i].Hitbox))
-            //    {
-            //        //if (physicsObjs[i].Position.X < Hitbox.Width)
-            //        //{ physicsObjs[i].Position.X = physicsObjs[i].getPos().X - 3; }
-            //        //if (physicsObjs[i].Position.X > Hitbox.Width/2)
-            //        //{ physicsObjs[i].Position.X = physicsObjs[i].Position.X - 3; }
-            //    }
-            //}
         }
 
         /// <summary>

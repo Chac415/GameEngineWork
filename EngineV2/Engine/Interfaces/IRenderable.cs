@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine.Interfaces
 {
     public interface IRenderable
     {
-        void Draw(IScene scene, SpriteBatch sprite);
+        void Draw(IList<IScene> scene, SpriteBatch sprite);
     }
 }

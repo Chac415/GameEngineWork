@@ -21,10 +21,10 @@ namespace ProjectHastings.Scenes
 
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
 
-        public GameOver()
+        public GameOver(int ScreenWidth, int ScreenHeight)
         {
 
-            back = new BackGrounds(900, 600);
+            back = new BackGrounds(ScreenWidth, ScreenHeight);
             ExitBut = new ExitButton();
         }
 

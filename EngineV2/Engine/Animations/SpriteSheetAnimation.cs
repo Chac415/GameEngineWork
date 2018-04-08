@@ -1,8 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Engine.Interfaces;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine.Animations
 {

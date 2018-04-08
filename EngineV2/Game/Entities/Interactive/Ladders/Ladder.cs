@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using Engine.Collision_Management;
+﻿using Engine.Collision_Manager;
 using Engine.Input_Managment;
 using Engine.Interfaces;
-using Engine.Managers;
 using Engine.Service_Locator;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -26,12 +24,8 @@ namespace ProjectHastings.Entities.Interactive.Ladders
         private KeyboardState keyState;
 
         //Collision Management Variables
-        private IEntity collisionObj;
-        private ICollidable colliders;
-        private List<IEntity> playerObj;
 
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
-        ICollisionManager coli = Locator.Instance.getProvider<CollisionManager>() as ICollisionManager;
 
         #endregion
 
@@ -40,38 +34,6 @@ namespace ProjectHastings.Entities.Interactive.Ladders
         /// </summary>
         public override void UniqueData()
         {
-            coli.subscribe(onCollision);
-            _Collisions.isInteractiveCollidable(this);
-            CollidableObjs();
-        }
-
-        /// <summary>
-        /// Get the player Object list
-        /// </summary>
-        public override void CollidableObjs()
-        {
-            playerObj = _Collisions.getPlayableObj();
-        }
-
-        /// <summary>
-        /// Call collision Evem
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="data"></param>
-        public virtual void onCollision(object source, CollisionEventData data)
-        {
-            collisionObj = data.objectCollider;
-
-            for (int i = 0; i < playerObj.Count; i++)
-            {
-                if (Hitbox.Intersects(playerObj[i].Hitbox) && playerObj[i].Tag == "Player")
-                {
-                    Player.Player.canClimb = true;
-                }
-
-                Player.Player.canClimb = false;
-            }
-
 
         }
 

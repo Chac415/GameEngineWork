@@ -17,10 +17,10 @@ namespace ProjectHastings.Scenes
         Point mousePosition;
 
 
-        public WinGame()
+        public WinGame(int ScreenWidth, int ScreenHeight)
         {
 
-            back = new BackGrounds(900, 600);
+            back = new BackGrounds(ScreenWidth, ScreenHeight);
             ExitBut = new ExitButton();
         }
 

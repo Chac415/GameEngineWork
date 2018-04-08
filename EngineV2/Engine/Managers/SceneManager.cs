@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Engine.Interfaces;
 using Engine.Render;
-using Engine.Service_Locator;
 
 namespace Engine.Managers
 {
@@ -62,8 +60,9 @@ namespace Engine.Managers
             foreach (IScene screen in scene)
             {
                 screen.update(gameTime);
-                render.Draw(screen, sprt);
+                
             }
+            render.Draw(scene, sprt);
 
             base.Update(gameTime);
 

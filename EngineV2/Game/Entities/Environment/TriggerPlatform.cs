@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Engine.Collision_Management;
+using Engine.Collision_Manager;
 using Engine.Interfaces;
 using Engine.Service_Locator;
 using Microsoft.Xna.Framework;
@@ -19,7 +19,6 @@ namespace ProjectHastings.Entities.Environment
         private IEntity collisionObj;
         private IEntity collision;
 
-        ICollisionManager coli = Locator.Instance.getProvider<CollisionManager>() as ICollisionManager;
 
         //LISTS
         private List<IEntity> physicsObjs;
@@ -30,9 +29,8 @@ namespace ProjectHastings.Entities.Environment
         public override void UniqueData()
         {
             Tag = "leverObj";
-            coli.subscribe(onCollision);
             //physicsObjs = _PhysicsObj.getPhysicsList();
-            _Collisions.isEnvironmentCollidable(this);
+            
         }
 
         #region behaviours
@@ -42,27 +40,6 @@ namespace ProjectHastings.Entities.Environment
                 Position += new Vector2(0, 1);
         }
         #endregion
-
-        /// <summary>
-        /// Send Event to collision Event Manager
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="data"></param>
-        public virtual void onCollision(object source, CollisionEventData data)
-        {
-
-            bool onTerrain = false;
-
-            collision = data.objectCollider;
-
-            //for (int i = 0; i < physicsObjs.Count; i++)
-            //{
-            //    //if (Hitbox.Intersects(physicsObjs[i].Hitbox))
-            //    //{
-            //    //    physicsObjs[i].setGrav(false);
-            //    //}
-            //}
-        }
 
         /// <summary>
         /// Draws the entty based on the texture and position obtained from the animation class
