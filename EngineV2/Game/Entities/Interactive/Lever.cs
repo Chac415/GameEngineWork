@@ -85,13 +85,5 @@ namespace ProjectHastings.Entities.Interactive
 
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
-
-
-        #region GET/SETS
-        public override void setRow(int rows)
-        {
-            row = rows;
-        }
-        #endregion
     }
 }

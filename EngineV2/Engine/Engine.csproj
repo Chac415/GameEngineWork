@@ -67,6 +67,8 @@
     <Compile Include="Interfaces\IPhysicsObj.cs" />
     <Compile Include="Interfaces\IProvider.cs" />
     <Compile Include="Interfaces\IRenderable.cs" />
+    <Compile Include="Interfaces\IQuad.cs" />
+    <Compile Include="Interfaces\ISAT.cs" />
     <Compile Include="Interfaces\IScene.cs" />
     <Compile Include="Interfaces\ISceneManager.cs" />
     <Compile Include="Interfaces\ISoundManager.cs" />

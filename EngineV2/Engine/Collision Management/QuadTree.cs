@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Engine.Collision_Manager
 
 {
-    public class QuadTree
+    public class QuadTree : IQuad
     {
         int maxObjects = 2;
         int maxLevels = 4;

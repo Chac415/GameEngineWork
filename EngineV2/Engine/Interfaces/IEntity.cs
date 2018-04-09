@@ -25,9 +25,5 @@ namespace Engine.Interfaces
         List<Vector2> Edges();
         Vector2 Center();
 
-        //Animations 
-        void setRow(int row);
-        int getRows();
-
     }
 }

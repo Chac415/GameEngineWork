@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Engine.Interfaces;
+using Engine.Physics;
+using Engine.State_Machines;
 
 namespace Engine.Managers
 {
@@ -19,10 +21,7 @@ namespace Engine.Managers
         /// </summary>
         public void Update()
         {
-            foreach (IBehaviour ent in behaviours)
-            {
-                ent.update();
-            }
+
         }
 
         /// <summary>

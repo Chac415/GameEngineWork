@@ -5,10 +5,10 @@ using Microsoft.Xna.Framework;
 
 namespace Engine.Collision_Manager
 {
-    public class SAT_CLass
+    public class SAT_CLass : ISAT
     {
-        public bool Intersect;
-        public Vector2 MTV;
+        public bool Intersect { get; set; }
+        public Vector2 MTV { get; set; }
         public Vector2 ClosingVelo;
         public Vector2 CNormal;
 

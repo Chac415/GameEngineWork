@@ -11,8 +11,8 @@ namespace Engine.Collision_Manager
     public class CollisionManager : ICollisionManager, IProvider
 
     {
-    QuadTree Quad; //Create Variable for the quad Tree class
-    SAT_CLass SAT; //Create Varaible for the SAT class
+    IQuad Quad; //Create Variable for the quad Tree class
+    ISAT SAT; //Create Varaible for the SAT class
 
 
     List<IEntity> CollidableObjects { get; set; } //List of IAsset of all Objects that have colliders

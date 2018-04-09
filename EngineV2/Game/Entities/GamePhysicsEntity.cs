@@ -99,17 +99,8 @@ namespace ProjectHastings.Entities
         }
 
         #region get/sets
-        public override int getRows()
-        {
-            return row;
-        }
 
         public override float Direction { get; set; }
-
-        public override void setRow(int rows)
-        {
-            row = rows;
-        }
 
         public override List<Vector2> Point()
         {

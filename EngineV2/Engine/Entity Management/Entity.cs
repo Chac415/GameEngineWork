@@ -18,8 +18,6 @@ namespace Engine.Entity_Management
         public abstract void UniqueData();
 
         //Animations
-        public abstract int getRows();
-        public abstract void setRow(int row);
         public abstract float Direction { get; set; }
         public abstract List<Vector2> Point();
         public abstract List<Vector2> Edges();

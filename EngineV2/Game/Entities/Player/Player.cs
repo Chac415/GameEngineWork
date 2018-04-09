@@ -1,9 +1,14 @@
 ﻿using System.Collections.Generic;
+using Engine.Animations;
 using Engine.Collision_Manager;
 using Engine.Input_Managment;
 using Engine.Interfaces;
 using Engine.Managers;
+using Engine.Physics;
 using Engine.Service_Locator;
+using Engine.State_Machines;
+using Engine.State_Machines.Animations;
+using Engine.State_Machines.Test_States;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -22,11 +27,6 @@ namespace ProjectHastings.Entities.Player
     public class Player : GamePhysicsEntity, ICollidable
     {
         #region Properties
-        //Animation Variable
-        public IAnimations ani;
-        public new static int row = 1;
-        public static bool Animate = false;
-
 
         //Movement
         public static bool canClimb = false;
@@ -41,6 +41,7 @@ namespace ProjectHastings.Entities.Player
 
         //Input Management
         private KeyboardState keyState;
+        private IAnimation SpriteSheet;
 
         //Collision Lists
         private List<IEntity> collisionObjs;
@@ -48,7 +49,7 @@ namespace ProjectHastings.Entities.Player
         private List<IEntity> environment;
 
         private IEntity collision;
-
+        IStateMachine<IPhysics> stateMachine;
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
 
@@ -59,9 +60,17 @@ namespace ProjectHastings.Entities.Player
         /// </summary>
         public override void UniqueData()
         {
+            //Initialise the spriteSheet animation
+            SpriteSheet = new SpriteSheetAnimation(Texture);
             Tag = "Player";
             speed = 3;
+            //stateMachine = new StateMachine<IPhysics>(this);
+            //stateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 2, 2f), new MoveLeft<IPhysics>(), "left" );
+            //stateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 1, 2f), new MoveRight<IPhysics>(), "right" );
+
+
             _BehaviourManager.createMind<PlayerMind>(this);
+            
 
 
             // CollisionManager.GetColliderInstance.subscribe(onCollision);
@@ -140,6 +149,7 @@ namespace ProjectHastings.Entities.Player
         /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
         {
+            //stateMachine.DrawAnimation(spriteBatch);
             spriteBatch.Draw(Texture, Position, Color.AntiqueWhite);
         }
         /// <summary>
@@ -149,21 +159,10 @@ namespace ProjectHastings.Entities.Player
         public override void Update(GameTime game)
         {
             Hitbox = new Rectangle((int)Position.X - 25, (int)Position.Y - 25, Texture.Width/2, Texture.Height/2);
+            //stateMachine.UpdateBehaviour();
             SetPoints();
+            //stateMachine.UpdateAnimation(game);
         }
-
-        #region get/sets
-        public override int getRows()
-        {
-            return row;
-        }
-        public override void setRow(int rows)
-        {
-            row = rows;
-        }
-
-        #endregion
-
 
     }
 

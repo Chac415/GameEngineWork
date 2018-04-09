@@ -133,8 +133,7 @@ namespace ProjectHastings.Scenes
         {
             //Update Input
             input.Update();
-            //Update COllisions
-            coli.Update();
+
 
             //Call the Update method for the physics Manager
             physicsMgr.Update();
@@ -147,6 +146,8 @@ namespace ProjectHastings.Scenes
                 entity.Update(gameTime);
             }
 
+            //Update COllisions
+            coli.Update();
 
 
         }
