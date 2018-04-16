@@ -212,3 +212,6 @@ C:\Users\chac4_15\Documents\GitHub\GameEngineWork\EngineV2\Game\bin\WindowsGL\De
 C:\Users\chac4_15\Documents\GitHub\GameEngineWork\EngineV2\Game\bin\WindowsGL\Debug\MonoGame.Framework.dll
 C:\Users\chac4_15\Documents\GitHub\GameEngineWork\EngineV2\Game\bin\WindowsGL\Debug\OpenTK.dll
 C:\Users\chac4_15\Documents\GitHub\GameEngineWork\EngineV2\Game\bin\WindowsGL\Debug\Engine.pdb
+C:\Users\Robn1_15\Documents\GitHub\GameEngineWork\EngineV2\Game\bin\WindowsGL\Debug\ProjectHastings.exe.config
+C:\Users\Robn1_15\Documents\GitHub\GameEngineWork\EngineV2\Game\obj\x86\Debug\ProjectHastings.exe
+C:\Users\Robn1_15\Documents\GitHub\GameEngineWork\EngineV2\Game\obj\x86\Debug\ProjectHastings.pdb

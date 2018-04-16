@@ -72,6 +72,7 @@
     <Compile Include="Interfaces\IScene.cs" />
     <Compile Include="Interfaces\ISceneManager.cs" />
     <Compile Include="Interfaces\ISoundManager.cs" />
+    <Compile Include="Kernel.cs" />
     <Compile Include="Managers\BehaviourManager.cs" />
     <Compile Include="Managers\EntityManager.cs" />
     <Compile Include="Managers\PhysicsManager.cs" />

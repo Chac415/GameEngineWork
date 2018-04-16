@@ -14,7 +14,7 @@ namespace ProjectHastings
         [STAThread]
         static void Main()
         {
-            using (var game = new Kernel())
+            using (var game = new GameBase())
                 game.Run();
         }
     }

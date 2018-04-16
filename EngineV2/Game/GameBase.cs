@@ -8,7 +8,7 @@ namespace ProjectHastings
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Kernel : Game
+    public class GameBase : Game
     {
         #region Instance Variables
         //Constants
@@ -28,7 +28,7 @@ namespace ProjectHastings
         #endregion
 
 
-        public Kernel()
+        public GameBase()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
