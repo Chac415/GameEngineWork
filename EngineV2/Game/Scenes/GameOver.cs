@@ -46,7 +46,7 @@ namespace ProjectHastings.Scenes
             mouseinput = Mouse.GetState();
             mousePosition = new Point(mouseinput.X, mouseinput.Y);
 
-            sound.Playsnd("MyHeartWillGoOn", 1.0f);
+            sound.Playsnd("MyHeartWillGoOn", 1.0f, true);
 
             if (ExitBut.HitBox.Contains(mousePosition) && mouseinput.LeftButton == ButtonState.Pressed)
             {

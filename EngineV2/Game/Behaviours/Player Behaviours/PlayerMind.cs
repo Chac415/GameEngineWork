@@ -55,14 +55,14 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
             {
                 speed = -2.5f;
                 body.Position += new Vector2(0,speed);
-                sound.Playsnd("Ladder", 0.3f);
+                sound.Playsnd("Ladder", 0.3f, true);
 
             }
             if (/*Player.canClimb &&*/ keyState.IsKeyDown(Keys.S) || /*Player.canClimb &&*/ keyState.IsKeyDown(Keys.Down))
             {
                 speed = 2.5f;
                 body.Position += new Vector2(0, speed);
-                sound.Playsnd("Ladder", 0.3f);
+                sound.Playsnd("Ladder", 0.3f, true);
             }
         }
 

@@ -6,7 +6,7 @@ namespace Engine.Interfaces
     {
         void Initialize(string soundname, SoundEffect snd);
         void CreateInstance();
-        void Playsnd(string soundName, float Volume);
+        void Playsnd(string soundName, float Volume, bool loop);
         void Stopsnd(string soundName);
         
     }

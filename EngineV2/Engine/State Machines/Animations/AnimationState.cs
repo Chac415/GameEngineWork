@@ -19,11 +19,10 @@ namespace Engine.State_Machines.Animations
         public float AnimationSpeed { get; private set; }
 
 
-        private Rectangle sourceRectangle, destinationRectangle;
+        private Rectangle sourceRectangle;
 
 
         private float timeSinceLastFrame = 0f;
-        private float millisecondsPerFrame = 100;
 
         //Animation Variables
         public IAnimation SpriteSheet { get; private set; }

@@ -57,7 +57,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Behaviours\Player Behaviours\IPlayerBehaviour.cs" />
-    <Compile Include="Behaviours\Player Behaviours\PlayerController.cs" />
     <Compile Include="Behaviours\Player Behaviours\PlayerMind.cs" />
     <Compile Include="Buttons\ExitButton.cs" />
     <Compile Include="Buttons\StartButton.cs" />

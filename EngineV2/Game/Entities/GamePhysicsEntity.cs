@@ -60,11 +60,11 @@ namespace ProjectHastings.Entities
             //Top Left
             _point1 = new Vector2(Position.X, Position.Y);
             //Top Right
-            _point2 = new Vector2((Position.X + Texture.Width), Position.Y);
+            _point2 = new Vector2((Position.X + Texture.Width/3), Position.Y);
             //Bottom Right
-            _point3 = new Vector2((Position.X + Texture.Width), (Position.Y + Texture.Height));
+            _point3 = new Vector2((Position.X + Texture.Width/3), (Position.Y + Texture.Height/3));
             //Bottom Left
-            _point4 = new Vector2(Position.X, (Position.Y + Texture.Height));
+            _point4 = new Vector2(Position.X, (Position.Y + Texture.Height/3));
 
 
             Points.Add(_point1);

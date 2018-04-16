@@ -18,16 +18,18 @@ namespace Engine.Collision_Manager
     List<IEntity> CollidableObjects { get; set; } //List of IAsset of all Objects that have colliders
     List<IEntity> WillCollide { get; set; } //List of IAsset for each of the entities that can colide with each other
 
+
+
     /// <summary>
     /// Contructor
     /// </summary>
     /// <param name="quad"></param>
     /// <param name="sat"></param>
-    public CollisionManager(int scnWidth, int scnHeight)
+    public CollisionManager(IQuad quad)
     {
         CollidableObjects = new List<IEntity>(); //Initialise CollidableObjects List
         WillCollide = new List<IEntity>(); //Initialise WillCollide List
-        Quad = new QuadTree(0, new Rectangle(0, 0, scnWidth, scnHeight));
+        Quad = quad;
         SAT = new SAT_CLass(); //Initialise new SAT class
     }
 

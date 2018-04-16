@@ -29,6 +29,18 @@ namespace Engine.Collision_Manager
             YMidpoint = bounds.Y + (bounds.Height / 2);   //Determines he center point of the bounds y value
         }
 
+        public QuadTree(int maxEntities, int maxLevels, Rectangle Bounds)
+        {
+            maxObjects = maxEntities;
+            this.maxLevels = maxLevels;
+
+            objects = new List<IEntity>();
+            nodes = new QuadTree[4];
+
+            XMidpoint = bounds.X + (bounds.Width / 2);    //Determines he center point of the bounds X value
+            YMidpoint = bounds.Y + (bounds.Height / 2);   //Determines he center point of the bounds y value
+        }
+
         /// <summary>
         /// Clear the Objects Lists from each and every Node
         /// </summary>
@@ -67,7 +79,7 @@ namespace Engine.Collision_Manager
             nodes[2] = new QuadTree(level + 1, new Rectangle(subNodeX + subNodeWidth, subNodeY, subNodeWidth, subNodeHeight));
             //Create New Node in Bottom Right
             nodes[3] = new QuadTree(level + 1, new Rectangle(subNodeX + subNodeWidth, subNodeY + subNodeHeight, subNodeWidth, subNodeHeight));
-        }
+        }   
 
         /// <summary>
         /// Stores the Entity into the Nodes

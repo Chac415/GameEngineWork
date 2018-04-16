@@ -8,7 +8,6 @@ namespace ProjectHastings.Behaviours
     public class EnemyMind
 
     {
-    private IMoveBehaviour move;
     private IPhysics body;
 
     public EnemyMind(IPhysics ent, IStateMachine<IPhysics> stateMachine)

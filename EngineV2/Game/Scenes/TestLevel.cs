@@ -42,7 +42,7 @@ namespace ProjectHastings.Scenes
 
             physicsMgr = new PhysicsManager();
 
-            coli = new CollisionManager(ScreenWidth, ScreenHeight);
+            coli = new CollisionManager(new QuadTree(2, 4, new Rectangle(0, 0, ScreenWidth, ScreenHeight)));
 
             #endregion
 

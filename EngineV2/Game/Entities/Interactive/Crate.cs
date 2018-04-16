@@ -56,12 +56,12 @@ namespace ProjectHastings.Entities.Interactive
                 if (crateContact && keyState.IsKeyDown(Keys.D) || moveObject && keyState.IsKeyDown(Keys.Right))
                 {
                     Position += new Vector2(3, 0);
-                    sound.Playsnd("Crate", 0.2f);
+                    sound.Playsnd("Crate", 0.2f, true);
                 }
                 if (crateContact && keyState.IsKeyDown(Keys.A) || moveObject && keyState.IsKeyDown(Keys.Left))
                 {
                     Position += new Vector2(-3, 0);
-                    sound.Playsnd("Crate", 0.2f);
+                    sound.Playsnd("Crate", 0.2f, true);
                 }
 
             }
