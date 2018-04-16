@@ -1,5 +1,4 @@
-﻿using Engine.Entity_Management;
-using Engine.Physics;
+﻿using Engine.Physics;
 using Microsoft.Xna.Framework;
 
 namespace Engine.Entity_Management

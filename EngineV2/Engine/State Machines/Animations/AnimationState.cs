@@ -19,11 +19,10 @@ namespace Engine.State_Machines.Animations
         public float AnimationSpeed { get; private set; }
 
 
-        private Rectangle sourceRectangle, destinationRectangle;
+        private Rectangle sourceRectangle;
 
 
         private float timeSinceLastFrame = 0f;
-        private float millisecondsPerFrame = 100;
 
         //Animation Variables
         public IAnimation SpriteSheet { get; private set; }
@@ -116,9 +115,6 @@ namespace Engine.State_Machines.Animations
                 //Create a new rectangle and assign it to the sourceRectangle variable.
                 //The rectangle will hold all the information it need to create a rectangle around the image on the spritesheet.
                 sourceRectangle = new Rectangle(Width * column, Height * TargetRow, Width, Height);
-                //Create a new rectangle and assign it to the destinationRectangle variable.
-                //The rectangle will hold all the information it needs for where the animations is going to be created.
-                destinationRectangle = new Rectangle((int)Entity.Position.X, (int)Entity.Position.Y, Width, Height);
                
                 //Call the Draw method from the spritebatch method and assign it the correct parameters need to draw the animations.
                 spriteBatch.Draw(Entity.Texture, Entity.Position, sourceRectangle, Color.White);

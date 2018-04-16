@@ -24,10 +24,10 @@ namespace ProjectHastings.Scenes
 
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
 
-        public MainMenu()
+        public MainMenu(int ScreenWidth, int ScreenHeight)
         {
             
-            back = new BackGrounds(900, 600);
+            back = new BackGrounds(ScreenWidth, ScreenHeight);
             StartBut = new StartButton();
             ExitBut = new ExitButton();
             buttonlist = new ButtonList();

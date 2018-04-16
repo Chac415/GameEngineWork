@@ -1,4 +1,5 @@
-﻿using Engine.Entity_Management;
+﻿using System.Collections.Generic;
+using Engine.Entity_Management;
 using Engine.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,27 +23,29 @@ namespace ProjectHastings.Entities
         public bool onTerrain;
         public float speed;
 
+        protected List<Vector2> Points = new List<Vector2>();
+        protected List<Vector2> edges = new List<Vector2>();
+        protected Vector2 _point1;
+        protected Vector2 _point2;
+        protected Vector2 _point3;
+        protected Vector2 _point4;
+
         //References to the Managers
         public IBehaviourManager _BehaviourManager;
-        public ICollidable _Collisions;
 
 
-        public override void Initialize(Texture2D tex, Vector2 posn, ICollidable _collider, IBehaviourManager behaviours)
+        public override void Initialize(Texture2D tex, Vector2 posn, IBehaviourManager behaviours)
         {
             GravityBool = false;
             Position = posn;
             Texture = tex;
-            _Collisions = _collider;
             _BehaviourManager = behaviours;
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
             UniqueData();
         }   //Initialises the objects, catching references to the managers
         public override void UniqueData()
         {
-            CollidableObjs();
         }                    // Used to apply the specific variables such as animations onto the entity
-        public override void CollidableObjs()
-        { }                //Used to get the Lists for the collidable Objects
         public virtual void Move()
         {
             Position += new Vector2(4,0);
@@ -50,19 +53,75 @@ namespace ProjectHastings.Entities
         public override void Update(GameTime game)
         {
             Move();
-        }           //Update method, called every fram
+        }           //Update method, called every frame
+        public override void SetPoints()
+        {
+            Points.Clear();
+            //Top Left
+            _point1 = new Vector2(Position.X, Position.Y);
+            //Top Right
+            _point2 = new Vector2((Position.X + Texture.Width/3), Position.Y);
+            //Bottom Right
+            _point3 = new Vector2((Position.X + Texture.Width/3), (Position.Y + Texture.Height/3));
+            //Bottom Left
+            _point4 = new Vector2(Position.X, (Position.Y + Texture.Height/3));
+
+
+            Points.Add(_point1);
+            Points.Add(_point2);
+            Points.Add(_point3);
+            Points.Add(_point4);
+
+            BuildEdges();
+        }
+        public override void BuildEdges()
+        {
+            Vector2 p1;
+            Vector2 p2;
+            edges.Clear();
+            for (int i = 0; i < Points.Count; i++)
+            {
+                p1 = Points[i];
+                if (i + 1 >= Points.Count)
+                {
+                    p2 = Points[0];
+                }
+                else
+                {
+                    p2 = Points[i + 1];
+                }
+                edges.Add(p2 - p1);
+            }
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Texture, Position, Color.AntiqueWhite);
+        }
 
         #region get/sets
-        public override int getRows()
-        {
-            return row;
-        }
 
         public override float Direction { get; set; }
 
-        public override void setRow(int rows)
+        public override List<Vector2> Point()
         {
-            row = rows;
+            return Points;
+        }
+
+        public override List<Vector2> Edges()
+        {
+            return edges;
+        }
+
+        public override Vector2 Center()
+        {
+            float totalX = 0;
+            float totalY = 0;
+            for (int i = 0; i < Points.Count; i++)
+            {
+                totalX += Points[i].X;
+                totalY += Points[i].Y;
+            }
+            return new Vector2(totalX / Points.Count, totalY / Points.Count);
         }
         #endregion
     }

@@ -56,10 +56,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Animations\PlayerAnimation.cs" />
-    <Compile Include="Animations\ThugAnimation.cs" />
     <Compile Include="Behaviours\Player Behaviours\IPlayerBehaviour.cs" />
-    <Compile Include="Behaviours\Player Behaviours\PlayerController.cs" />
     <Compile Include="Behaviours\Player Behaviours\PlayerMind.cs" />
     <Compile Include="Buttons\ExitButton.cs" />
     <Compile Include="Buttons\StartButton.cs" />

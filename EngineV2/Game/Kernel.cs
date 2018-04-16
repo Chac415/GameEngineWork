@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using Engine.Input_Managment;
-using Engine.Interfaces;
+﻿using Engine.Interfaces;
 using Engine.Managers;
-using Engine.Service_Locator;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using ProjectHastings.Scenes;
 
 namespace ProjectHastings
@@ -17,19 +13,13 @@ namespace ProjectHastings
         #region Instance Variables
         //Constants
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
 
         ISceneManager scn;
-        ICollidable collider;
-        IPhysicsObj physicsObj;
 
         IScene TestScene;
         IScene mainmenu;
         IScene Wingame;
         IScene LoseScreen;
-
-        public static Kernel instance;
-
 
         //Screen Size
         int screenWidth = 900;
@@ -57,10 +47,10 @@ namespace ProjectHastings
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            mainmenu = new MainMenu();
-            TestScene = new TestLevel();
-            Wingame = new WinGame();
-            LoseScreen = new GameOver();
+            mainmenu = new MainMenu(screenWidth, screenHeight);
+            TestScene = new TestLevel(screenWidth, screenHeight);
+            Wingame = new WinGame(screenWidth, screenHeight);
+            LoseScreen = new GameOver(screenWidth, screenHeight);
             scn = new SceneManager(this);
 
 

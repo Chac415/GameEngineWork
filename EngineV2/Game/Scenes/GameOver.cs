@@ -21,10 +21,10 @@ namespace ProjectHastings.Scenes
 
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
 
-        public GameOver()
+        public GameOver(int ScreenWidth, int ScreenHeight)
         {
 
-            back = new BackGrounds(900, 600);
+            back = new BackGrounds(ScreenWidth, ScreenHeight);
             ExitBut = new ExitButton();
         }
 
@@ -46,7 +46,7 @@ namespace ProjectHastings.Scenes
             mouseinput = Mouse.GetState();
             mousePosition = new Point(mouseinput.X, mouseinput.Y);
 
-            sound.Playsnd("MyHeartWillGoOn", 1.0f);
+            sound.Playsnd("MyHeartWillGoOn", 1.0f, true);
 
             if (ExitBut.HitBox.Contains(mousePosition) && mouseinput.LeftButton == ButtonState.Pressed)
             {

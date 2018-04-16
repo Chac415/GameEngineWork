@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 using Engine.BackGround;
-using Engine.Collision_Management;
+using Engine.Collision_Manager;
 using Engine.Input_Managment;
 using Engine.Interfaces;
 using Engine.Managers;
@@ -27,15 +26,14 @@ namespace ProjectHastings.Scenes
         //Managers
         IEntityManager entManager;
         IBackGrounds back;
-        ICollidable collider;
         IPhysicsManager physicsMgr;
 
+        ICollisionManager coli;
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
-        ICollisionManager coli = Locator.Instance.getProvider<CollisionManager>() as ICollisionManager;
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
         IBehaviourManager behaviours = Locator.Instance.getProvider<BehaviourManager>() as IBehaviourManager;
 
-        public TestLevel()
+        public TestLevel(int ScreenWidth, int ScreenHeight)
         {
 
             #region Instantiate Managers
@@ -44,11 +42,11 @@ namespace ProjectHastings.Scenes
 
             physicsMgr = new PhysicsManager();
 
-            collider = new CollidableClass();
+            coli = new CollisionManager(new QuadTree(2, 4, new Rectangle(0, 0, ScreenWidth, ScreenHeight)));
 
             #endregion
 
-            back = new BackGrounds(900, 600);
+            back = new BackGrounds(ScreenWidth, ScreenHeight);
 
         }
 
@@ -67,42 +65,42 @@ namespace ProjectHastings.Scenes
             back.Initialize("Background", Content.Load<Texture2D>("BackgroundTex1"));
 
             //Ladders
-            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(200, 110), collider, behaviours);
-            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("LLadderTex"), new Vector2(400, 107), collider, behaviours);
-            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("LLadderTex"), new Vector2(675, 107), collider, behaviours);
+            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(200, 110), behaviours);
+            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("LLadderTex"), new Vector2(400, 107), behaviours);
+            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("LLadderTex"), new Vector2(675, 107),  behaviours);
 
 
             //Door
-            entManager.CreateEnt<Door>(Content.Load<Texture2D>("Door"), new Vector2(850, 555), collider, behaviours);
+            entManager.CreateEnt<Door>(Content.Load<Texture2D>("Door"), new Vector2(850, 555), behaviours);
 
             //Key
-            entManager.CreateEnt<Key>(Content.Load<Texture2D>("Key"), new Vector2(850, -30), collider, behaviours);
+            entManager.CreateEnt<Key>(Content.Load<Texture2D>("Key"), new Vector2(850, -30), behaviours);
 
             //Platforms          
-            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("XLPlatformTex"), new Vector2(0, 595), collider, behaviours);
-            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(695, 475), collider, behaviours);
-            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("XLPlatformTex"), new Vector2(0, 355), collider, behaviours);
-            entManager.CreateEnt<TriggerPlatform>(Content.Load<Texture2D>("XLPlatformTex"), new Vector2(400, -10), collider, behaviours);
-            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(-4, 107), collider, behaviours);
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("XLPlatformTex"), new Vector2(0, 595), behaviours);
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(695, 475), behaviours);
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("XLPlatformTex"), new Vector2(0, 355),  behaviours);
+            entManager.CreateEnt<TriggerPlatform>(Content.Load<Texture2D>("XLPlatformTex"), new Vector2(400, -10),  behaviours);
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(-4, 107),  behaviours);
             //INTERACTIVE OBJECTS
 
             //Crates
-            entManager.CreateEnt<Crate>(Content.Load<Texture2D>("crate"), new Vector2(10, 80), collider, behaviours);
+            entManager.CreateEnt<Crate>(Content.Load<Texture2D>("crate"), new Vector2(10, 80), behaviours);
 
             //Pressure Plates
-            entManager.CreateEnt<PressurePlate>(Content.Load<Texture2D>("PPlateTex"), new Vector2(10, 355), collider, behaviours);
+            entManager.CreateEnt<PressurePlate>(Content.Load<Texture2D>("PPlateTex"), new Vector2(10, 355), behaviours);
 
             //Walls
-            entManager.CreateEnt<TriggerWall>(Content.Load<Texture2D>("Wall"), new Vector2(705, 357), collider, behaviours);
+            entManager.CreateEnt<TriggerWall>(Content.Load<Texture2D>("Wall"), new Vector2(705, 357), behaviours);
 
             //Lever
-            entManager.CreateEnt<Lever>(Content.Load<Texture2D>("Lever"), new Vector2(840, 450), collider, behaviours);
+            entManager.CreateEnt<Lever>(Content.Load<Texture2D>("Lever"), new Vector2(840, 450), behaviours);
 
             //The Player
-            entManager.CreateEnt<Player>(Content.Load<Texture2D>("Chasting"), new Vector2(50, 100), collider, behaviours);
+            entManager.CreateEnt<Player>(Content.Load<Texture2D>("Chasting"), new Vector2(50, 100),  behaviours);
 
             //Enemies
-            entManager.CreateEnt<Thug>(Content.Load<Texture2D>("Thug"), new Vector2(630, 564), collider, behaviours);
+            entManager.CreateEnt<Thug>(Content.Load<Texture2D>("Thug"), new Vector2(630, 564), behaviours);
 
             Scenegraph.AddRange(EntityManager.Entities);
             Behaviours = BehaviourManager.behaviours;
@@ -117,6 +115,11 @@ namespace ProjectHastings.Scenes
                     //Add Entites to the Physics List in the Physics Manager
                     physicsMgr.AddToList((IPhysics)entity);
                 }
+
+                if (entity is ICollidable)
+                {
+                    coli.hasCollisions(entity);
+                }
             }
 
         }
@@ -130,8 +133,7 @@ namespace ProjectHastings.Scenes
         {
             //Update Input
             input.Update();
-            //Update COllisions
-            coli.update();
+
 
             //Call the Update method for the physics Manager
             physicsMgr.Update();
@@ -144,6 +146,8 @@ namespace ProjectHastings.Scenes
                 entity.Update(gameTime);
             }
 
+            //Update COllisions
+            coli.Update();
 
 
         }

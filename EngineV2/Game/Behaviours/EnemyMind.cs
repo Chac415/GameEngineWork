@@ -6,40 +6,38 @@ using Microsoft.Xna.Framework;
 namespace ProjectHastings.Behaviours
 {
     public class EnemyMind
+
     {
-        private IMoveBehaviour move;
-        private IPhysics body;
+    private IPhysics body;
 
-        public EnemyMind(IPhysics Ent, IStateMachine<IPhysics> stateMachine)
-        {
-            var stateMachine1 = stateMachine;
-            body = Ent;
-            //move = new xMoveBehaviour(body);
-            stateMachine1.AddMethodTransition(right, "left", "right");
-            stateMachine1.AddMethodTransition(left, "right", "left");
+    public EnemyMind(IPhysics ent, IStateMachine<IPhysics> stateMachine)
+    {
+        body = ent;
+        stateMachine.AddMethodTransition(right, "left", "right");
+        stateMachine.AddMethodTransition(left, "right", "left");
         }
-
 
         bool left()
+    {
+        if (body.Position.X <= 0)
         {
-            if (body.Position.X <= 0)
-            {
-                body.Position = new Vector2(1, body.Position.Y);
-                return true;
-            }
-            return false;
+            body.Position = new Vector2(1, body.Position.Y);
+            return true;
         }
 
-        bool right()
+        return false;
+    }
+
+    bool right()
+    {
+        if (body.Position.X + 25 >= 850)
         {
-            if (body.Position.X + 25 >= 850)
-            {
-                body.Position = new Vector2(824, body.Position.Y);
-                return true;
-            }
-            return false;
+            body.Position = new Vector2(824, body.Position.Y);
+            return true;
         }
 
+        return false;
+    }
 
     }
 }
