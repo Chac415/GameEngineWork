@@ -1,9 +1,9 @@
-﻿using Engine.Physics;
+﻿using Engine.Interfaces;
 using Microsoft.Xna.Framework;
 
 namespace Engine.State_Machines.Test_States
 {
-    public class MoveRight<T> : IState<T> where T: IPhysics
+    public class MoveRight<T> : IState<T> where T: IEntity
     {
         public bool success { get; }
 

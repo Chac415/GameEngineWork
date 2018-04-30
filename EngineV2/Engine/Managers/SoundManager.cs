@@ -28,7 +28,7 @@ namespace Engine.Managers
 
             foreach (var songName in SoundEffects.ToArray())
             {
-                AudioInstance = SoundEffects[songName.Key].CreateInstance();
+                 AudioInstance = SoundEffects[songName.Key].CreateInstance();
                 InstanceList.Add(songName.Key, AudioInstance);
 
             }

@@ -11,7 +11,14 @@ namespace Engine.Managers
     /// </summary>
    public sealed class PhysicsManager : IPhysicsManager
     {
-        private readonly IList<IPhysics> PhysicsEntites;
+        private readonly IList<IEntity> PhysicsEntites;
+
+        //So list of IEntity
+        //Should we have the physics code occur in here e.g
+        //call the update physics
+        //Issue is getting them into here :/
+        //How could we accomplish this
+        //Iphysics could be empty??? THIS!!!!
 
         /// <summary>
         /// Ctor for Physics Manager
@@ -19,14 +26,14 @@ namespace Engine.Managers
         public PhysicsManager()
         {
             //Initialise the Physics Entities List
-            PhysicsEntites = new List<IPhysics>();
+            PhysicsEntites = new List<IEntity>();
         }
 
         /// <summary>
         /// Add Entities to the List of Physics Entites
         /// </summary>
         /// <param name="physicsObj"></param>
-        public void AddToList(IPhysics physicsObj)
+        public void AddToList(IEntity physicsObj)
         {
             // Add Entities to the List of Physics Entites
             PhysicsEntites.Add(physicsObj);
@@ -45,7 +52,7 @@ namespace Engine.Managers
                 foreach (var physics in PhysicsEntites)
                 {
                     //update Entity Physics
-                    physics.UpdatePhysics();
+                      physics.UpdatePhysics();
                 }
             }
         }

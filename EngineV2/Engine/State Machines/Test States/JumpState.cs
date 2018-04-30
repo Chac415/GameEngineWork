@@ -1,9 +1,9 @@
 ﻿using System;
-using Engine.Physics;
+using Engine.Interfaces;
 
 namespace Engine.State_Machines.Test_States
 {
-    class JumpState<T>: IState<T> where T : IPhysics
+    class JumpState<T>: IState<T> where T : IEntity
     {
 
         public bool success { get; }

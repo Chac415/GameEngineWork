@@ -24,7 +24,7 @@ namespace ProjectHastings.Entities.Player
     /// Version 0.5
     /// 
     /// </summary>
-    public class Player : GamePhysicsEntity, ICollidable
+    public class Player : GameEntity, ICollidable, IPhysics
     {
         #region Properties
 
@@ -64,6 +64,7 @@ namespace ProjectHastings.Entities.Player
             SpriteSheet = new SpriteSheetAnimation(Texture);
             Tag = "Player";
             speed = 3;
+            
             //stateMachine = new StateMachine<IPhysics>(this);
             //stateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 2, 2f), new MoveLeft<IPhysics>(), "left" );
             //stateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 1, 2f), new MoveRight<IPhysics>(), "right" );

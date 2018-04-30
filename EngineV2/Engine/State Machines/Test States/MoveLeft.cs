@@ -2,9 +2,10 @@
 using Engine.Physics;
 using Microsoft.Xna.Framework;
 
+using Engine.Interfaces;
 namespace Engine.State_Machines.Test_States
 {
-    public class MoveLeft<T> : IState<T> where T: IPhysics
+    public class MoveLeft<T> : IState<T> where T: IEntity
     {
         public bool success { get; }
 

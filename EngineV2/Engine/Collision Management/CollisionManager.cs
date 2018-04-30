@@ -41,7 +41,7 @@ namespace Engine.Collision_Manager
     public void Update()
     {
         QuadColi();
-        //HierarchyColi();
+        HierarchyColi();
     }
 
     /// <summary>
@@ -87,13 +87,11 @@ namespace Engine.Collision_Manager
                             SAT.PolygonVsPolygon(CollidableObjects[i], WillCollide[u]);
                         }
 
-
                         if (SAT.Intersect)
                         {
                             CollidableObjects[i].Position += SAT.MTV;
                         }
                 }
-
             }
         }
     }

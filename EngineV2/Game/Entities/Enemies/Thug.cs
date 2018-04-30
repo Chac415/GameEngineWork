@@ -18,7 +18,7 @@ namespace ProjectHastings.Entities.Enemies
 
         public EnemyMind Mind { get; private set; }
         private IAnimation SpriteSheet;
-        public IStateMachine<IPhysics> StateMachine;
+        public IStateMachine<IEntity> StateMachine;
 
         /// <summary>
         /// Initialise the Variables specific to this object
@@ -30,11 +30,11 @@ namespace ProjectHastings.Entities.Enemies
             //Initialise the spriteSheet animation
             SpriteSheet = new SpriteSheetAnimation(Texture);
             //Create a new instance of State Machine
-            StateMachine = new StateMachine<IPhysics>(this);
+            StateMachine = new StateMachine<IEntity>(this);
 
             //Add the states to the State Machine
-            StateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 1, 2f), new MoveLeft<IPhysics>(), "left");
-            StateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 0, 2f),new MoveRight<IPhysics>(), "right");
+            StateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 1, 2f), new MoveLeft<IEntity>(), "left");
+            StateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 0, 2f),new MoveRight<IEntity>(), "right");
 
             //Create the Mind and pass the state machine and this entity
             Mind = new EnemyMind(this, StateMachine);

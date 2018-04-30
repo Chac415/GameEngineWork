@@ -1,10 +1,10 @@
 ﻿using System;
-using Engine.Physics;
+using Engine.Interfaces;
 using Microsoft.Xna.Framework;
 
 namespace Engine.State_Machines.Test_States
 {
-    class FallState<T> : IState<T> where T : IPhysics
+    class FallState<T> : IState<T> where T : IEntity
     {
 
         public bool success { get; }

@@ -8,9 +8,9 @@ namespace ProjectHastings.Behaviours
     public class EnemyMind
 
     {
-    private IPhysics body;
+    private IEntity body;
 
-    public EnemyMind(IPhysics ent, IStateMachine<IPhysics> stateMachine)
+    public EnemyMind(IEntity ent, IStateMachine<IEntity> stateMachine)
     {
         body = ent;
         stateMachine.AddMethodTransition(right, "left", "right");

@@ -18,12 +18,21 @@ namespace Engine.Interfaces
         string Tag { get; set; }
         float Direction { get; set; }
         void UniqueData();
-
-
-
         List<Vector2> Point();
         List<Vector2> Edges();
         Vector2 Center();
+
+
+        #region Physics content
+
+        Vector2 Velocity { get; set; }
+        Vector2 Acceleration { get; set; }
+        Vector2 Gravity { get; set; }
+        bool GravityBool { get; set; }
+        void ApplyForce(Vector2 force);
+        void ApplyImpulse(Vector2 closingVelo);
+        void UpdatePhysics();
+        #endregion
 
     }
 }

@@ -113,7 +113,7 @@ namespace ProjectHastings.Scenes
                 if (entity is IPhysics)
                 {
                     //Add Entites to the Physics List in the Physics Manager
-                    physicsMgr.AddToList((IPhysics)entity);
+                    physicsMgr.AddToList(entity);
                 }
 
                 if (entity is ICollidable)
