@@ -7,14 +7,12 @@ namespace Engine.Render
     class Renderable : IRenderable
     {
 
-        public void Draw(IList<IScene> scene, SpriteBatch sprite)
+        public void Draw(IScene scene, SpriteBatch sprite)
         {
 
             sprite.Begin();
-            foreach (IScene screen in scene)
-            {
-                screen.Draw(sprite);
-            }
+
+            scene.Draw(sprite);
             
 
             sprite.End();

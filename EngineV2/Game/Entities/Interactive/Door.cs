@@ -77,9 +77,6 @@ namespace ProjectHastings.Entities.Interactive
             if (doorContact && keyState.IsKeyDown(Keys.W) && Key.Unlock || doorContact && keyState.IsKeyDown(Keys.Up) && Key.Unlock)
             {
                 sound.Playsnd("Exit", 0.5f, false);
-                EntityManager.Entities.Clear();
-                BehaviourManager.behaviours.Clear();
-                ButtonList.Buttons.Clear();
 
 
                 //doorContact = false;

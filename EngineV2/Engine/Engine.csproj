@@ -42,8 +42,7 @@
     <Compile Include="Animations\IAnimation.cs" />
     <Compile Include="Animations\SpriteSheetAnimation.cs" />
     <Compile Include="BackGround\BackGrounds.cs" />
-    <Compile Include="Buttons\ButtonList.cs" />
-    <Compile Include="ClearList\ListWipe.cs" />
+    <Compile Include="Buttons\ButtonManager.cs" />
     <Compile Include="Collision Management\ICollidable.cs" />
     <Compile Include="Collision Management\QuadTree.cs" />
     <Compile Include="Collision Management\SAT_CLass.cs" />
@@ -61,7 +60,6 @@
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\IEntityManager.cs" />
     <Compile Include="Interfaces\IInputManager.cs" />
-    <Compile Include="Interfaces\IListWipe.cs" />
     <Compile Include="Interfaces\IMoveBehaviour.cs" />
     <Compile Include="Interfaces\IPhysicsManager.cs" />
     <Compile Include="Interfaces\IPhysicsObj.cs" />

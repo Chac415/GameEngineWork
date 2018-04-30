@@ -11,7 +11,7 @@ namespace Engine.Managers
     public class SceneManager : DrawableGameComponent, ISceneManager
     {
 
-        public IDictionary<string, IScene> CurrentScene;
+        string ActiveScene;
         public IDictionary<string, IScene> AllScenes;
         private IRenderable render;
         private SpriteBatch sprt;
@@ -19,16 +19,16 @@ namespace Engine.Managers
         public SceneManager(Game game) : base(game)
         {
             render = new Renderable();
-            CurrentScene = new Dictionary<string, IScene>();
             AllScenes = new Dictionary<string, IScene>();
             sprt = new SpriteBatch(GraphicsDevice);
         }
 
         public void AddScene(string name, IScene scenes)
         {
-            if (CurrentScene.Count == 0 && AllScenes.Count == 0)  
+            if (AllScenes.Count == 0)  
             {
-               CurrentScene.Add(name, scenes);
+               ActiveScene = name;
+               AllScenes.Add(name, scenes);
             }
             else
             {
@@ -38,31 +38,24 @@ namespace Engine.Managers
 
         public void ChangeScene (string name)
         {
-            if (!CurrentScene.ContainsKey(name))
+            if (ActiveScene != name)
             {
-                CurrentScene[name] = AllScenes[name];
-                AllScenes.Remove(name);
+                ActiveScene = name;
             }
         }
 
         public void RemoveScene(string name)
         {
-            CurrentScene.Remove(name);
+            AllScenes.Remove(name);
         }
         public override void Update(GameTime gameTime) 
         {
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
             Game.Exit();
 
-            
+            AllScenes[ActiveScene].update(gameTime);
 
-            IList<IScene> scene = CurrentScene.Values.ToList();
-            foreach (IScene screen in scene)
-            {
-                screen.update(gameTime);
-                
-            }
-            render.Draw(scene, sprt);
+            render.Draw(AllScenes[ActiveScene], sprt);
 
             base.Update(gameTime);
 

@@ -5,6 +5,6 @@ namespace Engine.Interfaces
 {
     public interface IRenderable
     {
-        void Draw(IList<IScene> scene, SpriteBatch sprite);
+        void Draw(IScene scene, SpriteBatch sprite);
     }
 }
