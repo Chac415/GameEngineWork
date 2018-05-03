@@ -133,8 +133,6 @@ namespace Engine.State_Machines
             }
         }
 
-
-
         /// <summary>
         /// Looks to see whether or not the States Dictionary holds a State
         /// </summary>
@@ -145,7 +143,6 @@ namespace Engine.State_Machines
             //Returns the state in the dictionary based on the Key passed
             return StateBehaviour.ContainsKey(State);
         }
-
 
         /// <summary>
         /// Looks to see whether or not the Animation State Dictionary holds a State
@@ -159,12 +156,11 @@ namespace Engine.State_Machines
         }
 
 
-
         /// <summary>
         /// When called, Changes the Current State, calls the exit method and the enter method
         /// </summary>
         /// <param name="changeto"></param>
-        private void ChangeState(string changeto)
+        public void ChangeState(string changeto)
         {
             //If the type isnt null
             if (changeto != null)
@@ -173,14 +169,14 @@ namespace Engine.State_Machines
                 StateBehaviour[ActiveState].Exit(Holder);
 
                 //Look to see if the dicitonary is holding the target State
-                if (HoldingState(changeto) && StateBehaviour.Count != 0)  
+                if (HoldingState(changeto) && StateBehaviour.Count != 0)
                     //Change the current to state to the Type being passed into the method
                     ActiveState = changeto;
 
                 //Null Check on Animation States Dictionary and to see if it is holding the target Animation state
-                if ( HoldingAnimationState(changeto) && StateAnimation.Count != 0)
+                if (HoldingAnimationState(changeto) && StateAnimation.Count != 0)
                     //Change the current Aniation state to the Type being passed into the method
-                    ActiveAnimation = changeto;                   
+                    ActiveAnimation = changeto;
 
                 //Call The Update method of the new currentState from the dictionary
                 StateBehaviour[ActiveState].Enter(Holder);
@@ -197,7 +193,7 @@ namespace Engine.State_Machines
             if (changeto != null)
             {
                 //Change the current Aniation state to the Type being passed into the method
-                ActiveAnimation = changeto;                   
+                ActiveAnimation = changeto;
             }
         }
 
@@ -234,6 +230,7 @@ namespace Engine.State_Machines
                 //Store the method transition in the transition dictionary
                 Transitions[stateFrom].StoreMethodTransition(targetState, MethodVal, ReqResult);
             }
+
         }
 
         /// <summary>
@@ -244,7 +241,7 @@ namespace Engine.State_Machines
         /// <returns></returns>
         private bool IsValidTransition(string baseState, string targetState)
         {
-            if (StateBehaviour.Count!= 0 && StateAnimation.Count!=0)
+            if (StateBehaviour.Count != 0 && StateAnimation.Count != 0)
             {
                 //Check to see if base state to target state is a valid transion for both the state behaviour and animation
                 if (StateBehaviour.ContainsKey(baseState) && StateBehaviour.ContainsKey(targetState) && baseState != targetState)
@@ -263,15 +260,20 @@ namespace Engine.State_Machines
         /// </summary>
         public void CheckMethodTransition()
         {
-            //If the States Dictionary holds the ActiveState and the ANimationes Doesn't
-            if (StateBehaviour.Keys.Contains(ActiveState))
-                //Only change the State
-                ChangeState((Transitions[ActiveState].CheckMethodTransition()));
-
-            //If only the Animation holds the active state
-            else if (StateAnimation.Keys.Contains(ActiveAnimation))
-                //Only change the Animation State
-                ChangeAnimationState(Transitions[ActiveAnimation].CheckMethodTransition());
+            if (StateBehaviour.Count != 0)
+            {
+                //If the States Dictionary holds the ActiveState and the Animationes Doesn't
+                if (StateBehaviour.Keys.Contains(ActiveState) && Transitions.Count != 0)
+                    //Only change the State
+                    ChangeState((Transitions[ActiveState].CheckMethodTransition()));
+            }
+            if (StateAnimation.Count != 0)
+            {
+                //If only the Animation holds the active state
+                if (StateAnimation.Keys.Contains(ActiveAnimation) && StateAnimation[ActiveAnimation] != null && Transitions.Count != 0)
+                    //Only change the Animation State
+                    ChangeAnimationState(Transitions[ActiveAnimation].CheckMethodTransition());
+            }
         }
 
         /// <summary>
@@ -340,7 +342,8 @@ namespace Engine.State_Machines
             //Look to see whether or not the state behaviour should be changed
             CheckMethodTransition();
             //Update the State Behaviour
-            StateBehaviour[ActiveState].Update(Holder);
+           if (StateBehaviour.Count != 0)
+                StateBehaviour[ActiveState].Update(Holder);
         }
 
         #endregion

@@ -13,7 +13,7 @@ namespace ProjectHastings.Entities.Environment
     /// Date of Change: 03/02/18
     /// Version: 0.4
     /// </summary>
-    class Platform : GameEntity
+    class Platform : GameEntity, ICollidable
     {
         //COLLISIONS
 
@@ -26,6 +26,7 @@ namespace ProjectHastings.Entities.Environment
         /// </summary>
         public override void UniqueData()
         {
+            InverseMass = 50;
             //  physicsObjs = _PhysicsObj.getPhysicsList();
         }
 
@@ -45,6 +46,7 @@ namespace ProjectHastings.Entities.Environment
         /// <param name="game"></param>
         public override void Update(GameTime game)
         {
+            SetPoints(1,1);
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
     }

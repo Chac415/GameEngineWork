@@ -48,7 +48,6 @@
     <Compile Include="Collision Management\QuadTree.cs" />
     <Compile Include="Collision Management\SAT_CLass.cs" />
     <Compile Include="Collision Management\CollisionManager.cs" />
-    <Compile Include="Entity Management\PhysicsEntity.cs" />
     <Compile Include="Interfaces\IBackGrounds.cs" />
     <Compile Include="Entity Management\Entity.cs" />
     <Compile Include="Input Managment\EventData.cs" />

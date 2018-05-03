@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Engine.Interfaces;
+using Microsoft.Xna.Framework.Input;
+
 
 
 namespace Engine.Entity_Management
@@ -16,7 +18,7 @@ namespace Engine.Entity_Management
         public abstract void Update(GameTime game);
         public abstract Rectangle Hitbox { get; set; }
         public abstract string Tag { get; set; }
-        public abstract void SetPoints();
+        public abstract void SetPoints(int spriteWidth, int spriteHeight);
         public abstract void BuildEdges();
         public abstract void UniqueData();
 
@@ -80,8 +82,11 @@ namespace Engine.Entity_Management
             Velocity *= Damping;
             Position += Velocity;
 
-            //Apply Gravity
-            Acceleration = gravity;
+            if (GravityBool || Keyboard.GetState().IsKeyDown(Keys.G))
+                //Apply Gravity
+                Acceleration = gravity;
+            else Acceleration = new Vector2(0, 0);
+
 
 
         }

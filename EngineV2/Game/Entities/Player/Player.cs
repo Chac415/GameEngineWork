@@ -31,6 +31,7 @@ namespace ProjectHastings.Entities.Player
         //Movement
         public static bool canClimb = false;
         public bool sprint = false;
+        PlayerMind mind;
 
         //Jump Variables
         private float jumpForce = 10;
@@ -41,15 +42,7 @@ namespace ProjectHastings.Entities.Player
 
         //Input Management
         private KeyboardState keyState;
-        private IAnimation SpriteSheet;
 
-        //Collision Lists
-        private List<IEntity> collisionObjs;
-        private List<IEntity> interactiveObjs;
-        private List<IEntity> environment;
-
-        private IEntity collision;
-        IStateMachine<IPhysics> stateMachine;
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
 
@@ -60,20 +53,12 @@ namespace ProjectHastings.Entities.Player
         /// </summary>
         public override void UniqueData()
         {
-            //Initialise the spriteSheet animation
-            SpriteSheet = new SpriteSheetAnimation(Texture);
+
             Tag = "Player";
             speed = 3;
+            mind = new PlayerMind(this);
+            //_BehaviourManager.createMind<PlayerMind>(this);       
             
-            //stateMachine = new StateMachine<IPhysics>(this);
-            //stateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 2, 2f), new MoveLeft<IPhysics>(), "left" );
-            //stateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 1, 2f), new MoveRight<IPhysics>(), "right" );
-
-
-            _BehaviourManager.createMind<PlayerMind>(this);
-            
-
-
             // CollisionManager.GetColliderInstance.subscribe(onCollision);
             input.AddKeyListener(OnNewKeyInput);
         }
@@ -86,7 +71,6 @@ namespace ProjectHastings.Entities.Player
         public virtual void OnNewKeyInput(object source, KeyEventData data)
         {
             keyState = data._newKey;
-
 
             #region SPACEBAR
             if (keyState.IsKeyDown(Keys.Space))
@@ -150,8 +134,8 @@ namespace ProjectHastings.Entities.Player
         /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //stateMachine.DrawAnimation(spriteBatch);
-            spriteBatch.Draw(Texture, Position, Color.AntiqueWhite);
+            mind.stateMachine.DrawAnimation(spriteBatch);
+           //spriteBatch.Draw(Texture, Position, Color.AntiqueWhite);
         }
         /// <summary>
         /// Called Every Frame
@@ -160,9 +144,9 @@ namespace ProjectHastings.Entities.Player
         public override void Update(GameTime game)
         {
             Hitbox = new Rectangle((int)Position.X - 25, (int)Position.Y - 25, Texture.Width/2, Texture.Height/2);
-            //stateMachine.UpdateBehaviour();
-            SetPoints();
-            //stateMachine.UpdateAnimation(game);
+            mind.stateMachine.UpdateBehaviour();
+            SetPoints(3,3);
+            mind.stateMachine.UpdateAnimation(game);
         }
 
     }

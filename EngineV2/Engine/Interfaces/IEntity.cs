@@ -10,7 +10,7 @@ namespace Engine.Interfaces
         void Initialize(Texture2D Tex, Vector2 Posn, IBehaviourManager behaviours);
         void Draw(SpriteBatch spriteBatch);
         void Update(GameTime game);
-        void SetPoints();
+        void SetPoints(int spriteWidth, int spriteHeight);
         void BuildEdges();
         Vector2 Position { get; set; }
         Texture2D Texture { get; set; }

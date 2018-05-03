@@ -49,24 +49,26 @@ namespace ProjectHastings.Entities
         public override void Update(GameTime game)
         {
         }           //Update method, called every fram
-        public override void SetPoints()
+        public override void SetPoints(int spriteWidth, int spriteHeight)
         {
             Points.Clear();
-            //Top Left
-            _point1 = new Vector2(Position.X, Position.Y);
-            //Top Right
-            _point2 = new Vector2((Position.X + Texture.Width/3), Position.Y);
-            //Bottom Right
-            _point3 = new Vector2((Position.X + Texture.Width/3), (Position.Y + Texture.Height/3));
-            //Bottom Left
-            _point4 = new Vector2(Position.X, (Position.Y + Texture.Height/3));
+
+            
+                //Top Left
+                _point1 = new Vector2(Position.X, Position.Y);
+                //Top Right
+                _point2 = new Vector2((Position.X + Texture.Width / spriteWidth), Position.Y);
+                //Bottom Right
+                _point3 = new Vector2((Position.X + Texture.Width / spriteWidth), (Position.Y + Texture.Height / spriteHeight));
+                //Bottom Left
+                _point4 = new Vector2(Position.X, (Position.Y + Texture.Height / spriteHeight));
 
 
-            Points.Add(_point1);
-            Points.Add(_point2);
-            Points.Add(_point3);
-            Points.Add(_point4);
-
+                Points.Add(_point1);
+                Points.Add(_point2);
+                Points.Add(_point3);
+                Points.Add(_point4);
+            
             BuildEdges();
         }
         public override void BuildEdges()
