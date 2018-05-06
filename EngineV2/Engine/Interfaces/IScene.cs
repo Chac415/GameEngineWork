@@ -6,7 +6,7 @@ namespace Engine.Interfaces
 {
     public interface IScene
     {
-        void LoadContent(ContentManager Content);
+        void LoadContent();
         void update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
     }

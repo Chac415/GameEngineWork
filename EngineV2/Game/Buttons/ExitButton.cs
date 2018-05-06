@@ -52,13 +52,6 @@ namespace ProjectHastings.Buttons
         {
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
-
-        /// <summary>
-        /// Create a method called Click, which will be called when the buttons recieves input from the mouse.
-        /// </summary>
-        public void click()
-        {
-        }
         #endregion
 
     }

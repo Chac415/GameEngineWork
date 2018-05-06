@@ -9,6 +9,5 @@ namespace Engine.Interfaces
         void Draw(SpriteBatch spriteBatch);
         void update();
         Rectangle HitBox { get; set; }
-        void click();
     }
 }

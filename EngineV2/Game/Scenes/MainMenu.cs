@@ -19,22 +19,25 @@ namespace ProjectHastings.Scenes
         IButton StartBut, ExitBut;
         IBackGrounds back;
         MouseState mouseState;
+        ContentManager Content;
+        ISceneManager scn;
 
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
         ButtonManager buttons = Locator.Instance.getProvider<ButtonManager>() as ButtonManager;
 
-        public MainMenu(int ScreenWidth, int ScreenHeight)
+        public MainMenu(int ScreenWidth, int ScreenHeight, ContentManager content, ISceneManager scene)
         {
             
             back = new BackGrounds(ScreenWidth, ScreenHeight);
             StartBut = new StartButton();
             ExitBut = new ExitButton();
+            Content = content;
+            scn = scene;
             input.AddMouseListener(OnNewMouseInput);
-
         }
 
-        public void LoadContent(ContentManager Content)
+        public void LoadContent()
         {
             sound.Initialize("MainMenuMusic" ,Content.Load<SoundEffect>("MainMenuMusic"));
             sound.CreateInstance();
@@ -57,11 +60,12 @@ namespace ProjectHastings.Scenes
 
             if (mouseState.LeftButton == ButtonState.Pressed && buttons.Buttons["StartButton"].HitBox.Contains(mouseState.Position))
             {
-                buttons.Buttons["StartButton"].click();
+                Content.Unload();
+                scn.ChangeScene("TestLevel");
             }
             if (mouseState.LeftButton == ButtonState.Pressed && buttons.Buttons["ExitButton"].HitBox.Contains(mouseState.Position))
             {
-                buttons.Buttons["ExitButton"].click();
+                scn.Exit();
             }
         }
 

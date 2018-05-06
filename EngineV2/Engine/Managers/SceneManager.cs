@@ -29,6 +29,7 @@ namespace Engine.Managers
             {
                ActiveScene = name;
                AllScenes.Add(name, scenes);
+               AllScenes[ActiveScene].LoadContent();
             }
             else
             {
@@ -41,6 +42,7 @@ namespace Engine.Managers
             if (ActiveScene != name)
             {
                 ActiveScene = name;
+                AllScenes[ActiveScene].LoadContent();
             }
         }
 
@@ -51,16 +53,19 @@ namespace Engine.Managers
         public override void Update(GameTime gameTime) 
         {
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Game.Exit();
+            Exit();
 
             AllScenes[ActiveScene].update(gameTime);
 
             render.Draw(AllScenes[ActiveScene], sprt);
 
             base.Update(gameTime);
-
         }
 
+        public void Exit()
+        {
+            Game.Exit();
+        }
 
 
     }

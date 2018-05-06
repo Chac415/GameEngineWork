@@ -47,44 +47,21 @@ namespace ProjectHastings
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            mainmenu = new MainMenu(screenWidth, screenHeight);
-            TestScene = new TestLevel(screenWidth, screenHeight);
-            Wingame = new WinGame(screenWidth, screenHeight);
-            LoseScreen = new GameOver(screenWidth, screenHeight);
             scn = new SceneManager(this);
+            mainmenu = new MainMenu(screenWidth, screenHeight, Content, scn);
+            TestScene = new TestLevel(screenWidth, screenHeight, Content);
+            Wingame = new WinGame(screenWidth, screenHeight, Content, scn);
+            LoseScreen = new GameOver(screenWidth, screenHeight, Content, scn);
 
+            scn.AddScene("Mainmenu", mainmenu);
+            scn.AddScene("TestLevel", TestScene);
+            scn.AddScene("WinGame", Wingame);
+            scn.AddScene("LoseScreen", LoseScreen);
 
             Components.Add((GameComponent)scn);
 
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        protected override void LoadContent()
-        {
-            
-            mainmenu.LoadContent(Content);
-            TestScene.LoadContent(Content);
-            Wingame.LoadContent(Content);
-            LoseScreen.LoadContent(Content);
-
-            //scn.AddScene("Mainmenu", mainmenu);
-            //scn.AddScene("TestLevel", TestScene);
-            //scn.AddScene("WinGame", Wingame);
-            scn.AddScene("LoseScreen", LoseScreen);
-
-        }
-
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
     }
 }

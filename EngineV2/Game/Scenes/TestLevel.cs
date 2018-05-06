@@ -27,13 +27,14 @@ namespace ProjectHastings.Scenes
         IEntityManager entManager;
         IBackGrounds back;
         IPhysicsManager physicsMgr;
+        private ContentManager Content;
 
         ICollisionManager coli;
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
         IBehaviourManager behaviours = Locator.Instance.getProvider<BehaviourManager>() as IBehaviourManager;
 
-        public TestLevel(int ScreenWidth, int ScreenHeight)
+        public TestLevel(int ScreenWidth, int ScreenHeight, ContentManager content)
         {
 
             #region Instantiate Managers
@@ -47,10 +48,11 @@ namespace ProjectHastings.Scenes
             #endregion
 
             back = new BackGrounds(ScreenWidth, ScreenHeight);
+            Content = content;
 
         }
 
-        public void LoadContent(ContentManager Content)
+        public void LoadContent()
         {
             //Sounds
             sound.Initialize("Level1BackgroundMusic", Content.Load<SoundEffect>("Level1BackgroundMusic"));

@@ -17,21 +17,26 @@ namespace ProjectHastings.Scenes
 
         IBackGrounds back;
         MouseState mouseState;
+        ContentManager Content;
+        ISceneManager scn;
 
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
         ButtonManager buttons = Locator.Instance.getProvider<ButtonManager>() as ButtonManager;
 
 
-        public WinGame(int ScreenWidth, int ScreenHeight)
+        public WinGame(int ScreenWidth, int ScreenHeight, ContentManager content, ISceneManager scene)
         {
 
             back = new BackGrounds(ScreenWidth, ScreenHeight);
+            Content = content;
+            scn = scene;
             input.AddMouseListener(OnNewMouseInput);
+            LoadContent();
         }
 
 
-        public void LoadContent(ContentManager Content)
+        public void LoadContent()
         {
             back.Initialize("WinGameBackground" ,Content.Load<Texture2D>("WinGameBackground"));
 
@@ -49,7 +54,7 @@ namespace ProjectHastings.Scenes
 
             if (mouseState.LeftButton == ButtonState.Pressed && buttons.Buttons["ExitButton"].HitBox.Contains(mouseState.Position))
             {
-                buttons.Buttons["ExitButton"].click();
+
             }
         }
 

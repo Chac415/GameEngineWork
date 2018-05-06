@@ -16,23 +16,26 @@ namespace ProjectHastings.Scenes
     {
         IBackGrounds back;
         MouseState mouseState;
+        ContentManager Content;
+        ISceneManager scn;
 
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
         ButtonManager buttons = Locator.Instance.getProvider<ButtonManager>() as ButtonManager;
 
-        public GameOver(int ScreenWidth, int ScreenHeight)
+        public GameOver(int ScreenWidth, int ScreenHeight, ContentManager content, ISceneManager scene)
         {
+            Content = content;
+            scn = scene;
             back = new BackGrounds(ScreenWidth, ScreenHeight);
             input.AddMouseListener(OnNewMouseInput);
         }
 
 
-        public void LoadContent(ContentManager Content)
+        public void LoadContent()
         {
             sound.Initialize("MyHeartWillGoOn" ,Content.Load<SoundEffect>("MyHeartWillGoOn"));
             sound.CreateInstance();
-
 
             back.Initialize("LoseGameBackground" ,Content.Load<Texture2D>("LoseGameBackground"));
 
@@ -50,7 +53,7 @@ namespace ProjectHastings.Scenes
 
             if (mouseState.LeftButton == ButtonState.Pressed && buttons.Buttons["ExitButton"].HitBox.Contains(mouseState.Position))
             {
-                buttons.Buttons["ExitButton"].click();
+                    
             }
         }
 
