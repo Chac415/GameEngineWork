@@ -48,7 +48,6 @@ namespace ProjectHastings.Entities.Player
         private List<IEntity> interactiveObjs;
         private List<IEntity> environment;
 
-        private IEntity collision;
         IStateMachine<IPhysics> stateMachine;
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
@@ -75,6 +74,17 @@ namespace ProjectHastings.Entities.Player
 
             // CollisionManager.GetColliderInstance.subscribe(onCollision);
             input.AddKeyListener(OnNewKeyInput);
+        }
+
+        public override void OnColiEnter(IEntity ColiEnt, ISAT SAT)
+        {
+                if (ColiEnt.Tag == "environment")
+                    this.Position += SAT.MTV;
+                if (ColiEnt.Tag == "Ladder" && keyState.IsKeyDown(Keys.W))
+                    ;
+                if (ColiEnt.Tag == "Ladder" && keyState.IsKeyDown(Keys.S))
+                    ;
+
         }
 
         /// <summary>
@@ -160,7 +170,7 @@ namespace ProjectHastings.Entities.Player
         {
             Hitbox = new Rectangle((int)Position.X - 25, (int)Position.Y - 25, Texture.Width/2, Texture.Height/2);
             //stateMachine.UpdateBehaviour();
-            SetPoints();
+            SetPoints(3,3);
             //stateMachine.UpdateAnimation(game);
         }
 

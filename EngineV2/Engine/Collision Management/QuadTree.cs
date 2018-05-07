@@ -12,7 +12,7 @@ namespace Engine.Collision_Management
         int maxObjects = 2;
         int maxLevels = 4;
         int level;
-        List<IEntity> objects;
+        IList<IEntity> objects;
         Rectangle bounds;
         QuadTree[] nodes;
         float XMidpoint;
@@ -163,7 +163,7 @@ namespace Engine.Collision_Management
         /// <param name="returnObjects"></param>
         /// <param name="Entity"></param>
         /// <returns></returns>
-        public List<IEntity> Retrieve(List<IEntity> returnObjects, IEntity Entity)
+        public IList<IEntity> Retrieve(IList<IEntity> returnObjects, IEntity Entity)
         {
             //List<IAsset> retObj  = new List<IAsset>();
 

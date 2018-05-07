@@ -15,8 +15,8 @@ namespace Engine.Collision_Management
     ISAT SAT; //Create Varaible for the SAT class
 
 
-    List<IEntity> CollidableObjects { get; set; } //List of IAsset of all Objects that have colliders
-    List<IEntity> WillCollide { get; set; } //List of IAsset for each of the entities that can colide with each other
+    IList<IEntity> CollidableObjects { get; set; } //List of IAsset of all Objects that have colliders
+    IList<IEntity> WillCollide { get; set; } //List of IAsset for each of the entities that can colide with each other
 
 
 
@@ -82,16 +82,17 @@ namespace Engine.Collision_Management
                 for (int u = 0; u < WillCollide.Count; u++)
                 {
 
-                        if (CollidableObjects[i] is ICollidable) //&& WillCollide[u] == typeof(ICollidable))
-                        {
-                            SAT.PolygonVsPolygon(CollidableObjects[i], WillCollide[u]);
-                        }
+                    if (CollidableObjects[i] is ICollidable) //&& WillCollide[u] == typeof(ICollidable))
+                    {
+                        SAT.PolygonVsPolygon(CollidableObjects[i], WillCollide[u]);
+
 
 
                         if (SAT.Intersect)
                         {
-                            CollidableObjects[i].Position += SAT.MTV;
+                                CollidableObjects[i].OnColiEnter(CollidableObjects[u], SAT);
                         }
+                    }
                 }
 
             }
@@ -115,6 +116,7 @@ namespace Engine.Collision_Management
 
                         if (SAT.Intersect)
                         {
+                           
                             CollidableObjects[i].Position += SAT.MTV;
                         }
                     }

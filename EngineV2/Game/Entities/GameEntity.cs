@@ -45,21 +45,24 @@ namespace ProjectHastings.Entities
         {
         }                    // Used to apply the specific variables such as animations onto the entity
 
+        public override void OnColiEnter(IEntity ColiEnt, ISAT SAT)
+        {
+        }
 
         public override void Update(GameTime game)
         {
         }           //Update method, called every fram
-        public override void SetPoints()
+        public override void SetPoints(int Columns, int Rows)
         {
             Points.Clear();
             //Top Left
             _point1 = new Vector2(Position.X, Position.Y);
             //Top Right
-            _point2 = new Vector2((Position.X + Texture.Width/3), Position.Y);
+            _point2 = new Vector2((Position.X + Texture.Width/Columns), Position.Y);
             //Bottom Right
-            _point3 = new Vector2((Position.X + Texture.Width/3), (Position.Y + Texture.Height/3));
+            _point3 = new Vector2((Position.X + Texture.Width/Columns), (Position.Y + Texture.Height/Rows));
             //Bottom Left
-            _point4 = new Vector2(Position.X, (Position.Y + Texture.Height/3));
+            _point4 = new Vector2(Position.X, (Position.Y + Texture.Height/Rows));
 
 
             Points.Add(_point1);

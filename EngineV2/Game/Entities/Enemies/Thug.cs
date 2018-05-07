@@ -29,7 +29,7 @@ namespace ProjectHastings.Entities.Enemies
         public override void Update(GameTime game)
         {
             // Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
-            SetPoints();
+            SetPoints(3,3);
             Mind.Update(game);
         }
 

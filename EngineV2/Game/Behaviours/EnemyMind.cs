@@ -61,9 +61,9 @@ namespace ProjectHastings.Behaviours
 
         bool right()
         {
-            if (body.Position.X + 25 >= 850)
+            if (body.Position.X + (body.Texture.Width /3) >= 900)
             {
-                body.Position = new Vector2(824, body.Position.Y);
+                body.Position = new Vector2(body.Position.X, body.Position.Y);
                 return true;
             }
             return false;

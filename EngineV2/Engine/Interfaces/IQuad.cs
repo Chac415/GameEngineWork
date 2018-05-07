@@ -9,6 +9,6 @@ namespace Engine.Interfaces
     {
         void Clear();
         void Insert(IEntity Entity);
-        List<IEntity> Retrieve(List<IEntity> returnObjects, IEntity Entity);
+        IList<IEntity> Retrieve(IList<IEntity> returnObjects, IEntity Entity);
     }
 }

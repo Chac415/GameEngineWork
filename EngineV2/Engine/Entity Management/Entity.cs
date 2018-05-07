@@ -13,9 +13,10 @@ namespace Engine.Entity_Management
         public abstract void Update(GameTime game);
         public abstract Rectangle Hitbox { get; set; }
         public abstract string Tag { get; set; }
-        public abstract void SetPoints();
+        public abstract void SetPoints(int Columns, int Rows);
         public abstract void BuildEdges();
         public abstract void UniqueData();
+        public abstract void OnColiEnter(IEntity ColiEnt, ISAT SAT);
 
         //Animations
         public abstract float Direction { get; set; }

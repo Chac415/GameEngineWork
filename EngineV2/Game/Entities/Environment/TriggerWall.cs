@@ -13,7 +13,7 @@ namespace ProjectHastings.Entities.Environment
     /// Date of Change: 03/02/18
     /// Version: 0.4
     /// </summary>
-    class TriggerWall : GameEntity
+    class TriggerWall : GameEntity, ICollidable
     {
         //COLLISIONS
         private IEntity collisionObj;
@@ -27,7 +27,7 @@ namespace ProjectHastings.Entities.Environment
         /// </summary>
         public override void UniqueData()
         {
-            Tag = "triggerWall";
+            Tag = "environment";
             // physicsObjs = _PhysicsObj.getPhysicsList();
         }
 
@@ -46,6 +46,7 @@ namespace ProjectHastings.Entities.Environment
         /// <param name="game"></param>
         public override void Update(GameTime game)
         {
+            SetPoints(1, 1);
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
     }

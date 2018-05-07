@@ -43,3 +43,10 @@ C:\Users\chac4_15\Documents\GitHub\GameEngineWork\EngineV2\Engine\bin\Debug\Open
 C:\Users\chac4_15\Documents\GitHub\GameEngineWork\EngineV2\Engine\obj\Debug\Engine.dll
 C:\Users\chac4_15\Documents\GitHub\GameEngineWork\EngineV2\Engine\obj\Debug\Engine.pdb
 C:\Users\act1w\OneDrive\Documents\GitHub\GameEngineWork\EngineV2\Engine\obj\Debug\Engine.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\GameEngineWork\EngineV2\Engine\bin\Debug\Engine.dll
+C:\Users\User\Desktop\GameEngineWork\EngineV2\Engine\bin\Debug\Engine.pdb
+C:\Users\User\Desktop\GameEngineWork\EngineV2\Engine\bin\Debug\MonoGame.Framework.dll
+C:\Users\User\Desktop\GameEngineWork\EngineV2\Engine\bin\Debug\OpenTK.dll
+C:\Users\User\Desktop\GameEngineWork\EngineV2\Engine\obj\Debug\Engine.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\GameEngineWork\EngineV2\Engine\obj\Debug\Engine.dll
+C:\Users\User\Desktop\GameEngineWork\EngineV2\Engine\obj\Debug\Engine.pdb
