@@ -7,13 +7,14 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Engine.Buttons;
 using Engine.Input_Managment;
+using ProjectHastings.Buttons;
 
 namespace ProjectHastings.Scenes
 {
     class GameOver : IScene
     {
+        IButton StartBut, ExitBut;
         IBackGrounds back;
         MouseState mouseState;
         ContentManager Content;
@@ -21,13 +22,14 @@ namespace ProjectHastings.Scenes
 
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
-        ButtonManager buttons = Locator.Instance.getProvider<ButtonManager>() as ButtonManager;
 
         public GameOver(int ScreenWidth, int ScreenHeight, ContentManager content, ISceneManager scene)
         {
             Content = content;
             scn = scene;
             back = new BackGrounds(ScreenWidth, ScreenHeight);
+            StartBut = new StartButton();
+            ExitBut = new ExitButton();
             input.AddMouseListener(OnNewMouseInput);
         }
 
@@ -36,6 +38,8 @@ namespace ProjectHastings.Scenes
         {
             sound.Initialize("MyHeartWillGoOn" ,Content.Load<SoundEffect>("MyHeartWillGoOn"));
             sound.CreateInstance();
+            sound.Playsnd("MyHeartWillGoOn", 1.0f, true);
+            ExitBut.Initialize(Content.Load<Texture2D>("Exit Button"), new Vector2(350, 300));
 
             back.Initialize("LoseGameBackground" ,Content.Load<Texture2D>("LoseGameBackground"));
 
@@ -43,7 +47,7 @@ namespace ProjectHastings.Scenes
 
         public void update(GameTime gameTime)
         {
-            buttons.Update();
+            ExitBut.update();
             input.Update();
         }
 
@@ -51,16 +55,16 @@ namespace ProjectHastings.Scenes
         {
             mouseState = data._newMouse;
 
-            if (mouseState.LeftButton == ButtonState.Pressed && buttons.Buttons["ExitButton"].HitBox.Contains(mouseState.Position))
+            if (mouseState.LeftButton == ButtonState.Pressed && ExitBut.HitBox.Contains(mouseState.Position))
             {
-                    
+               scn.Exit();    
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             back.Draw(spriteBatch);
-            buttons.Buttons["ExitButton"].Draw(spriteBatch);
+            ExitBut.Draw(spriteBatch);
         }
     }
 }

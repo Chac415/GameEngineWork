@@ -3,7 +3,7 @@ using Engine.Interfaces;
 using Microsoft.Xna.Framework;
 
 
-namespace Engine.Collision_Manager
+namespace Engine.Collision_Management
 {
     /// <summary>
     /// Collision Manager which controls collision detection, and what objects can collide with one and other

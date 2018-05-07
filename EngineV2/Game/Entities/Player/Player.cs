@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Engine.Animations;
-using Engine.Collision_Manager;
+using Engine.Collision_Management;
 using Engine.Input_Managment;
 using Engine.Interfaces;
 using Engine.Managers;

@@ -42,7 +42,6 @@
     <Compile Include="Animations\IAnimation.cs" />
     <Compile Include="Animations\SpriteSheetAnimation.cs" />
     <Compile Include="BackGround\BackGrounds.cs" />
-    <Compile Include="Buttons\ButtonManager.cs" />
     <Compile Include="Collision Management\ICollidable.cs" />
     <Compile Include="Collision Management\QuadTree.cs" />
     <Compile Include="Collision Management\SAT_CLass.cs" />

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Engine.BackGround;
-using Engine.Buttons;
 using Engine.Interfaces;
 using Engine.Managers;
 using Engine.Service_Locator;
@@ -24,7 +24,7 @@ namespace ProjectHastings.Scenes
 
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
-        ButtonManager buttons = Locator.Instance.getProvider<ButtonManager>() as ButtonManager;
+        public IDictionary<string, IButton> buttons = new Dictionary<string, IButton>();
 
         public MainMenu(int ScreenWidth, int ScreenHeight, ContentManager content, ISceneManager scene)
         {
@@ -41,15 +41,15 @@ namespace ProjectHastings.Scenes
         {
             sound.Initialize("MainMenuMusic" ,Content.Load<SoundEffect>("MainMenuMusic"));
             sound.CreateInstance();
-
+            sound.Playsnd("MainMenuMusic", 1.0f, true);
 
             back.Initialize("Menu" ,Content.Load<Texture2D>("MainMenuBackground"));
 
             StartBut.Initialize(Content.Load<Texture2D>("Start Button"), new Vector2(25, 400));
             ExitBut.Initialize(Content.Load<Texture2D>("Exit Button"), new Vector2(25, 500));
 
-            buttons.AddButton("StartButton", StartBut);
-            buttons.AddButton("ExitButton", ExitBut);
+            buttons.Add("StartButton", StartBut);
+            buttons.Add("ExitButton", ExitBut);
 
 
         }
@@ -58,29 +58,40 @@ namespace ProjectHastings.Scenes
         {
             mouseState = data._newMouse;
 
-            if (mouseState.LeftButton == ButtonState.Pressed && buttons.Buttons["StartButton"].HitBox.Contains(mouseState.Position))
+            if (mouseState.LeftButton == ButtonState.Pressed && buttons["StartButton"].HitBox.Contains(mouseState.Position))
             {
-                Content.Unload();
-                scn.ChangeScene("TestLevel");
+                sound.Stopsnd("MainMenuMusic");
+                scn.ChangeScene("Level1");
             }
-            if (mouseState.LeftButton == ButtonState.Pressed && buttons.Buttons["ExitButton"].HitBox.Contains(mouseState.Position))
+            if (mouseState.LeftButton == ButtonState.Pressed && buttons["ExitButton"].HitBox.Contains(mouseState.Position))
             {
                 scn.Exit();
             }
+
         }
 
         public void update(GameTime gameTime)
         {
 
             input.Update();
-            buttons.Update();
+
+            IList<IButton> butts = buttons.Values.ToList();
+            foreach (IButton button in butts)
+            {
+                button.update();
+            }
+            
   
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
                 back.Draw(spriteBatch);
-                buttons.Draw(spriteBatch);
+                IList<IButton> butts = buttons.Values.ToList();
+                foreach (IButton button in butts)
+                {
+                button.Draw(spriteBatch);
+                }
         }
     }
 }

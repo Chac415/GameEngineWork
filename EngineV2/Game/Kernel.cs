@@ -20,6 +20,7 @@ namespace ProjectHastings
         IScene mainmenu;
         IScene Wingame;
         IScene LoseScreen;
+        IScene Level1;
 
         //Screen Size
         int screenWidth = 900;
@@ -49,13 +50,15 @@ namespace ProjectHastings
             // TODO: Add your initialization logic here
             scn = new SceneManager(this);
             mainmenu = new MainMenu(screenWidth, screenHeight, Content, scn);
-            TestScene = new TestLevel(screenWidth, screenHeight, Content);
+            TestScene = new TestLevel(screenWidth, screenHeight, Content, scn);
+            Level1 = new Level1(screenWidth, screenHeight, Content, scn);
             Wingame = new WinGame(screenWidth, screenHeight, Content, scn);
             LoseScreen = new GameOver(screenWidth, screenHeight, Content, scn);
 
             scn.AddScene("Mainmenu", mainmenu);
             scn.AddScene("TestLevel", TestScene);
-            scn.AddScene("WinGame", Wingame);
+            scn.AddScene("Level1", Level1);
+            scn.AddScene("WinScreen", Wingame);
             scn.AddScene("LoseScreen", LoseScreen);
 
             Components.Add((GameComponent)scn);

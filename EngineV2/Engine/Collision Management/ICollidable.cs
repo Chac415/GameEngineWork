@@ -1,4 +1,4 @@
-﻿namespace Engine.Collision_Manager
+﻿namespace Engine.Collision_Management
 {
     public interface ICollidable
     {

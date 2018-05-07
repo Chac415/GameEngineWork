@@ -4,7 +4,7 @@ using Engine.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Engine.Collision_Manager
+namespace Engine.Collision_Management
 
 {
     public class QuadTree : IQuad
