@@ -10,15 +10,13 @@ namespace Engine.State_Machines.Test_States
 
         public void Enter(T entity)
         {
-            if (entity is IPhysics)
-            {
-            }
-            // entity.ApplyForce(new Vector2(-1, 0));
+
+             ((IPhysics)entity).ApplyForce(new Vector2(1, 0));
         }
 
         public void Update(T entity)
         {
-         //   entity.ApplyForce(new Vector2(1, 0));
+            ((IPhysics)entity).ApplyForce(new Vector2(1, 0));
 
         }
 

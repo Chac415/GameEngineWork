@@ -137,17 +137,6 @@ namespace Engine.State_Machines
         }
 
         /// <summary>
-        /// Look to see whether or not the transition requirements have been met for the Method Transitions
-        /// </summary>
-        public void CheckMethodTransition()
-        {
-            //If only the Animation holds the active state
-            if (StateAnimation.Keys.Contains(ActiveAnimation))
-                //Only change the Animation State
-                ChangeAnimationState(Transitions[ActiveAnimation].CheckMethodTransition());
-        }
-
-        /// <summary>
         /// Check to see whether or not the transitions dictionary holds the transition is currently stored
         /// </summary>
         /// <param name="state"></param>
@@ -157,6 +146,21 @@ namespace Engine.State_Machines
             if (!Transitions.ContainsKey(state))
                 //Add the new transition to the state
                 Transitions.Add(state, new TransitionHandler());
+        }
+
+
+
+
+        #region Updates
+        /// <summary>
+        /// Look to see whether or not the transition requirements have been met for the Method Transitions
+        /// </summary>
+        public void CheckMethodTransition()
+        {
+            //If only the Animation holds the active state
+            if (StateAnimation.Keys.Contains(ActiveAnimation))
+                //Only change the Animation State
+                ChangeAnimationState(Transitions[ActiveAnimation].CheckMethodTransition());
         }
 
         /// <summary>
@@ -184,5 +188,6 @@ namespace Engine.State_Machines
                 throw new Exception("There is no Animation to draw in the State Machine");
             StateAnimation[ActiveAnimation].DrawAnimation(sprite);
         }
+        #endregion
     }
 }

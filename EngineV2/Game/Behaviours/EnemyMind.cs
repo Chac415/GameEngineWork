@@ -27,51 +27,51 @@ namespace ProjectHastings.Behaviours
 
             //Initialise the spriteSheet animation
             SpriteSheet = new SpriteSheetAnimation(body.Texture);
+
             //Create a new instance of State Machine
             StateMachine = new StateMachine<IEntity>(body);
             AnimationMachine = new AnimationMachine<IEntity>(body);
 
             //Add the states to the State Machine
-            //StateMachine.AddState(new MoveLeft<IEntity>(), "left");
-            //StateMachine.AddState(new MoveRight<IEntity>(), "right");
+            StateMachine.AddState(new MoveLeft<IEntity>(), "left");
+            StateMachine.AddState(new MoveRight<IEntity>(), "right");
+
+            //Add state behaviour Transitions
+            StateMachine.AddMethodTransition(right, "left", "right");
+            StateMachine.AddMethodTransition(left, "right", "left");
+
+            //Add Animation States
             AnimationMachine.AddState(new AnimationState(body, SpriteSheet, 12, 1), "left");
             AnimationMachine.AddState(new AnimationState(body, SpriteSheet, 12, 0), "right");
-
-
-            //StateMachine.AddMethodTransition(right, "left", "right");
-            //StateMachine.AddMethodTransition(left, "right", "left");
-            AnimationMachine.AddMethodTransition(left, "right", "left");
+            //Add Animation Transitions
+            AnimationMachine.AddMethodTransition(right, "left", "right");
             AnimationMachine.AddMethodTransition(left, "right", "left");
         }
 
 
         bool left()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            if (body.Position.X <= 0)
+            {
+                body.Position = new Vector2(1, body.Position.Y);
                 return true;
-            //if (body.Position.X <= 0)
-            //{
-            //    body.Position = new Vector2(1, body.Position.Y);
-            //    return true;
-            //}
+            }
             return false;
         }
 
         bool right()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            if (body.Position.X + 25 >= 850)
+            {
+                body.Position = new Vector2(824, body.Position.Y);
                 return true;
-            //if (body.Position.X + 25 >= 850)
-            //{
-            //    body.Position = new Vector2(824, body.Position.Y);
-            //    return true;
-            //}
+            }
             return false;
         }
 
         public void Update(GameTime game)
         {
-            //StateMachine.UpdateBehaviour();
+            StateMachine.UpdateBehaviour();
             AnimationMachine.UpdateAnimation(game);
         }
 

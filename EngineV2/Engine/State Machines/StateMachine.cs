@@ -165,22 +165,6 @@ namespace Engine.State_Machines
         }
 
         /// <summary>
-        /// Look to see whether or not the transition requirements have been met for the Method Transitions
-        /// </summary>
-        public void CheckMethodTransition()
-        {
-            //If the States Dictionary holds the ActiveState and the ANimationes Doesn't
-            if (StateBehaviour.Keys.Contains(ActiveState))
-                //Only change the State
-                ChangeState((Transitions[ActiveState].CheckMethodTransition()));
-
-        //    //If only the Animation holds the active state
-        //    else if (StateAnimation.Keys.Contains(ActiveAnimation))
-        //        //Only change the Animation State
-        //        ChangeAnimationState(Transitions[ActiveAnimation].CheckMethodTransition());
-        }
-
-        /// <summary>
         /// Check to see whether or not the transitions dictionary holds the transition is currently stored
         /// </summary>
         /// <param name="state"></param>
@@ -194,6 +178,18 @@ namespace Engine.State_Machines
         #endregion
 
         #region Update      
+
+        /// <summary>
+        /// Look to see whether or not the transition requirements have been met for the Method Transitions
+        /// </summary>
+        public void CheckMethodTransition()
+        {
+            //If the States Dictionary holds the ActiveState and the ANimationes Doesn't
+            if (StateBehaviour.Keys.Contains(ActiveState))
+                //Only change the State
+                ChangeState(Transitions[ActiveState].CheckMethodTransition());
+        }
+
         /// <summary>
         /// Call the update method for the state behvaiour that ios currently active
         /// </summary>
