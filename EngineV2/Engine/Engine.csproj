@@ -79,8 +79,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render\Renderable.cs" />
     <Compile Include="Service Locator\Locator.cs" />
+    <Compile Include="State Machines\AnimationMachine.cs" />
     <Compile Include="State Machines\Animations\AnimationState.cs" />
     <Compile Include="State Machines\Animations\IAnimationState.cs" />
+    <Compile Include="State Machines\IAnimationMachine.cs" />
     <Compile Include="State Machines\IState.cs" />
     <Compile Include="State Machines\IStateMachine.cs" />
     <Compile Include="State Machines\StateMachine.cs" />
