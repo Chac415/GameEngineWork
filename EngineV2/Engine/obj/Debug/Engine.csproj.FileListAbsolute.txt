@@ -42,3 +42,4 @@ C:\Users\chac4_15\Documents\GitHub\GameEngineWork\EngineV2\Engine\bin\Debug\Mono
 C:\Users\chac4_15\Documents\GitHub\GameEngineWork\EngineV2\Engine\bin\Debug\OpenTK.dll
 C:\Users\chac4_15\Documents\GitHub\GameEngineWork\EngineV2\Engine\obj\Debug\Engine.dll
 C:\Users\chac4_15\Documents\GitHub\GameEngineWork\EngineV2\Engine\obj\Debug\Engine.pdb
+C:\Users\act1w\OneDrive\Documents\GitHub\GameEngineWork\EngineV2\Engine\obj\Debug\Engine.csprojResolveAssemblyReference.cache

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Engine.Interfaces;
 using Microsoft.Xna.Framework;
 
-namespace Engine.Collision_Manager
+namespace Engine.Collision_Management
 {
     public class SAT_CLass : ISAT
     {

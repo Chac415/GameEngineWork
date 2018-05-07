@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Engine.Collision_Manager;
+using Engine.Collision_Management;
 using Engine.Interfaces;
 using Engine.Physics;
 using Engine.Service_Locator;
