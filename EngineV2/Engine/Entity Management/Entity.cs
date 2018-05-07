@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Engine.Interfaces;
-
+using Microsoft.Xna.Framework.Input;
 
 namespace Engine.Entity_Management
 {
@@ -29,6 +29,62 @@ namespace Engine.Entity_Management
 
         //Virtual Methods
         public abstract void Draw(SpriteBatch spriteBatch);
+
+        #region Physics content
+
+        private Vector2 gravity;
+
+        public virtual Vector2 Velocity { get; set; }
+        public virtual Vector2 Acceleration { get; set; }
+        public Vector2 Gravity { get { return gravity; } set { gravity = value; } }
+        public virtual bool GravityBool { get; set; }
+
+        //Inverse mass to encourage multiplication and not diviision due to multiplication being faster
+        protected float InverseMass = -1.5f;
+        protected float Restitution = 1f;
+        protected float Damping = 0.5f;
+
+        protected void SetGravity(Vector2 grav)
+        {
+            Gravity = grav;
+        }
+        /// <summary>
+        /// Apply force to an entity commonly used for movement
+        /// </summary>
+        /// <param name="force"></param>
+        public virtual void ApplyForce(Vector2 force)
+        {
+            //Multiply force by the inversemass to obtain the acceleration value
+            Acceleration += force * InverseMass;
+        }
+        /// <summary>
+        /// Used for moving entities based off of collisions
+        /// </summary>
+        /// <param name="closingVelo"></param>
+        public virtual void ApplyImpulse(Vector2 closingVelo)
+        {
+            //Apply Impulse by setting the velocy to the closing velocity by the Restitution of the entity
+            Velocity = closingVelo * Restitution;
+        }
+
+        /// <summary>
+        /// Update the physics of the entity
+        /// </summary>
+        public virtual void UpdatePhysics()
+        {
+            Velocity += Acceleration;
+            Velocity *= Damping;
+            Position += Velocity;
+
+            if (GravityBool)
+                Acceleration = gravity;
+            else Acceleration = new Vector2(0, 0);
+
+
+
+        }
+
+        #endregion     
 
     }
 }
