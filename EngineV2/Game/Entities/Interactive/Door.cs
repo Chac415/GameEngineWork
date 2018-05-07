@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Engine.Buttons;
-using Engine.Collision_Management;
+using Engine.Collision_Manager;
 using Engine.Input_Managment;
 using Engine.Interfaces;
 using Engine.Managers;
@@ -28,14 +28,12 @@ namespace ProjectHastings.Entities.Interactive
 
         //Collision Management Variables
         private IEntity collisionObj;
-        private ICollidable colliders;
 
 
         //Lists
         private List<IEntity> interactiveObjs;
 
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
-        ICollisionManager coli = Locator.Instance.getProvider<CollisionManager>() as ICollisionManager;
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
 
         #endregion
@@ -46,11 +44,6 @@ namespace ProjectHastings.Entities.Interactive
         public override void UniqueData()
         {
             input.AddKeyListener(OnNewKeyInput);
-
-            coli.subscribe(onCollision);
-
-            //CALL COLLIDABLEOBJS()
-            CollidableObjs();
         }
 
         /// <summary>
@@ -83,10 +76,7 @@ namespace ProjectHastings.Entities.Interactive
             //if Plyaer has unlocked the door, change scene and play audio instance
             if (doorContact && keyState.IsKeyDown(Keys.W) && Key.Unlock || doorContact && keyState.IsKeyDown(Keys.Up) && Key.Unlock)
             {
-                sound.Playsnd("Exit", 0.5f);
-                EntityManager.Entities.Clear();
-                BehaviourManager.behaviours.Clear();
-                ButtonList.Buttons.Clear();
+                sound.Playsnd("Exit", 0.5f, false);
 
 
                 //doorContact = false;
@@ -98,35 +88,6 @@ namespace ProjectHastings.Entities.Interactive
             }
         }
 
-        /// <summary>
-        /// Get the list of interactive objects
-        /// </summary>
-        public override void CollidableObjs()
-        {
-            interactiveObjs = _Collisions.getCollidableList();
-        }
 
-        /// <summary>
-        /// Send Event to collision Event Manager
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="data"></param>
-        public virtual void onCollision(object source, CollisionEventData data)
-        {
-            //collisionObj = data.objectCollider;
-
-            //for (int i = 0; i < interactiveObjs.Count; i++)
-            //{
-            //    //checks to see if player is in contact with the door 
-            //    if (Hitbox.Intersects((interactiveObjs[0].Hitbox)))
-            //    {
-            //        doorContact = true;
-            //    }
-            //    else
-            //    {
-            //        doorContact = false;
-            //    }
-            //}
-        }
     }
 }

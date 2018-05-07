@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Engine.Collision_Management;
+using Engine.Collision_Manager;
 using Engine.Interfaces;
 using Engine.Service_Locator;
 using Microsoft.Xna.Framework;
@@ -16,40 +16,19 @@ namespace ProjectHastings.Entities.Environment
     class Platform : GameEntity
     {
         //COLLISIONS
-        private IEntity collisionObj;
-        private IEntity collision;
 
         //LISTS
         private List<IEntity> physicsObjs;
 
-        ICollisionManager coli = Locator.Instance.getProvider<CollisionManager>() as ICollisionManager;
 
         /// <summary>
         /// Initialise the Variables specific to this object
         /// </summary>
         public override void UniqueData()
         {
-            coli.subscribe(onCollision);
             //  physicsObjs = _PhysicsObj.getPhysicsList();
-            _Collisions.isEnvironmentCollidable(this);
         }
 
-        /// <summary>
-        /// Send Event to collision Event Manager
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="data"></param>
-        public virtual void onCollision(object source, CollisionEventData data)
-        {
-
-            collision = data.objectCollider;
-
-            //for (int i = 0; i < physicsObjs.Count; i++)
-            //{
-            //    //if (Hitbox.Intersects(physicsObjs[i].Hitbox))
-            //    //{ physicsObjs[i].setGrav(false); }
-            //}
-        }
 
         /// <summary>
         /// Draws the entty based on the texture and position obtained from the animation class

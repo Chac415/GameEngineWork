@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Engine.Interfaces;
 namespace Engine.Managers
 {
@@ -37,12 +33,12 @@ namespace Engine.Managers
         /// <param name="IBehave"></param>
         /// <param name="behave"></param>
         /// <returns></returns>
-        public T CreateEnt<T>(Texture2D text, Vector2 posn, ICollidable col, IBehaviourManager behave) where T : IEntity, new()
+        public T CreateEnt<T>(Texture2D text, Vector2 posn, IBehaviourManager behave) where T : IEntity, new()
         {
             //Create a new object of type T
             T Ent = new T();
             //Call the Initialise Method of Type T
-            Ent.Initialize(text, posn, col, behave);
+            Ent.Initialize(text, posn, behave);
             //Add the object to a list of entities
             Entities.Add(Ent);
             return Ent;

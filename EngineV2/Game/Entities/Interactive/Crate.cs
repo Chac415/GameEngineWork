@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Engine.Collision_Management;
+using Engine.Collision_Manager;
 using Engine.Input_Managment;
 using Engine.Interfaces;
 using Engine.Managers;
@@ -26,21 +26,17 @@ namespace ProjectHastings.Entities.Interactive
         private KeyboardState keyState;
 
         //Collision Management
-        private IEntity collisionObj;
+
         //Lists
         private List<IEntity> player;
         private List<IEntity> environment;
 
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
-        ICollisionManager coli = Locator.Instance.getProvider<CollisionManager>() as ICollisionManager;
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
 
         public override void UniqueData()
         {
             input.AddKeyListener(OnNewKeyInput);
-            coli.subscribe(onCollision);
-            CollidableObjs();
-            _Collisions.isInteractiveCollidable(this);
             //  _PhysicsObj.hasPhysics(this);
         }
 
@@ -60,12 +56,12 @@ namespace ProjectHastings.Entities.Interactive
                 if (crateContact && keyState.IsKeyDown(Keys.D) || moveObject && keyState.IsKeyDown(Keys.Right))
                 {
                     Position += new Vector2(3, 0);
-                    sound.Playsnd("Crate", 0.2f);
+                    sound.Playsnd("Crate", 0.2f, true);
                 }
                 if (crateContact && keyState.IsKeyDown(Keys.A) || moveObject && keyState.IsKeyDown(Keys.Left))
                 {
                     Position += new Vector2(-3, 0);
-                    sound.Playsnd("Crate", 0.2f);
+                    sound.Playsnd("Crate", 0.2f, true);
                 }
 
             }
@@ -74,67 +70,6 @@ namespace ProjectHastings.Entities.Interactive
             {
                 sound.Stopsnd("Crate");
             }
-        }
-
-        /// <summary>
-        /// Get the lists of collidabl objects
-        /// </summary>
-        public override void CollidableObjs()
-        {
-            //interactiveObjs = colliders.getEntityList();
-            player = _Collisions.getPlayableObj();
-            environment = _Collisions.getEnvironment();
-        }
-
-        /// <summary>
-        /// Send Event to collision Event Manager
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="data"></param>
-        public virtual void onCollision(object source, CollisionEventData data)
-        {
-            collisionObj = data.objectCollider;
-            gravity = true;
-
-            #region wall collisions
-
-            if (Position.X <= 0)
-            {
-                Position += new Vector2(3, 0);
-            }
-            if (Hitbox.X >= 850)
-            { Position -= new Vector2(3, 0); }
-            if (Position.Y >= 570)
-            {
-                gravity = false;
-                Position -= new Vector2(2, 0);
-            }
-            #endregion
-
-            #region Player Collision
-            for (int i = 0; i < player.Count; i++)
-            {
-                if (Hitbox.Intersects((player[i].Hitbox)))
-                {
-                    //if (player[i].Tag == "Player")
-                    //{ crateContact = true; }
-                    //else if (player[i].Tag != "Player")
-                    //{ crateContact = false; }
-
-                    crateContact = true;
-                }
-                else
-                { crateContact = false; }
-
-            }
-            for (int i = 0; i < environment.Count; i++)
-            {
-                if (Hitbox.Intersects(environment[i].Hitbox))
-                {
-                    gravity = false;
-                }
-            }
-            #endregion
         }
 
         /// <summary>

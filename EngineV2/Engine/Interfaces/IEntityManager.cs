@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace Engine.Interfaces
 {
@@ -18,6 +13,6 @@ namespace Engine.Interfaces
     /// </summary>
     public interface IEntityManager
     {
-        T CreateEnt<T>(Texture2D text, Vector2 Posn, ICollidable col, IBehaviourManager IBehave) where T : IEntity, new();    
+        T CreateEnt<T>(Texture2D text, Vector2 Posn, IBehaviourManager IBehave) where T : IEntity, new();    
     }
 }

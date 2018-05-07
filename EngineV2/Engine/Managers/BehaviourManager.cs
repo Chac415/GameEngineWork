@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿using System.Collections.Generic;
 using Engine.Interfaces;
+using Engine.Physics;
+using Engine.State_Machines;
 
 namespace Engine.Managers
 {
@@ -25,10 +21,7 @@ namespace Engine.Managers
         /// </summary>
         public void Update()
         {
-            foreach (IBehaviour ent in behaviours)
-            {
-                ent.update();
-            }
+
         }
 
         /// <summary>

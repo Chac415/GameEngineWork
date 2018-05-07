@@ -1,10 +1,11 @@
 ﻿using Engine.Input_Managment;
 using Engine.Interfaces;
 using Engine.Managers;
+using Engine.Physics;
 using Engine.Service_Locator;
+using Engine.State_Machines;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using ProjectHastings.Animations;
 using ProjectHastings.Entities.Player;
 
 namespace ProjectHastings.Behaviours.Player_Behaviours
@@ -15,7 +16,6 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
 
         private KeyboardState keyState;
         private Player player;
-        private PlayerAnimation ani;
 
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
         private IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
@@ -30,7 +30,6 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
         public void Initialise(IEntity ent)
         {
             body = ent;
-            ani = new PlayerAnimation();
             input.AddKeyListener(OnNewKeyInput);
         }
 
@@ -43,9 +42,6 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
 
                 speed = 2.5f;
                 body.Position += new Vector2(speed, 0);
-                Player.Animate = true;
-                Player.row = 1;
-
             }
 
             if (keyState.IsKeyDown(Keys.A) || keyState.IsKeyDown(Keys.Left))
@@ -53,33 +49,23 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
 
                 speed = -2.5f;
                 body.Position += new Vector2(speed, 0);
-                Player.Animate = true;
-                Player.row = 0;
             }
 
-            if (Player.canClimb && keyState.IsKeyDown(Keys.W) || Player.canClimb && keyState.IsKeyDown(Keys.Up))
+            if (/*Player.canClimb &&*/ keyState.IsKeyDown(Keys.W) || /*Player.canClimb &&*/ keyState.IsKeyDown(Keys.Up))
             {
                 speed = -2.5f;
-                body.Position += new Vector2(speed);
-                Player.Animate = true;
-                Player.row = 2;
-                sound.Playsnd("Ladder", 0.3f);
+                body.Position += new Vector2(0,speed);
+                sound.Playsnd("Ladder", 0.3f, true);
 
             }
-            if (Player.canClimb && keyState.IsKeyDown(Keys.S) || Player.canClimb && keyState.IsKeyDown(Keys.Down))
+            if (/*Player.canClimb &&*/ keyState.IsKeyDown(Keys.S) || /*Player.canClimb &&*/ keyState.IsKeyDown(Keys.Down))
             {
                 speed = 2.5f;
-                body.Position += new Vector2(speed, 0);
-                Player.Animate = true;
-                Player.row = 2;
-                sound.Playsnd("Ladder", 0.3f);
+                body.Position += new Vector2(0, speed);
+                sound.Playsnd("Ladder", 0.3f, true);
             }
         }
 
-        public void update()
-        {
-
-        }
 
     }
 }

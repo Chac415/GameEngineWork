@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Engine.Collision_Management;
+using Engine.Collision_Manager;
 using Engine.Input_Managment;
 using Engine.Interfaces;
 using Engine.Physics;
@@ -29,8 +29,6 @@ namespace ProjectHastings.Entities.Interactive
         private KeyboardState keyState;
 
         //Collision Management
-        private IEntity collisionObj;
-        private ICollidable colliders;
         IPhysics physics;
 
         //Lists
@@ -39,7 +37,6 @@ namespace ProjectHastings.Entities.Interactive
         private IEntity triggerWall;
 
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
-        ICollisionManager coli = Locator.Instance.getProvider<CollisionManager>() as ICollisionManager;
 
         /// <summary>
         /// Initialise the Variables specific to this object
@@ -47,62 +44,7 @@ namespace ProjectHastings.Entities.Interactive
         public override void UniqueData()
         {
 
-            coli.subscribe(onCollision);
-            CollidableObjs();
-            _Collisions.isInteractiveCollidable(this);
         }
-
-        /// <summary>
-        /// Get the list of interactive objects
-        /// </summary>
-        public override void CollidableObjs()
-        {
-            //physicsObj = physics.getPhysicsList();
-            environementObjs = _Collisions.getEnvironment();
-            interactiveObj = _Collisions.getInteractiveObj();
-        }
-
-        /// <summary>
-        /// Send Event to collision Event Manager
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="data"></param>
-        public virtual void onCollision(object source, CollisionEventData data)
-        {
-            collisionObj = data.objectCollider;
-
-
-            #region Player Collision
-            for (int i = 0; i < interactiveObj.Count; i++)
-            {
-                if (Hitbox.Intersects(interactiveObj[i].Hitbox) && interactiveObj[i].Tag == "Crate")
-                {
-                    activate();
-                }
-
-            }
-
-            #endregion
-        }
-
-        #region behaviours
-
-        public void activate()
-        {
-            for (int i = 0; i < environementObjs.Count; i++)
-            {
-                if (environementObjs[i].Tag == "triggerWall")
-                {
-                    triggerWall = environementObjs[i];
-                }
-            }
-            triggerWall.Position = new Vector2(0, 1000);
-        }
-
-        public void reset()
-        { triggerWall.Position = new Vector2(0, 351); }
-
-        #endregion
 
         /// <summary>
         /// Draws the entty based on the texture and position obtained from the animation class

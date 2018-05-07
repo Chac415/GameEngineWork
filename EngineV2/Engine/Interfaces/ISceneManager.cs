@@ -8,5 +8,6 @@ namespace Engine.Interfaces
         void AddScene(string name, IScene scenes);
         void ChangeScene(string name);
         void RemoveScene(string name);
+        void Exit();
     }
 }

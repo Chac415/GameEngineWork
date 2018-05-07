@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Engine.Collision_Management;
+using Engine.Collision_Manager;
 using Engine.Input_Managment;
 using Engine.Interfaces;
-using Engine.Managers;
 using Engine.Service_Locator;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,12 +26,10 @@ namespace ProjectHastings.Entities.Interactive
 
         //Collision Management
         private IEntity collisionObj;
-        private ICollidable colliders;
         private List<IEntity> playerObj;
         private List<IEntity> targetObjs;
 
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
-        ICollisionManager coli = Locator.Instance.getProvider<CollisionManager>() as ICollisionManager;
 
         #endregion
 
@@ -43,10 +40,7 @@ namespace ProjectHastings.Entities.Interactive
         {
             //SUBSCRIBERS
             input.AddKeyListener(OnNewKeyInput);
-            coli.subscribe(onCollision);
 
-            //CALL COLLIDABLEOBJS()
-            CollidableObjs();
         }
 
         /// <summary>
@@ -70,35 +64,6 @@ namespace ProjectHastings.Entities.Interactive
             }
         }
 
-        /// <summary>
-        /// Get the list of interactive objects
-        /// </summary>
-        public override void CollidableObjs()
-        {
-            playerObj = _Collisions.getPlayableObj();
-            targetObjs = _Collisions.getEnvironment();
-        }
-
-        /// <summary>
-        /// Send Event to collision Event Manager
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="data"></param>
-        public virtual void onCollision(object source, CollisionEventData data)
-        {
-            collisionObj = data.objectCollider;
-
-            for (int i = 0; i < playerObj.Count; i++)
-            {
-                //checks to see if player is in contact with the lever 
-                if (Hitbox.Intersects((playerObj[0].Hitbox)))
-                {
-                    //CAN ACTIVATE LEVER
-                    canTrigger = true;
-                }
-                else canTrigger = false;
-            }
-        }
 
         /// <summary>
         /// Draws the entty based on the texture and position obtained from the animation class
@@ -120,13 +85,5 @@ namespace ProjectHastings.Entities.Interactive
 
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
-
-
-        #region GET/SETS
-        public override void setRow(int rows)
-        {
-            row = rows;
-        }
-        #endregion
     }
 }

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Engine.Interfaces;
-using Engine.Managers;
 
 namespace Engine.Render
 {
@@ -17,8 +11,9 @@ namespace Engine.Render
         {
 
             sprite.Begin();
-            
+
             scene.Draw(sprite);
+            
 
             sprite.End();
 

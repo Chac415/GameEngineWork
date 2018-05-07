@@ -5,8 +5,10 @@ using System.Text;
 
 namespace Engine.Interfaces
 {
-    public interface IListWipe
+    public interface IQuad
     {
         void Clear();
+        void Insert(IEntity Entity);
+        List<IEntity> Retrieve(List<IEntity> returnObjects, IEntity Entity);
     }
 }

@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using Engine.Input_Managment;
-using Engine.Interfaces;
+﻿using Engine.Interfaces;
 using Engine.Managers;
-using Engine.Service_Locator;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using ProjectHastings.Scenes;
 
 namespace ProjectHastings
@@ -17,19 +13,13 @@ namespace ProjectHastings
         #region Instance Variables
         //Constants
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
 
         ISceneManager scn;
-        ICollidable collider;
-        IPhysicsObj physicsObj;
 
         IScene TestScene;
         IScene mainmenu;
         IScene Wingame;
         IScene LoseScreen;
-
-        public static Kernel instance;
-
 
         //Screen Size
         int screenWidth = 900;
@@ -57,44 +47,21 @@ namespace ProjectHastings
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            mainmenu = new MainMenu();
-            TestScene = new TestLevel();
-            Wingame = new WinGame();
-            LoseScreen = new GameOver();
             scn = new SceneManager(this);
+            mainmenu = new MainMenu(screenWidth, screenHeight, Content, scn);
+            TestScene = new TestLevel(screenWidth, screenHeight, Content);
+            Wingame = new WinGame(screenWidth, screenHeight, Content, scn);
+            LoseScreen = new GameOver(screenWidth, screenHeight, Content, scn);
 
+            scn.AddScene("Mainmenu", mainmenu);
+            scn.AddScene("TestLevel", TestScene);
+            scn.AddScene("WinGame", Wingame);
+            scn.AddScene("LoseScreen", LoseScreen);
 
             Components.Add((GameComponent)scn);
 
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        protected override void LoadContent()
-        {
-            
-            mainmenu.LoadContent(Content);
-            TestScene.LoadContent(Content);
-            Wingame.LoadContent(Content);
-            LoseScreen.LoadContent(Content);
-
-            //scn.AddScene("Mainmenu", mainmenu);
-            scn.AddScene("TestLevel", TestScene);
-            scn.AddScene("WinGame", Wingame);
-            scn.AddScene("LoseScreen", LoseScreen);
-
-        }
-
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
     }
 }

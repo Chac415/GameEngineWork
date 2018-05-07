@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Engine.Collision_Management;
+using Engine.Collision_Manager;
 using Engine.Input_Managment;
 using Engine.Interfaces;
 using Engine.Managers;
@@ -27,8 +27,7 @@ namespace ProjectHastings.Entities.Interactive
         private KeyboardState keyState;
 
         //Collision Management Variables
-        private IEntity collisionObj;
-        private ICollidable colliders;
+
 
 
 
@@ -36,17 +35,13 @@ namespace ProjectHastings.Entities.Interactive
         private List<IEntity> interactiveObjs;
 
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
-        ICollisionManager coli = Locator.Instance.getProvider<CollisionManager>() as ICollisionManager;
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
 
         #endregion
 
         public override void UniqueData()
         {
-            coli.subscribe(onCollision);
             //_PhysicsObj.hasPhysics(this);
-            _Collisions.isEnvironmentCollidable(this);
-            CollidableObjs();
         }
 
         /// <summary>
@@ -67,39 +62,6 @@ namespace ProjectHastings.Entities.Interactive
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
 
-        /// <summary>
-        /// Get the list of interactive objects
-        /// </summary>
-        public override void CollidableObjs()
-        {
-            interactiveObjs = _Collisions.getPlayableObj();
-        }
-
-        /// <summary>
-        /// Send Event to collision Event Manager
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="data"></param>
-        public virtual void onCollision(object source, CollisionEventData data)
-        {
-            collisionObj = data.objectCollider;
-            gravity = true;
-
-            for (int i = 0; i < interactiveObjs.Count; i++)
-            {
-                //checks to see if player is in contact with the door 
-                if (Hitbox.Intersects((interactiveObjs[0].Hitbox)))
-                {
-                    sound.Playsnd("Key", 0.5f);
-                    Unlock = true;
-                    EntityManager.Entities.Remove(this);
-                }
-                else
-                {
-                    sound.Stopsnd("Key");
-                }
-            }
-        }
 
     }
 }
