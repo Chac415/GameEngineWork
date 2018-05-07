@@ -112,7 +112,16 @@ namespace Engine.State_Machines
             }
         }
 
-
+        /// <summary>
+        /// Easy Access to change the current active animation in the state machine
+        /// </summary>
+        /// <param name="animation"></param>
+        public void ChangeActiveAnimation(string animation)
+        {
+            if (StateAnimation.ContainsKey(animation))
+                ActiveAnimation = animation;
+            else throw new Exception("This Animation doesn't exist in the animation list");
+        }
 
         /// <summary>
         /// returns a true statement id both of the States are held in the dictionary of states
@@ -158,7 +167,7 @@ namespace Engine.State_Machines
         public void CheckMethodTransition()
         {
             //If only the Animation holds the active state
-            if (StateAnimation.Keys.Contains(ActiveAnimation))
+            if (StateAnimation.Keys.Contains(ActiveAnimation) && Transitions.Count != 0)
                 //Only change the Animation State
                 ChangeAnimationState(Transitions[ActiveAnimation].CheckMethodTransition());
         }

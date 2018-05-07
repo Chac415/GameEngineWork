@@ -43,6 +43,8 @@ namespace ProjectHastings.Entities.Player
         private KeyboardState keyState;
         private IAnimation SpriteSheet;
 
+        private PlayerMind mind; 
+
         //Collision Lists
         private List<IEntity> collisionObjs;
         private List<IEntity> interactiveObjs;
@@ -60,19 +62,10 @@ namespace ProjectHastings.Entities.Player
         /// </summary>
         public override void UniqueData()
         {
-            //Initialise the spriteSheet animation
-            SpriteSheet = new SpriteSheetAnimation(Texture);
             Tag = "Player";
             speed = 3;
-            //stateMachine = new StateMachine<IPhysics>(this);
-            //stateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 2, 2f), new MoveLeft<IPhysics>(), "left" );
-            //stateMachine.AddState(new AnimationState(this, SpriteSheet, 12, 1, 2f), new MoveRight<IPhysics>(), "right" );
-
-
-            _BehaviourManager.createMind<PlayerMind>(this);
+            mind = new PlayerMind(this);         
             
-
-
             // CollisionManager.GetColliderInstance.subscribe(onCollision);
             input.AddKeyListener(OnNewKeyInput);
         }
@@ -149,8 +142,8 @@ namespace ProjectHastings.Entities.Player
         /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //stateMachine.DrawAnimation(spriteBatch);
-            spriteBatch.Draw(Texture, Position, Color.AntiqueWhite);
+            mind.Animate(spriteBatch);
+                //spriteBatch.Draw(Texture, Position, Color.AntiqueWhite);
         }
         /// <summary>
         /// Called Every Frame
@@ -162,6 +155,7 @@ namespace ProjectHastings.Entities.Player
             //stateMachine.UpdateBehaviour();
             SetPoints();
             //stateMachine.UpdateAnimation(game);
+            mind.Update(game);
         }
 
     }

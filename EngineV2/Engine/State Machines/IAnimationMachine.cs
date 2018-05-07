@@ -14,6 +14,7 @@ namespace Engine.State_Machines
 
         void AddMethodTransition(Func<bool> methodVal, string stateFrom, string targetState);
         void AddMethodTransition(Func<bool> methodVal, string stateFrom, string targetState, bool successVal);
+        void ChangeActiveAnimation(string animation);
 
         void UpdateAnimation(GameTime gameTime); //Update Animation State
         void DrawAnimation(SpriteBatch sprite);
