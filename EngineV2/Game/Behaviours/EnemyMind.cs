@@ -1,46 +1,84 @@
-﻿using Engine.Interfaces;
+﻿using System;
+using Engine.Animations;
+using Engine.Interfaces;
 using Engine.Physics;
 using Engine.State_Machines;
+using Engine.State_Machines.Animations;
+using Engine.State_Machines.Test_States;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace ProjectHastings.Behaviours
 {
     public class EnemyMind
     {
-        private IMoveBehaviour move;
-        private IPhysics body;
 
-        public EnemyMind(IPhysics Ent, IStateMachine<IPhysics> stateMachine)
+        private IAnimation SpriteSheet;
+        public IStateMachine<IEntity> StateMachine;
+        public IAnimationMachine<IEntity> AnimationMachine;
+
+        private IMoveBehaviour move;
+        private IEntity body;
+
+        public EnemyMind(IEntity Ent)
         {
-            var stateMachine1 = stateMachine;
             body = Ent;
-            //move = new xMoveBehaviour(body);
-            stateMachine1.AddMethodTransition(right, "left", "right");
-            stateMachine1.AddMethodTransition(left, "right", "left");
+
+            //Initialise the spriteSheet animation
+            SpriteSheet = new SpriteSheetAnimation(body.Texture);
+            //Create a new instance of State Machine
+            StateMachine = new StateMachine<IEntity>(body);
+            AnimationMachine = new AnimationMachine<IEntity>(body);
+
+            //Add the states to the State Machine
+            //StateMachine.AddState(new MoveLeft<IEntity>(), "left");
+            //StateMachine.AddState(new MoveRight<IEntity>(), "right");
+            AnimationMachine.AddState(new AnimationState(body, SpriteSheet, 12, 1), "left");
+            AnimationMachine.AddState(new AnimationState(body, SpriteSheet, 12, 0), "right");
+
+
+            //StateMachine.AddMethodTransition(right, "left", "right");
+            //StateMachine.AddMethodTransition(left, "right", "left");
+            AnimationMachine.AddMethodTransition(left, "right", "left");
+            AnimationMachine.AddMethodTransition(left, "right", "left");
         }
 
 
         bool left()
         {
-            if (body.Position.X <= 0)
-            {
-                body.Position = new Vector2(1, body.Position.Y);
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
                 return true;
-            }
+            //if (body.Position.X <= 0)
+            //{
+            //    body.Position = new Vector2(1, body.Position.Y);
+            //    return true;
+            //}
             return false;
         }
 
         bool right()
         {
-            if (body.Position.X + 25 >= 850)
-            {
-                body.Position = new Vector2(824, body.Position.Y);
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
                 return true;
-            }
+            //if (body.Position.X + 25 >= 850)
+            //{
+            //    body.Position = new Vector2(824, body.Position.Y);
+            //    return true;
+            //}
             return false;
         }
 
+        public void Update(GameTime game)
+        {
+            //StateMachine.UpdateBehaviour();
+            AnimationMachine.UpdateAnimation(game);
+        }
 
+        public void Animate(SpriteBatch sprite)
+        {
+            AnimationMachine.DrawAnimation(sprite);
+        }
     }
 }
 
