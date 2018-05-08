@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ProjectHastings.Entities.Player;
-
+using ProjectHastings.Behaviours.States;
 namespace ProjectHastings.Behaviours
 {
     public class EnemyMind
@@ -22,6 +22,8 @@ namespace ProjectHastings.Behaviours
         private IMoveBehaviour move;
         private IEntity body;
 
+        bool turning = true;
+
         public EnemyMind(IEntity Ent)
         {
             body = Ent;
@@ -33,22 +35,13 @@ namespace ProjectHastings.Behaviours
             StateMachine = new StateMachine<IEntity>(body);
             AnimationMachine = new AnimationMachine<IEntity>(body);
 
-            //Add the states to the State Machine
-            StateMachine.AddState(new MoveLeft<IEntity>(), "left");
-            StateMachine.AddState(new MoveRight<IEntity>(), "right");
-
-            //Add state behaviour Transitions
-            StateMachine.AddMethodTransition(right, "left", "right");
-            StateMachine.AddMethodTransition(left, "right", "left");
 
             //Add Animation States
             AnimationMachine.AddState(new AnimationState(body, SpriteSheet, 12, 1), "left");
             AnimationMachine.AddState(new AnimationState(body, SpriteSheet, 12, 0), "right");
-            //Add Animation Transitions
-            AnimationMachine.AddMethodTransition(right, "left", "right");
-            AnimationMachine.AddMethodTransition(left, "right", "left");
-            AnimationMachine.AddMethodTransition(turn, "right", "left");
-            AnimationMachine.AddMethodTransition(turn, "right", "left");
+
+            //Add the states to the State Machine
+            StateMachine.AddState(new Patrol<IEntity>(100, body.Position, AnimationMachine), "Patrol");
         }
 
 
@@ -73,24 +66,28 @@ namespace ProjectHastings.Behaviours
         }
         bool turn()
         {
-            return true;
+            if (turning)
+            { return true; }
+            else return false;
         }
 
         /// <summary>
         /// Attack Method
         /// </summary>
         /// <param name="collision"></param>
-        public void Attack(IEntity collision)
+        public void Collision(IEntity collision)
         {
+
             //If the enemy collides with the player, take 1 damage
             if (collision.Tag == "Player")
             {
-                ((Player)collision).healthScript.TakeDamage(1);
+             //   ((Player)collision).healthScript.TakeDamage(1);
             }
-            if (collision.Tag == "Wall")
+            if ( collision.Tag == "Crate")
             {
-                turn();
+                turning = true;
             }
+            
         }
 
 

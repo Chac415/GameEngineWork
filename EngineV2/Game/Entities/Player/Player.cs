@@ -40,7 +40,10 @@ namespace ProjectHastings.Entities.Player
         private bool canJump = false;
         private bool isJumping = false;
         private float jumpHeight = 0;
+        private float timer = 0;
 
+        
+        public float Timer { get { return timer; } set { timer = value; } }
         private KeyboardState keyState;
         private IAnimation SpriteSheet;
 
@@ -49,7 +52,7 @@ namespace ProjectHastings.Entities.Player
 
 
         //Behaviours & scripts
-        private PlayerMind mind;
+        public PlayerMind mind;
         public IDamageable healthScript;
 
 
@@ -119,7 +122,6 @@ namespace ProjectHastings.Entities.Player
 
             if (canJump)
             {
-                //            gravity = false;
                 if (isJumping)
                 {
                     Position -= new Vector2(0, jumpForce);
@@ -153,7 +155,8 @@ namespace ProjectHastings.Entities.Player
         /// <param name="game"></param>
         public override void Update(GameTime game)
         {
-            Hitbox = new Rectangle((int)Position.X - 25, (int)Position.Y - 25, Texture.Width/2, Texture.Height/2);
+            Timer += game.ElapsedGameTime.Seconds;
+       //     Hitbox = new Rectangle((int)Position.X - 25, (int)Position.Y - 25, Texture.Width/2, Texture.Height/2);
             SetPoints(3,3);
             mind.Update(game);
         }

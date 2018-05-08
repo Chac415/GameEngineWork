@@ -9,11 +9,12 @@ using Engine.State_Machines.Animations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProjectHastings.Behaviours.States;
 using ProjectHastings.Entities.Player;
 
 namespace ProjectHastings.Behaviours.Player_Behaviours
 {
-    class PlayerMind
+    public class PlayerMind
     {
         private IEntity body;
         private KeyboardState keyState;
@@ -21,6 +22,11 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
         private IAnimationMachine<IEntity> Animations;
         private IAnimation SpriteSheet;
         private IStateMachine<IEntity> StateMachine;
+        string IdleState;
+
+        int direction = 1;
+        private float timer;
+        public float Timer { get { return timer; } set { timer = value; } }
 
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
         private IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
@@ -31,7 +37,7 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
 
         public PlayerMind(IEntity ent)
         {
-
+            IdleState = "Idle_Right";
             body = ent;
             input.AddKeyListener(OnNewKeyInput);
             //Add states to player for things liek climbing in order to counter the limitations of gravity
@@ -40,7 +46,11 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
             SpriteSheet = new SpriteSheetAnimation(body.Texture);
             Animations = new AnimationMachine<IEntity>(body);
 
-            Animations.AddState(new AnimationState(body, SpriteSheet, 0, 2), "idle");
+            StateMachine.AddState(new EmptyState<IEntity>(), "BaseState");
+            StateMachine.AddState(new DamagedPlayerState<IEntity>(((Player)body), StateMachine, Animations), "Damaged");
+
+            Animations.AddState(new AnimationState(body, SpriteSheet, 0, 0, 0, 1), "Idle_Left");
+            Animations.AddState(new AnimationState(body, SpriteSheet, 0, 1, 0, 1), "Idle_Right");
             Animations.AddState(new AnimationState(body, SpriteSheet, 12, 0), "Walking_Left");
             Animations.AddState(new AnimationState(body, SpriteSheet, 12, 1), "Walking_Right");
             Animations.AddState(new AnimationState(body, SpriteSheet, 12, 2), "Climbing");
@@ -52,13 +62,14 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
             if (Collision.Tag == "Ladder")
             {
                 canClimb = true;
-                //((IPhysics)body).GravityBool = false;
+            }
+            if (Collision.Tag == "Enemy")
+            {
+                StateMachine.ChangeState("Damaged");
             }
             if (Collision.Tag != "Ladder")
             {
                 canClimb = false;
-                //((IPhysics)body).GravityBool = true;
-
             }
         }
 
@@ -66,13 +77,14 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
         {
             keyState = data._newKey;
 
-            Animations.ChangeActiveAnimation("idle");
+                Animations.ChangeActiveAnimation(IdleState);
+
 
             if (keyState.IsKeyDown(Keys.D) || keyState.IsKeyDown(Keys.Right))
             {
                 Animations.ChangeActiveAnimation("Walking_Right");
                 speed = 2.5f;
-                
+                IdleState = "Idle_Right";
                 body.Position += new Vector2(speed, 0);
             }
 
@@ -80,13 +92,15 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
             {
                 Animations.ChangeActiveAnimation("Walking_Left");
                 speed = -2.5f;
+                IdleState = "Idle_Left";
                 body.Position += new Vector2(speed, 0);
             }
 
             if (canClimb && keyState.IsKeyDown(Keys.W) || keyState.IsKeyDown(Keys.Up))
             {
                 speed = -5f;
-                body.Position += new Vector2(0,speed);
+                body.Position += new Vector2(0, speed);
+                Animations.ChangeActiveAnimation("Climbing");
                 sound.Playsnd("Ladder", 0.3f, true);
 
             }
@@ -94,6 +108,7 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
             {
                 speed = 5f;
                 body.Position += new Vector2(0, speed);
+                Animations.ChangeActiveAnimation("Climbing");
                 sound.Playsnd("Ladder", 0.3f, true);
             }
         }
@@ -101,7 +116,9 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
 
         public void Update(GameTime game)
         {
+            timer += game.ElapsedGameTime.Milliseconds;
             Animations.UpdateAnimation(game);
+            StateMachine.UpdateBehaviour();
         }
         public void Animate(SpriteBatch sprite)
         {

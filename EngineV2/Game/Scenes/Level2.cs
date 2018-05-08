@@ -17,7 +17,7 @@ using ProjectHastings.Entities.Player;
 
 namespace ProjectHastings.Scenes
 {
-    class Level1 : IScene
+    class Level2 : IScene
     {
         List<IEntity> Scenegraph = new List<IEntity>();
         List<IBehaviour> Behaviours = new List<IBehaviour>();
@@ -33,7 +33,7 @@ namespace ProjectHastings.Scenes
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
         IBehaviourManager behaviours = Locator.Instance.getProvider<BehaviourManager>() as IBehaviourManager;
 
-        public Level1(int ScreenWidth, int ScreenHeight, ContentManager content, ISceneManager scn)
+        public Level2(int ScreenWidth, int ScreenHeight, ContentManager content, ISceneManager scn)
         {
 
             #region Instantiate Managers
@@ -59,44 +59,57 @@ namespace ProjectHastings.Scenes
             sound.Initialize("Exit", Content.Load<SoundEffect>("ExitLevelSFX"));
             sound.Initialize("Key", Content.Load<SoundEffect>("KeyPickupSFX"));
             sound.Initialize("Ladder", Content.Load<SoundEffect>("LadderClimbSFX"));
+            sound.Initialize("CratePush", Content.Load<SoundEffect>("CratePushSFX"));
             sound.CreateInstance();
 
             //BackGround
             back.Initialize("Background", Content.Load<Texture2D>("BackgroundTex1"));
 
             //Ladders
-            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(227, 110), behaviours);
-            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(675, 355),  behaviours);
-            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(74, 470), behaviours);
-            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(167, 470), behaviours);
+            //entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(200, 110), behaviours);
+            //entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(675, 355),  behaviours);
+            //entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(100, 470), behaviours);
+            //entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(145, 470), behaviours);
             //Door
-            entManager.CreateEnt<Door>(Content.Load<Texture2D>("Door"), new Vector2(850, 555), behaviours);
+            //entManager.CreateEnt<Door>(Content.Load<Texture2D>("Door"), new Vector2(850, 555), behaviours);
 
             //Key
-            entManager.CreateEnt<Key>(Content.Load<Texture2D>("Key"), new Vector2(20, 560), behaviours);
+            //entManager.CreateEnt<Key>(Content.Load<Texture2D>("Key"), new Vector2(20, 560), behaviours);
 
             //Wall
-            entManager.CreateEnt<TriggerWall>(Content.Load<Texture2D>("Wall"), new Vector2(130, 470), behaviours);
+            // entManager.CreateEnt<TriggerWall>(Content.Load<Texture2D>("Wall"), new Vector2(130, 470), behaviours);
 
-            //Platforms          
+            //Platforms  Top of screen to Bottom  & Left to Right
+
+            //Top Layer
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(0, 80), behaviours);
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(675, 80), behaviours);
+
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(0, 150), behaviours);
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(125, 150), behaviours);
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(250, 150), behaviours);
+
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(375, 300), behaviours);
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(500, 300), behaviours);
+
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(125, 400), behaviours);
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(250, 400), behaviours);
+
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(0, 550), behaviours);
+
             entManager.CreateEnt<Platform>(Content.Load<Texture2D>("XLPlatformTex"), new Vector2(0, 595), behaviours);
-            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(702, 475), behaviours);
-            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(702, 355), behaviours);
-            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("LPlatformTex"), new Vector2(0, 355),  behaviours);
-            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(446, 355), behaviours);
-            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(0, 107),  behaviours);
-            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("Platform"), new Vector2(100, 470), behaviours);
+
+
+            //entManager.CreateEnt<Platform>(Content.Load<Texture2D>("XLPlatformTex"), new Vector2(0, 355),  behaviours);
+            // entManager.CreateEnt<Platform>(Content.Load<Texture2D>("Platform"), new Vector2(100, 470), behaviours);
             //INTERACTIVE OBJECTS
+            entManager.CreateEnt<Crate>(Content.Load<Texture2D>("crate"), new Vector2(30, 52), behaviours);
 
             //The Player
-            entManager.CreateEnt<Player>(Content.Load<Texture2D>("Chasting"), new Vector2(50, 70),  behaviours);
+            entManager.CreateEnt<Player>(Content.Load<Texture2D>("Chasting"), new Vector2(10, 583),  behaviours);
 
             //Enemies
-            entManager.CreateEnt<Thug>(Content.Load<Texture2D>("Thug"), new Vector2(300, 564), behaviours);
-            entManager.CreateEnt<Thug>(Content.Load<Texture2D>("Thug"), new Vector2(400, 340), behaviours);
-
-
-            entManager.CreateEnt<Crate>(Content.Load<Texture2D>("crate"), new Vector2(300, 300), behaviours);
+            entManager.CreateEnt<Thug>(Content.Load<Texture2D>("Thug"), new Vector2(630, 564), behaviours);
 
             Scenegraph.AddRange(EntityManager.Entities);
             Behaviours = BehaviourManager.behaviours;

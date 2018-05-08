@@ -88,10 +88,10 @@ namespace Engine.State_Machines
         /// When called, Changes the Current State, calls the exit method and the enter method
         /// </summary>
         /// <param name="changeto"></param>
-        private void ChangeState(string changeto)
+        public void ChangeState(string changeto)
         {
             //If the type isnt null
-            if (changeto != null)
+            if (changeto != null && changeto != ActiveState)
             {
                 //Caal the exit behaviour of the current state
                 StateBehaviour[ActiveState].Exit(Holder);
@@ -185,7 +185,7 @@ namespace Engine.State_Machines
         public void CheckMethodTransition()
         {
             //If the States Dictionary holds the ActiveState and the ANimationes Doesn't
-            if (StateBehaviour.Keys.Contains(ActiveState))
+            if (StateBehaviour.Keys.Contains(ActiveState) && Transitions.Count != 0)
                 //Only change the State
                 ChangeState(Transitions[ActiveState].CheckMethodTransition());
         }

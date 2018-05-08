@@ -56,10 +56,14 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AssistingSceneScripts\EnemySpawnLocations.cs" />
     <Compile Include="Behaviours\Player Behaviours\Health\HealthScript.cs" />
     <Compile Include="Behaviours\Player Behaviours\Health\IDamageable.cs" />
     <Compile Include="Behaviours\Player Behaviours\IPlayerBehaviour.cs" />
     <Compile Include="Behaviours\Player Behaviours\PlayerMind.cs" />
+    <Compile Include="Behaviours\States\DamagedPlayerState.cs" />
+    <Compile Include="Behaviours\States\EmptyState.cs" />
+    <Compile Include="Behaviours\States\Patrol.cs" />
     <Compile Include="Buttons\ExitButton.cs" />
     <Compile Include="Buttons\StartButton.cs" />
     <Compile Include="Entities\GameEntity.cs" />
@@ -81,6 +85,7 @@
     <Compile Include="Entities\Environment\TriggerPlatform.cs" />
     <Compile Include="Scenes\GameOver.cs" />
     <Compile Include="Scenes\Level1.cs" />
+    <Compile Include="Scenes\Level2.cs" />
     <Compile Include="Scenes\MainMenu.cs" />
     <Compile Include="Scenes\TestLevel.cs" />
     <Compile Include="Scenes\Wingame.cs" />

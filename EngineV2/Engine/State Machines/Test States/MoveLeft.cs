@@ -9,6 +9,13 @@ namespace Engine.State_Machines.Test_States
     {
         public bool success { get; }
 
+        float moveRange;
+
+        public MoveLeft(float range)
+        {
+            moveRange = range;
+        }
+
         public void Enter(T entity)
         {
             ((IPhysics)entity).ApplyForce(new Vector2(1,0));
