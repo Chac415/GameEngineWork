@@ -6,7 +6,7 @@ namespace Engine.Interfaces
     {
         void Update(GameTime gameTime);
         void AddScene(string name, IScene scenes);
-        void ChangeScene(string name);
+        //void ChangeScene(string name);
         void RemoveScene(string name);
         void Exit();
     }

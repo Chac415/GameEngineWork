@@ -79,10 +79,6 @@ namespace ProjectHastings.Behaviours
         {
 
             //If the enemy collides with the player, take 1 damage
-            if (collision.Tag == "Player")
-            {
-             //   ((Player)collision).healthScript.TakeDamage(1);
-            }
             if ( collision.Tag == "Crate")
             {
                 turning = true;

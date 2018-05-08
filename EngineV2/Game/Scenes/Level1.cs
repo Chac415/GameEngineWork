@@ -19,7 +19,6 @@ namespace ProjectHastings.Scenes
 {
     class Level1 : IScene
     {
-        List<IEntity> Scenegraph = new List<IEntity>();
         List<IBehaviour> Behaviours = new List<IBehaviour>();
 
         //Managers
@@ -98,12 +97,11 @@ namespace ProjectHastings.Scenes
 
             entManager.CreateEnt<Crate>(Content.Load<Texture2D>("crate"), new Vector2(300, 300), behaviours);
 
-            Scenegraph.AddRange(EntityManager.Entities);
             Behaviours = BehaviourManager.behaviours;
 
 
 
-            foreach (var entity in Scenegraph)
+            foreach (var entity in EntityManager.Entities)
             {
                 //If Entity is of Type IPhysics
                 if (entity is IPhysics)
@@ -131,7 +129,7 @@ namespace ProjectHastings.Scenes
             behaviours.Update();
 
             //Call the Update method for each entity in the Scengrapgh list
-            foreach (var entity in Scenegraph)
+            foreach (var entity in EntityManager.Entities)
             {
                 entity.Update(gameTime);
             }
@@ -149,9 +147,9 @@ namespace ProjectHastings.Scenes
             back.Draw(spriteBatch);
 
 
-            for (int i = 0; i < Scenegraph.Count; i++)
+            for (int i = 0; i < EntityManager.Entities.Count; i++)
             {
-                Scenegraph[i].Draw(spriteBatch);
+                EntityManager.Entities[i].Draw(spriteBatch);
             }
 
 

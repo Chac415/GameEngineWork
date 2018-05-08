@@ -16,7 +16,7 @@ namespace ProjectHastings.Entities.Interactive
     /// Date of Change: 03/02/18
     /// Version: 0.4
     /// </summary>
-    class Door : GameEntity, IInteractable
+    class Door : GameEntity, ICollidable
     {
         #region Instance Variables
         public bool doorContact = false;
@@ -28,6 +28,7 @@ namespace ProjectHastings.Entities.Interactive
         //Collision Management Variables
         private IEntity collisionObj;
 
+        public bool isTrigger { get; set; }
 
         //Lists
         private List<IEntity> interactiveObjs;
@@ -42,7 +43,7 @@ namespace ProjectHastings.Entities.Interactive
         /// </summary>
         public override void UniqueData()
         {
-            input.AddKeyListener(OnNewKeyInput);
+            isTrigger = true;
         }
 
         /// <summary>
@@ -54,39 +55,28 @@ namespace ProjectHastings.Entities.Interactive
             spriteBatch.Draw(Texture, Position, Color.AntiqueWhite);
         }
 
+        public override void OnTriggerEnter(IEntity collision)
+        {
+            if (collision.Tag == "Player" && Key.Unlock == true && SceneManager.ActiveScene == "Level1")
+            {
+                sound.Stopsnd("Level1BackgroundMusic");
+                SceneManager.ChangeScene("Level2");
+            }
+            //if (collision.Tag == "Player" && PressurePlate.Unlock == true && SceneManager.ActiveScene == "Level2")
+            //{
+            //    sound.Stopsnd("Level1BackgroundMusic");
+            //    SceneManager.ChangeScene("LoseScreen");
+            //}
+        }
+
         /// <summary>
         /// Called Every Frame
         /// </summary>
         /// <param name="game"></param>
         public override void Update(GameTime game)
         {
+            SetPoints(1, 1);
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
-
-        /// <summary>
-        /// Trigger Input Event
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="data"></param>
-        public virtual void OnNewKeyInput(object source, KeyEventData data)
-        {
-            keyState = data._newKey;
-
-            //if Plyaer has unlocked the door, change scene and play audio instance
-            if (doorContact && keyState.IsKeyDown(Keys.W) && Key.Unlock || doorContact && keyState.IsKeyDown(Keys.Up) && Key.Unlock)
-            {
-                sound.Playsnd("Exit", 0.5f, false);
-
-
-                //doorContact = false;
-
-            }
-            if (doorContact == false)
-            {
-                sound.Stopsnd("Exit");
-            }
-        }
-
-
     }
 }

@@ -11,8 +11,8 @@ namespace Engine.Managers
     public class SceneManager : DrawableGameComponent, ISceneManager
     {
 
-        string ActiveScene;
-        public IDictionary<string, IScene> AllScenes;
+        public static string ActiveScene;
+        private static IDictionary<string, IScene> AllScenes;
         private IRenderable render;
         private SpriteBatch sprt;
 
@@ -37,7 +37,7 @@ namespace Engine.Managers
             }
         }
 
-        public void ChangeScene (string name)
+        public static void ChangeScene (string name)
         {
             if (ActiveScene != name)
             {

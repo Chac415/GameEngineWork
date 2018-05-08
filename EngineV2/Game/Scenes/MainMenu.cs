@@ -61,7 +61,7 @@ namespace ProjectHastings.Scenes
             if (mouseState.LeftButton == ButtonState.Pressed && buttons["StartButton"].HitBox.Contains(mouseState.Position))
             {
                 sound.Stopsnd("MainMenuMusic");
-                scn.ChangeScene("Level1");
+                SceneManager.ChangeScene("Level1");
             }
             if (mouseState.LeftButton == ButtonState.Pressed && buttons["ExitButton"].HitBox.Contains(mouseState.Position))
             {

@@ -19,7 +19,6 @@ namespace ProjectHastings.Scenes
 {
     class Level2 : IScene
     {
-        List<IEntity> Scenegraph = new List<IEntity>();
         List<IBehaviour> Behaviours = new List<IBehaviour>();
 
         //Managers
@@ -53,17 +52,6 @@ namespace ProjectHastings.Scenes
 
         public void LoadContent()
         {
-            //Sounds
-            sound.Initialize("Level1BackgroundMusic", Content.Load<SoundEffect>("Level1BackgroundMusic"));
-            sound.Initialize("Walk", Content.Load<SoundEffect>("Footsteps"));
-            sound.Initialize("Exit", Content.Load<SoundEffect>("ExitLevelSFX"));
-            sound.Initialize("Key", Content.Load<SoundEffect>("KeyPickupSFX"));
-            sound.Initialize("Ladder", Content.Load<SoundEffect>("LadderClimbSFX"));
-            sound.Initialize("CratePush", Content.Load<SoundEffect>("CratePushSFX"));
-            sound.CreateInstance();
-
-            //BackGround
-            back.Initialize("Background", Content.Load<Texture2D>("BackgroundTex1"));
 
             //Ladders
             //entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(200, 110), behaviours);
@@ -111,12 +99,11 @@ namespace ProjectHastings.Scenes
             //Enemies
             entManager.CreateEnt<Thug>(Content.Load<Texture2D>("Thug"), new Vector2(630, 564), behaviours);
 
-            Scenegraph.AddRange(EntityManager.Entities);
             Behaviours = BehaviourManager.behaviours;
 
 
 
-            foreach (var entity in Scenegraph)
+            foreach (var entity in EntityManager.Entities)
             {
                 //If Entity is of Type IPhysics
                 if (entity is IPhysics)
@@ -144,7 +131,7 @@ namespace ProjectHastings.Scenes
             behaviours.Update();
 
             //Call the Update method for each entity in the Scengrapgh list
-            foreach (var entity in Scenegraph)
+            foreach (var entity in EntityManager.Entities)
             {
                 entity.Update(gameTime);
             }
@@ -162,9 +149,9 @@ namespace ProjectHastings.Scenes
             back.Draw(spriteBatch);
 
 
-            for (int i = 0; i < Scenegraph.Count; i++)
+            for (int i = 0; i < EntityManager.Entities.Count; i++)
             {
-                Scenegraph[i].Draw(spriteBatch);
+                EntityManager.Entities[i].Draw(spriteBatch);
             }
 
 

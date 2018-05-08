@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Managers;
 
 namespace ProjectHastings.Behaviours.Player_Behaviours.Health
 {
@@ -25,6 +26,7 @@ namespace ProjectHastings.Behaviours.Player_Behaviours.Health
             {
                 Console.WriteLine("the player has died, get fucked four eyes");
                 //gameOver
+                SceneManager.ChangeScene("LoseScreen");
             }
         }
 

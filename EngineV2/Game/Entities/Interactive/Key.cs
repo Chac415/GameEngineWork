@@ -20,13 +20,12 @@ namespace ProjectHastings.Entities.Interactive
     class Key : GameEntity, ICollidable
     {
         #region Instance Variables
+
         public static bool Unlock = false;
         public bool gravity = true;
 
-        public bool isTrigger
-        {
-            get; set;
-        }
+        public bool isTrigger { get; set; }
+
         //Input Management
         private KeyboardState keyState;
 
@@ -58,6 +57,16 @@ namespace ProjectHastings.Entities.Interactive
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Texture, Position, Color.AntiqueWhite);
+        }
+
+        public override void OnTriggerEnter(IEntity collision)
+        {
+            if (collision.Tag == "Player")
+            {
+                Unlock = true;
+                sound.Playsnd("Key", 0.2f, false);
+                EntityManager.Entities.Remove(this);
+            }
         }
 
         /// <summary>

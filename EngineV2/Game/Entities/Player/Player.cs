@@ -65,7 +65,6 @@ namespace ProjectHastings.Entities.Player
         public override void UniqueData()
         {
             Tag = "Player";
-            speed = 3;
             mind = new PlayerMind(this);
             isTrigger = false;
             GravityBool = true;

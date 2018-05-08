@@ -31,7 +31,7 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
         private IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
 
-        private float speed = 2.5f;
+        public float speed = 2.5f;
 
         private bool canClimb = false;
 
