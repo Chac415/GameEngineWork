@@ -21,7 +21,7 @@ namespace ProjectHastings.Behaviours.Player_Behaviours.Health
 
             //Update UI
 
-            if (health <= 0)
+            if (health < 0)
             {
                 Console.WriteLine("the player has died, get fucked four eyes");
                 //gameOver

@@ -15,6 +15,7 @@ namespace Engine.State_Machines
         void AddMethodTransition(Func<bool> methodVal, string stateFrom, string targetState);
         void AddMethodTransition(Func<bool> methodVal, string stateFrom, string targetState, bool successVal);
 
+        void ChangeState(string id);
         void UpdateBehaviour();  //Update State Behaviour
     }
 }

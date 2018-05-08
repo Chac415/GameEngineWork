@@ -18,7 +18,7 @@ namespace ProjectHastings.Entities.Enemies
         /// </summary>
         public override void UniqueData()
         {
-            Tag = "thug";
+            Tag = "Enemy";
             isTrigger = false;
             //Create the Mind and pass the state machine and this entity
             Mind = new EnemyMind(this);
@@ -27,7 +27,7 @@ namespace ProjectHastings.Entities.Enemies
 
         public override void OnCollision(IEntity collision)
         {
-            Mind.Attack(collision);
+            Mind.Collision(collision);
         }
 
         public override void Update(GameTime game)
