@@ -8,6 +8,7 @@ using Engine.State_Machines.Test_States;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProjectHastings.Entities.Player;
 
 namespace ProjectHastings.Behaviours
 {
@@ -46,6 +47,8 @@ namespace ProjectHastings.Behaviours
             //Add Animation Transitions
             AnimationMachine.AddMethodTransition(right, "left", "right");
             AnimationMachine.AddMethodTransition(left, "right", "left");
+            AnimationMachine.AddMethodTransition(turn, "right", "left");
+            AnimationMachine.AddMethodTransition(turn, "right", "left");
         }
 
 
@@ -68,6 +71,28 @@ namespace ProjectHastings.Behaviours
             }
             return false;
         }
+        bool turn()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Attack Method
+        /// </summary>
+        /// <param name="collision"></param>
+        public void Attack(IEntity collision)
+        {
+            //If the enemy collides with the player, take 1 damage
+            if (collision.Tag == "Player")
+            {
+                ((Player)collision).healthScript.TakeDamage(1);
+            }
+            if (collision.Tag == "Wall")
+            {
+                turn();
+            }
+        }
+
 
         public void Update(GameTime game)
         {

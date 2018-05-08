@@ -56,6 +56,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Behaviours\Player Behaviours\Health\HealthScript.cs" />
+    <Compile Include="Behaviours\Player Behaviours\Health\IDamageable.cs" />
     <Compile Include="Behaviours\Player Behaviours\IPlayerBehaviour.cs" />
     <Compile Include="Behaviours\Player Behaviours\PlayerMind.cs" />
     <Compile Include="Buttons\ExitButton.cs" />

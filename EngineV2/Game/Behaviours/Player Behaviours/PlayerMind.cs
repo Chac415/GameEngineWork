@@ -19,7 +19,8 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
         private KeyboardState keyState;
 
         private IAnimationMachine<IEntity> Animations;
-        private IAnimation SpriteSheet; 
+        private IAnimation SpriteSheet;
+        private IStateMachine<IEntity> StateMachine;
 
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
         private IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
@@ -33,6 +34,8 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
 
             body = ent;
             input.AddKeyListener(OnNewKeyInput);
+            //Add states to player for things liek climbing in order to counter the limitations of gravity
+            StateMachine = new StateMachine<IEntity>(body);
 
             SpriteSheet = new SpriteSheetAnimation(body.Texture);
             Animations = new AnimationMachine<IEntity>(body);

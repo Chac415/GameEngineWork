@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ProjectHastings.Behaviours.Player_Behaviours;
+using ProjectHastings.Behaviours.Player_Behaviours.Health;
 
 namespace ProjectHastings.Entities.Player
 {
@@ -40,16 +41,18 @@ namespace ProjectHastings.Entities.Player
         private bool isJumping = false;
         private float jumpHeight = 0;
 
-        //Input Management
         private KeyboardState keyState;
         private IAnimation SpriteSheet;
 
-        private PlayerMind mind; 
-
-
-        IStateMachine<IPhysics> stateMachine;
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
+
+
+        //Behaviours & scripts
+        private PlayerMind mind;
+        public IDamageable healthScript;
+
+
 
         #endregion
 
@@ -65,6 +68,7 @@ namespace ProjectHastings.Entities.Player
             GravityBool = true;
             // CollisionManager.GetColliderInstance.subscribe(onCollision);
             input.AddKeyListener(OnNewKeyInput);
+            healthScript = new HealthScript();
         }
 
         public override void OnCollision(IEntity collision)

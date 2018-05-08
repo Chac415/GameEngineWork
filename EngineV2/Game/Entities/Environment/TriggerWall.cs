@@ -28,7 +28,7 @@ namespace ProjectHastings.Entities.Environment
         /// </summary>
         public override void UniqueData()
         {
-            Tag = "environment";
+            Tag = "Environment";
             isTrigger = false;
             // physicsObjs = _PhysicsObj.getPhysicsList();
         }

@@ -92,7 +92,9 @@ namespace ProjectHastings.Scenes
             entManager.CreateEnt<Player>(Content.Load<Texture2D>("Chasting"), new Vector2(50, 70),  behaviours);
 
             //Enemies
-            //entManager.CreateEnt<Thug>(Content.Load<Texture2D>("Thug"), new Vector2(630, 564), behaviours);
+            entManager.CreateEnt<Thug>(Content.Load<Texture2D>("Thug"), new Vector2(300, 564), behaviours);
+
+            entManager.CreateEnt<Crate>(Content.Load<Texture2D>("crate"), new Vector2(300, 300), behaviours);
 
             Scenegraph.AddRange(EntityManager.Entities);
             Behaviours = BehaviourManager.behaviours;

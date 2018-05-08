@@ -13,28 +13,16 @@ namespace ProjectHastings.Entities.Interactive
     /// <summary>
     /// Trigger Object
     /// </summary>
-    class PressurePlate : GameEntity
+    class PressurePlate : GameEntity, ICollidable, IPhysics
     {
-        //tag Identifier
-        public new string Tag = "PressurePlate";
         private float moveDirec = 3;
-        private bool moveObject = false;
         private bool canMove = true;
         private bool crateContact = false;
 
-        //Physics
-        public bool gravity = true;
+        public bool isTrigger { get; set; }
 
         //Input Management
         private KeyboardState keyState;
-
-        //Collision Management
-        IPhysics physics;
-
-        //Lists
-        private List<IEntity> environementObjs;
-        private List<IEntity> interactiveObj;
-        private IEntity triggerWall;
 
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
 
@@ -43,7 +31,17 @@ namespace ProjectHastings.Entities.Interactive
         /// </summary>
         public override void UniqueData()
         {
+            Tag = "PressurePlate";
+            isTrigger = true;
+            GravityBool = false;
+        }
 
+        public override void OnTriggerEnter(IEntity collision)
+        {
+            if (collision.Tag == "Crate")
+            {
+                //DO STUFF
+            }
         }
 
         /// <summary>
@@ -61,6 +59,7 @@ namespace ProjectHastings.Entities.Interactive
         /// <param name="game"></param>
         public override void Update(GameTime game)
         {
+            SetPoints(1, 1);
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
     }

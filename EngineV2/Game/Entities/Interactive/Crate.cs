@@ -7,24 +7,21 @@ using Engine.Service_Locator;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Engine.Physics;
 
 namespace ProjectHastings.Entities.Interactive
 {
-    class Crate : GameEntity
+    class Crate : GameEntity, ICollidable, IPhysics
     {
-        public string tag = "Crate";
         private float moveDirec = 3;
         private bool moveObject = false;
         private bool canMove = true;
         private bool crateContact = false;
 
-        //Physics
-        public bool gravity = true;
-
 
         //Input Management
         private KeyboardState keyState;
-
+        public bool isTrigger { get; set; }
         //Collision Management
 
         //Lists
@@ -36,8 +33,10 @@ namespace ProjectHastings.Entities.Interactive
 
         public override void UniqueData()
         {
+            Tag = "Crate";
             input.AddKeyListener(OnNewKeyInput);
-            //  _PhysicsObj.hasPhysics(this);
+            GravityBool = true;
+            isTrigger = false;
         }
 
         /// <summary>
@@ -56,19 +55,19 @@ namespace ProjectHastings.Entities.Interactive
                 if (crateContact && keyState.IsKeyDown(Keys.D) || moveObject && keyState.IsKeyDown(Keys.Right))
                 {
                     Position += new Vector2(3, 0);
-                    sound.Playsnd("Crate", 0.2f, true);
+                    //sound.Playsnd("Crate", 0.2f, true);
                 }
                 if (crateContact && keyState.IsKeyDown(Keys.A) || moveObject && keyState.IsKeyDown(Keys.Left))
                 {
                     Position += new Vector2(-3, 0);
-                    sound.Playsnd("Crate", 0.2f, true);
+                    //sound.Playsnd("Crate", 0.2f, true);
                 }
 
             }
 
             if (crateContact == false)
             {
-                sound.Stopsnd("Crate");
+               // sound.Stopsnd("Crate");
             }
         }
 
@@ -87,6 +86,7 @@ namespace ProjectHastings.Entities.Interactive
         /// <param name="game"></param>
         public override void Update(GameTime game)
         {
+            SetPoints(1, 1);
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
     }
