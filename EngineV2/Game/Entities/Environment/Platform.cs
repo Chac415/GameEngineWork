@@ -13,20 +13,18 @@ namespace ProjectHastings.Entities.Environment
     /// Date of Change: 03/02/18
     /// Version: 0.4
     /// </summary>
-    class Platform : GameEntity
+    class Platform : GameEntity, ICollidable
     {
         //COLLISIONS
-
-        //LISTS
-        private List<IEntity> physicsObjs;
-
+        public bool isTrigger { get; set; }
 
         /// <summary>
         /// Initialise the Variables specific to this object
         /// </summary>
         public override void UniqueData()
         {
-            //  physicsObjs = _PhysicsObj.getPhysicsList();
+            Tag = "Environment";
+            isTrigger = false;
         }
 
 
@@ -45,6 +43,7 @@ namespace ProjectHastings.Entities.Environment
         /// <param name="game"></param>
         public override void Update(GameTime game)
         {
+            SetPoints(1, 1);
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Engine.Collision_Management;
 using Engine.Input_Managment;
 using Engine.Interfaces;
@@ -16,13 +17,16 @@ namespace ProjectHastings.Entities.Interactive
     /// Date of Change: 03/02/18
     /// Version: 0.4
     /// </summary>
-    class Key : GameEntity
+    class Key : GameEntity, ICollidable
     {
         #region Instance Variables
         public static bool Unlock = false;
         public bool gravity = true;
 
-
+        public bool isTrigger
+        {
+            get; set;
+        }
         //Input Management
         private KeyboardState keyState;
 
@@ -37,11 +41,14 @@ namespace ProjectHastings.Entities.Interactive
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
 
+
+
         #endregion
 
         public override void UniqueData()
         {
-            //_PhysicsObj.hasPhysics(this);
+            Tag = "Key";
+            isTrigger = true;
         }
 
         /// <summary>
@@ -59,6 +66,7 @@ namespace ProjectHastings.Entities.Interactive
         /// <param name="game"></param>
         public override void Update(GameTime game)
         {
+            SetPoints(1, 1);
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
 

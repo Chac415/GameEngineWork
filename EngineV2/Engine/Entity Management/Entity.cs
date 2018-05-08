@@ -13,9 +13,10 @@ namespace Engine.Entity_Management
         public abstract void Update(GameTime game);
         public abstract Rectangle Hitbox { get; set; }
         public abstract string Tag { get; set; }
-        public abstract void SetPoints();
+        public abstract void SetPoints(int Columns, int Rows);
         public abstract void BuildEdges();
         public abstract void UniqueData();
+        public abstract void OnColiEnter(IEntity ColiEnt, ISAT SAT);
 
         //Animations
         public abstract float Direction { get; set; }
@@ -26,9 +27,15 @@ namespace Engine.Entity_Management
         //Virtual Variables
         public abstract Vector2 Position { get; set; }
         public abstract Texture2D Texture { get; set; }
-
+        
         //Virtual Methods
         public abstract void Draw(SpriteBatch spriteBatch);
+
+        #region Collisions
+        public abstract void OnCollision(IEntity collision);
+        public abstract void OnTriggerEnter(IEntity collision);
+
+        #endregion
 
         #region Physics content
 

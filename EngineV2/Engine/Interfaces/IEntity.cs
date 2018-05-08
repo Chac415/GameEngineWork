@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 
@@ -10,7 +11,7 @@ namespace Engine.Interfaces
         void Initialize(Texture2D Tex, Vector2 Posn, IBehaviourManager behaviours);
         void Draw(SpriteBatch spriteBatch);
         void Update(GameTime game);
-        void SetPoints();
+        void SetPoints(int Columns, int Rows);
         void BuildEdges();
         Vector2 Position { get; set; }
         Texture2D Texture { get; set; }
@@ -18,6 +19,7 @@ namespace Engine.Interfaces
         string Tag { get; set; }
         float Direction { get; set; }
         void UniqueData();
+        void OnColiEnter(IEntity ColiEnt, ISAT SAT);
 
 
 

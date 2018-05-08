@@ -13,7 +13,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ProjectHastings.Entities.Enemies;
 using ProjectHastings.Entities.Environment;
 using ProjectHastings.Entities.Interactive;
-using ProjectHastings.Entities.Interactive.Ladders;
 using ProjectHastings.Entities.Player;
 
 namespace ProjectHastings.Scenes
@@ -66,10 +65,10 @@ namespace ProjectHastings.Scenes
             back.Initialize("Background", Content.Load<Texture2D>("BackgroundTex1"));
 
             //Ladders
-            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(200, 110), behaviours);
+            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(227, 110), behaviours);
             entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(675, 355),  behaviours);
-            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(100, 470), behaviours);
-            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(145, 470), behaviours);
+            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(74, 470), behaviours);
+            entManager.CreateEnt<Ladder>(Content.Load<Texture2D>("SLadderTex"), new Vector2(167, 470), behaviours);
             //Door
             entManager.CreateEnt<Door>(Content.Load<Texture2D>("Door"), new Vector2(850, 555), behaviours);
 
@@ -81,9 +80,11 @@ namespace ProjectHastings.Scenes
 
             //Platforms          
             entManager.CreateEnt<Platform>(Content.Load<Texture2D>("XLPlatformTex"), new Vector2(0, 595), behaviours);
-            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(695, 475), behaviours);
-            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("XLPlatformTex"), new Vector2(0, 355),  behaviours);
-            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(-4, 107),  behaviours);
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(702, 475), behaviours);
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(702, 355), behaviours);
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("LPlatformTex"), new Vector2(0, 355),  behaviours);
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(446, 355), behaviours);
+            entManager.CreateEnt<Platform>(Content.Load<Texture2D>("MPlatformTex"), new Vector2(0, 107),  behaviours);
             entManager.CreateEnt<Platform>(Content.Load<Texture2D>("Platform"), new Vector2(100, 470), behaviours);
             //INTERACTIVE OBJECTS
 
@@ -91,7 +92,7 @@ namespace ProjectHastings.Scenes
             entManager.CreateEnt<Player>(Content.Load<Texture2D>("Chasting"), new Vector2(50, 70),  behaviours);
 
             //Enemies
-            entManager.CreateEnt<Thug>(Content.Load<Texture2D>("Thug"), new Vector2(630, 564), behaviours);
+            //entManager.CreateEnt<Thug>(Content.Load<Texture2D>("Thug"), new Vector2(630, 564), behaviours);
 
             Scenegraph.AddRange(EntityManager.Entities);
             Behaviours = BehaviourManager.behaviours;

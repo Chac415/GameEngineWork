@@ -16,7 +16,7 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
     class PlayerMind
     {
         private IEntity body;
-         private KeyboardState keyState;
+        private KeyboardState keyState;
 
         private IAnimationMachine<IEntity> Animations;
         private IAnimation SpriteSheet; 
@@ -26,8 +26,11 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
 
         private float speed = 2.5f;
 
+        private bool canClimb = false;
+
         public PlayerMind(IEntity ent)
         {
+
             body = ent;
             input.AddKeyListener(OnNewKeyInput);
 
@@ -41,6 +44,20 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
 
         }
 
+        public void collisionResults(IEntity Collision)
+        {
+            if (Collision.Tag == "Ladder")
+            {
+                canClimb = true;
+                //((IPhysics)body).GravityBool = false;
+            }
+            if (Collision.Tag != "Ladder")
+            {
+                canClimb = false;
+                //((IPhysics)body).GravityBool = true;
+
+            }
+        }
 
         public virtual void OnNewKeyInput(object source, KeyEventData data)
         {
@@ -63,16 +80,16 @@ namespace ProjectHastings.Behaviours.Player_Behaviours
                 body.Position += new Vector2(speed, 0);
             }
 
-            if (keyState.IsKeyDown(Keys.W) ||keyState.IsKeyDown(Keys.Up))
+            if (canClimb && keyState.IsKeyDown(Keys.W) || keyState.IsKeyDown(Keys.Up))
             {
-                speed = -2.5f;
+                speed = -5f;
                 body.Position += new Vector2(0,speed);
                 sound.Playsnd("Ladder", 0.3f, true);
 
             }
-            if (keyState.IsKeyDown(Keys.S) || keyState.IsKeyDown(Keys.Down))
+            if (canClimb && keyState.IsKeyDown(Keys.S) || keyState.IsKeyDown(Keys.Down))
             {
-                speed = 2.5f;
+                speed = 5f;
                 body.Position += new Vector2(0, speed);
                 sound.Playsnd("Ladder", 0.3f, true);
             }

@@ -24,13 +24,14 @@ namespace ProjectHastings.Entities.Player
     /// Version 0.5
     /// 
     /// </summary>
-    public class Player : GamePhysicsEntity, ICollidable
+    public class Player : GameEntity, ICollidable, IPhysics
     {
         #region Properties
 
         //Movement
         public static bool canClimb = false;
         public bool sprint = false;
+        public bool isTrigger { get; set; }
 
         //Jump Variables
         private float jumpForce = 10;
@@ -45,12 +46,7 @@ namespace ProjectHastings.Entities.Player
 
         private PlayerMind mind; 
 
-        //Collision Lists
-        private List<IEntity> collisionObjs;
-        private List<IEntity> interactiveObjs;
-        private List<IEntity> environment;
 
-        private IEntity collision;
         IStateMachine<IPhysics> stateMachine;
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
         ISoundManager sound = Locator.Instance.getProvider<SoundManager>() as ISoundManager;
@@ -64,10 +60,16 @@ namespace ProjectHastings.Entities.Player
         {
             Tag = "Player";
             speed = 3;
-            mind = new PlayerMind(this);         
-            
+            mind = new PlayerMind(this);
+            isTrigger = false;
+            GravityBool = true;
             // CollisionManager.GetColliderInstance.subscribe(onCollision);
             input.AddKeyListener(OnNewKeyInput);
+        }
+
+        public override void OnCollision(IEntity collision)
+        {
+            mind.collisionResults(collision);
         }
 
         /// <summary>
@@ -79,23 +81,19 @@ namespace ProjectHastings.Entities.Player
         {
             keyState = data._newKey;
 
-
+            if (keyState.IsKeyDown(Keys.W) && canClimb)
+            {
+                ApplyForce(new Vector2(0, 10));
+            }
+            if (keyState.IsKeyDown(Keys.S) && canClimb)
+            {
+                ApplyForce(new Vector2(0, 3));
+            }
             #region SPACEBAR
             if (keyState.IsKeyDown(Keys.Space))
             {
                 isJumping = true;
                 jump();
-            }
-            #endregion
-
-            #region LEFT SHIFT
-            if (keyState.IsKeyDown(Keys.LeftShift))
-            {
-                sprint = true;
-            }
-            else if (keyState.IsKeyUp(Keys.LeftShift))
-            {
-                sprint = false;
             }
             #endregion
 
@@ -152,9 +150,7 @@ namespace ProjectHastings.Entities.Player
         public override void Update(GameTime game)
         {
             Hitbox = new Rectangle((int)Position.X - 25, (int)Position.Y - 25, Texture.Width/2, Texture.Height/2);
-            //stateMachine.UpdateBehaviour();
-            SetPoints();
-            //stateMachine.UpdateAnimation(game);
+            SetPoints(3,3);
             mind.Update(game);
         }
 

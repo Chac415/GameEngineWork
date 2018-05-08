@@ -13,7 +13,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ProjectHastings.Entities.Enemies;
 using ProjectHastings.Entities.Environment;
 using ProjectHastings.Entities.Interactive;
-using ProjectHastings.Entities.Interactive.Ladders;
 using ProjectHastings.Entities.Player;
 
 namespace ProjectHastings.Scenes
@@ -144,7 +143,6 @@ namespace ProjectHastings.Scenes
 
             //Update COllisions
             coli.Update();
-
 
         }
 

@@ -16,7 +16,7 @@ namespace ProjectHastings.Entities.Interactive
     /// Date of Change: 03/02/18
     /// Version: 0.4
     /// </summary>
-    class Door : GameEntity
+    class Door : GameEntity, IInteractable
     {
         #region Instance Variables
         public bool doorContact = false;

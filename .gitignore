@@ -46,3 +46,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 EngineV2/Game/Entities/Enemies/Thug.cs
+*.pdb
+EngineV2/Game/obj/x86/Debug/ProjectHastings.exe
+*.cache

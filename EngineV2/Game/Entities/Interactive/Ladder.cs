@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace ProjectHastings.Entities.Interactive.Ladders
+namespace ProjectHastings.Entities.Interactive
 {
     /// <summary>
     /// Interactive object for the player allowing them to go up and down the y axis
@@ -14,11 +14,9 @@ namespace ProjectHastings.Entities.Interactive.Ladders
     /// Date of Change: 03/02/18
     /// Version: 0.4
     /// </summary>
-    class Ladder : GameEntity
+    class Ladder : GameEntity, ICollidable
     {
         #region Instance Variables
-
-        public string tag = "Ladder";
 
         //Input Management
         private KeyboardState keyState;
@@ -26,6 +24,7 @@ namespace ProjectHastings.Entities.Interactive.Ladders
         //Collision Management Variables
 
         IInputManager input = Locator.Instance.getProvider<InputManager>() as IInputManager;
+        public bool isTrigger { get; set; }
 
         #endregion
 
@@ -34,7 +33,8 @@ namespace ProjectHastings.Entities.Interactive.Ladders
         /// </summary>
         public override void UniqueData()
         {
-
+            Tag = "Ladder";
+            isTrigger = true;
         }
 
         /// <summary>
@@ -51,6 +51,7 @@ namespace ProjectHastings.Entities.Interactive.Ladders
         /// <param name="game"></param>
         public override void Update(GameTime game)
         {
+            SetPoints(1,1);
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
         }
     }
